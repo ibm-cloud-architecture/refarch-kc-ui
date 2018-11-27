@@ -1,0 +1,43 @@
+{
+  "name": "kcbff",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ibm-cloud-architecture/refarch-kc-ui.git"
+  },
+  "engines": {
+    "node": "6.x",
+    "npm": "5.x"
+  },
+  "author": "Jerome Boyer",
+  "scripts": {
+    "start": "node server",
+    "test": "mocha"
+  },
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.7",
+    "cfenv": "^1.0.0",
+    "cloudant": "^1.4.x",
+    "cookie-parser": "^1.4.3",
+    "core-js": "^2.4.1",
+    "express": "^4.15.3",
+    "express-session": "^1.13.0",
+    "extend": "^3.0.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "request": "^2.72.0",
+    "vcap_services": "^0.1.7",
+    "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@types/jasmine": "2.5.38",
+    "@types/node": "~6.0.60",
+    "chai": "^4.0.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.11.0",
+    "typescript": "~2.4.2"
+  }
+}
