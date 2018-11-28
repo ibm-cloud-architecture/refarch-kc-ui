@@ -14,13 +14,15 @@ export class FleetService {
   ships: Ship[] = [{name: "MarieRose",latitude: "37.8044",longitude: "-122.2711",status: "Docked",port: "Oakland",type: "Carrier",maxRow: 3,
    maxColumn: 7, numberOfContainers: 17 },
  {name: "BlackBear",latitude: "36.8044",longitude: "-140.2711",status: "AtSea",type: "Carrier",maxRow: 4,maxColumn: 8,numberOfContainers : 30 }]
-  getFleetsUrl: string = "fleets";
+  
+ fleetsUrl: string = "fleets";
+ shipsUrl: string = "ships";
 
   constructor(private http: HttpClient) { }
 
   public getFleetList(): Observable<Fleet[]> {
     if (this.fleets.length == 0)  {
-      return this.http.get<Fleet[]>(this.getFleetsUrl)
+      return this.http.get<Fleet[]>(this.fleetsUrl)
       .pipe(map(data => {
         this.fleets = data;
         return this.fleets;
@@ -31,7 +33,7 @@ export class FleetService {
 
   public getShipsForFleet(fleetName: string): Observable<Ship[]> {
     if (this.ships.length == 0)  {
-      return this.http.get<Fleet[]>(this.getFleetsUrl)
+      return this.http.get<Fleet[]>(this.shipsUrl)
       .pipe(map(data => {
         this.ships = data;
         return this.ships;
