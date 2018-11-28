@@ -4,14 +4,14 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { TileComponent } from './tile/tile.component';
-import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
+
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule
   ],
-  declarations: [FooterComponent, HeaderComponent, TileComponent, LeafletMapComponent],
+  declarations: [FooterComponent, HeaderComponent, TileComponent],
   exports: [TileComponent, HeaderComponent, FooterComponent ]
 })
 export class SharedModule { }

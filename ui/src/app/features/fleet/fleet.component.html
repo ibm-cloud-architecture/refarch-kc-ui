@@ -1,3 +1,13 @@
-<p>
-  fleet works!
-</p>
+
+  <h4>Fleets</h4>
+  <mat-form-field>
+    <mat-select placeholder="Select one fleet" [(ngModel)]="selectedFleet" mame="fleet">
+      <mat-option *ngFor="let fleet of fleets" [value]="fleet.name">
+        {{fleet.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <app-ships *ngIf="selectedFleet" fleetName={{selectedFleet}}></app-ships>
+
+ 
