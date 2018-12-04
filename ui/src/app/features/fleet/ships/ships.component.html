@@ -13,13 +13,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ship of ships;let i = index">
+        <tr *ngFor="let ship of ships;let i = index" [class.selected]="ship === selectedship" (click)="onSelect(ship)">
            <td>{{ship.name}}</td>
            <td>{{ship.type}}</td>
            <td>{{ship.status}}</td>
            <td>{{ship.port}}</td>
            <td>{{ship.latitude}}</td>
-          <td>{{ship.longitude}}</td>
+           <td>{{ship.longitude}}</td>
       </tbody>
     </table>
   </div>
@@ -29,3 +29,5 @@
           <app-leaflet-map [ships]="ships"></app-leaflet-map>
       </div>
    </div>
+
+<app-ship [ship]="selectedship"></app-ship>

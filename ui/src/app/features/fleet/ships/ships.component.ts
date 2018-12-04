@@ -12,9 +12,15 @@ export class ShipsComponent implements OnInit {
   fleetName : string;
   message: string;
   ships: Ship[];
-  constructor(private service: FleetService) { 
-    this.service.getShipsForFleet(this.fleetName).subscribe( 
-      data => {this.ships = data }, 
+
+  selectedship: Ship;
+  onSelect(ship: Ship): void {
+  this.selectedship = ship;
+  }
+
+  constructor(private service: FleetService) {
+    this.service.getShipsForFleet(this.fleetName).subscribe(
+      data => {this.ships = data },
       error => { this.message = "Error retreiving ships"});
   }
 

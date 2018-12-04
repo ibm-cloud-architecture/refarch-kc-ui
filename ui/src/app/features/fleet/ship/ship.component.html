@@ -1,5 +1,11 @@
-<p>
-    a ship view works!
-  </p>
+<!-- Detail view of a ship with the containers layout in a canvas -->
 
-  <!-- Detail view of a ship with the containers layout in a canvas -->
+<div *ngIf="ship">
+   <h2>{{ship.name | uppercase}} Details</h2>
+   <div><span>Number of Containers: </span>{{ship.numberOfContainers}}</div>
+   <div>
+     <label>name:
+       <input [(ngModel)]="ship.name" placeholder="name">
+     </label>
+   </div>
+</div>

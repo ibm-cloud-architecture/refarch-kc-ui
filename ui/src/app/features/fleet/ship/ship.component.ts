@@ -7,8 +7,10 @@ import { Ship } from './ship';
   styleUrls: ['./ship.component.css']
 })
 export class ShipComponent implements OnInit {
+
   @Input()
   ship: Ship;
+
   constructor() { }
 
   ngOnInit() {
