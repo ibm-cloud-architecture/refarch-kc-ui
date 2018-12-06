@@ -4,6 +4,7 @@ import { map } from  'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Fleet } from './fleet/fleet';
 import { Ship } from './fleet/ship/ship';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class FleetService {
   ships: Ship[] = [{name: "MarieRose",latitude: "37.8044",longitude: "-122.2711",status: "Docked",port: "Oakland",type: "Carrier",maxRow: 3,
    maxColumn: 7, numberOfContainers: 17 },
  {name: "BlackBear",latitude: "36.8044",longitude: "-140.2711",status: "AtSea",type: "Carrier",maxRow: 4,maxColumn: 8,numberOfContainers : 30 }]
-  
+
  fleetsUrl: string = "fleets";
  shipsUrl: string = "ships";
 
@@ -41,4 +42,5 @@ export class FleetService {
     }
     return of(this.ships);
   }
+
 }

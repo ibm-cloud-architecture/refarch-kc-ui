@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ship of ships;let i = index" [class.selected]="ship === selectedship" (click)="onSelect(ship)">
+        <tr *ngFor="let ship of ships;let i = index" [class.selected]="ship === selectedship" (click)="onSelect(ship)" [routerLink]="['/ship', ship.name]">
            <td>{{ship.name}}</td>
            <td>{{ship.type}}</td>
            <td>{{ship.status}}</td>
@@ -30,4 +30,4 @@
       </div>
    </div>
 
-<app-ship [ship]="selectedship"></app-ship>
+<!-- <app-ship [ship]="selectedship"></app-ship> -->
