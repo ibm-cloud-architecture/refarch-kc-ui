@@ -7,3 +7,9 @@
     margin-top: 20px;
     margin-bottom: 20px;
  }
+
+ .selected {
+   background-color: #CFD8DC !important;
+   color: white;
+ }
+ 
