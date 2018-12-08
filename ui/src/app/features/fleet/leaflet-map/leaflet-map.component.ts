@@ -25,27 +25,31 @@ export class LeafletMapComponent implements OnInit, OnChanges {
   ngOnInit() {
      // Render Map centered on California, with a zoom high enough to fit the usa map
     // all mouse and touch interactions on the map are enabled, and it has zoom and attribution controls.
-    this.seaMap = L.map('mapid').setView([37, -120], 4);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar',  attribution: 'OpenStreet map &copy;'
+    this.seaMap = L.map('mapid').setView([37.8044, -122.2711], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {  
+       attribution: 'OpenStreet map &copy;'
       }).addTo(this.seaMap);
-
+      console.log(JSON.stringify(this.ships));
   }
 
-  addMarker(lat,long,iconType,assetID,myMap){
+  addMarker(lat,long,iconType,id,myMap){
     console.log('Add Marker run');
-    L.marker([lat,long],{icon: iconType,title:'Asset ' + assetID}).addTo(myMap);
+    L.marker([lat,long],{icon: iconType,title: id}).addTo(myMap);
   }
 
   ngOnChanges(shipUpdates) {
      console.log(JSON.stringify(shipUpdates));
-     this.ships = shipUpdates.assets;
+     this.ships = shipUpdates.ships.currentValue;
      this.placeMarkers();
    }
 
    placeMarkers(){
-      for(let ship of this.ships) {
-        this.addMarker(ship.latitude,ship.longitude,this.basicIcon,ship.name,this.seaMap);
+      if (this.seaMap !== undefined) {
+        for(let ship of this.ships) {
+          this.addMarker(ship.latitude,ship.longitude,this.basicIcon,ship.name,this.seaMap);
+        }
       }
+      
    }
 
 }

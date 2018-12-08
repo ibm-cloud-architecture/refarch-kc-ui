@@ -13,3 +13,10 @@
    color: white;
  }
  
+ table {
+    width: 100%;
+  }
+  
+  buttonpad {
+    padding: 3px 3px 3px 3px;
+  }

@@ -1,19 +1,35 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { HeaderComponent } from './header.component';
+import { MatToolbarModule } from '@angular/material';
+import { routes } from '../../features/routes';
 
-describe('HeaderComponent', () => {
+fdescribe('HeaderComponent', () => {
+  let location: Location;
+  let router: Router;
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-
+  let mockRouter;
   beforeEach(async(() => {
+    
+    mockRouter = {navigate: jasmine.createSpy('navigate')};
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      // RouterTestingModule modules sets up the router with a spy implementation of the Location Strategy that doesn’t actually change the URL.
+      imports: [RouterTestingModule.withRoutes(routes),
+       MatToolbarModule
+      ],
+      declarations: [ HeaderComponent ],
+      providers: [
+        { provide: Router, useValue: mockRouter } ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+    router = TestBed.get(Router); 
+    location = TestBed.get(Location);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -21,5 +37,17 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  // The HTML as a routerlink to home
+  // As a rule you test the component, not the router, and care only 
+  // if the component navigates with the right address under the given conditions.
+  it('should go to home url when clicking on home link', () => {
+    const link = fixture.debugElement.query(By.css('#home'));
+   // link.click();
+    fixture.whenStable().then(() => {
+      const routerService = TestBed.get(Router);
+      expect(routerService.navigate.calls.any()).toBe(true, 'navigate called');
+      //expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
+    })
   });
 });

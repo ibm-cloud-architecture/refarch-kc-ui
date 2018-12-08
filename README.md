@@ -1,6 +1,6 @@
 # User Interface and BFF for the KC container shipment solution
 
-This repository includes the user interface in Angular as Single Page Application and the BFF in nodejs to present the container shipment demonstration.
+This repository includes the user interface in Angular as Single Page Application and the BFF in nodejs to present the container shipment demonstration. It uses the different simulator microservices and functions to support the end to end demonstration.
 
 ## User stories to support
 
@@ -21,7 +21,7 @@ For the BFF code the server code is under the `server` folder and uses the stand
 
 ## UI Development
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.1. The user interface features are under the features folder.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1. The user interface features are under the features folder. We are using a TDD approach as described in [this note](https://github.com/ibm-cloud-architecture/refarch-caseportal-app/blob/master/docs/tdd.md). The tests run with `ng test`. We also encourage to read the [angular.io testing guide](https://angular.io/guide/testing)
 
 ### UI Development server
 

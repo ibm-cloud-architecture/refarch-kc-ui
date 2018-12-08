@@ -13,20 +13,34 @@ export class ShipsComponent implements OnInit {
   fleetName : string;
   message: string;
   ships: Ship[];
+  selectedship: Ship;
+  simulControl: boolean = false;
+  displayedColumns: string[] = ['name', 'type','status', 'port','latitude', 'longitude','actions'];
 
   constructor(private router: Router, private service: FleetService) {
     this.service.getShipsForFleet(this.fleetName).subscribe(
       data => {this.ships = data },
-      error => { this.message = "Error retreiving ships"});
+      error => { this.message = "Error retrieving ships"});
   }
 
-  selectedship: Ship;
+
   onSelect(ship: Ship): void {
-  this.selectedship = ship;
+     console.log("open " + JSON.stringify(ship));
+     this.selectedship = ship;
+     this.simulControl = false;
   }
 
   ngOnInit() {
   }
 
+  simulate(ship:Ship) {
+    console.log("simulate " + JSON.stringify(ship));
+    this.selectedship = ship;
+    this.simulControl = true;
+    // call service
+  }
 
+  getSimulControl():boolean {
+    return (this.selectedship !== undefined && this.simulControl);
+  }
 }

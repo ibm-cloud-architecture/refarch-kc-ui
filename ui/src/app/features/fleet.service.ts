@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { Fleet } from './fleet/fleet';
 import { Ship } from './fleet/ship/ship';
 import { BehaviorSubject } from 'rxjs';
+import { ShipControl } from './simulcontrol/shipControl';
+import { FleetControl } from './simulcontrol/fleetControl'; 
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +43,23 @@ export class FleetService {
       }))
     }
     return of(this.ships);
+  }
+
+
+  public startFleet(fc: FleetControl) {
+    console.log(JSON.stringify(fc));
+  }
+
+  public stopFleet() {
+
+  }
+
+  public startShip(sc: ShipControl) {
+    console.log(JSON.stringify(sc));
+  }
+
+  public stopShip(sc: ShipControl) {
+    console.log(JSON.stringify(sc));
   }
 
 }
