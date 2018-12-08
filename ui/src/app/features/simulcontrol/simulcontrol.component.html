@@ -1,13 +1,15 @@
 <h4>{{ship.name}}</h4>
   
 <mat-form-field>
-        <mat-select [(ngModel)]="selectedCommand" mame="selectedCommand">
-          <mat-option *ngFor="let command of commands" [value]="command.value">
-            {{command.name}}
-          </mat-option>
-        </mat-select>
-        <label for="numberOfMinutes">Number of minutes to run the simulation</label>
-          <mat-slider min="0" max="5" step="0.5" [(ngModel)]="numberOfMinutes" name="numberOfMinutes" #numberOfMinutes="ngModel"></mat-slider>
-        <label>{{numberOfMinutes}}</label><br/>
-  </mat-form-field>
-  <button *ngIf= "selectedCommand" class="buttonpad" mat-icon-button color="warn"(click)="simulate()"><mat-icon></mat-icon>Simulation</button>
+    <label class="wrapper" for="selectedCommand">Select a simulation</label>
+    <mat-select  [(ngModel)]="selectedCommand" mame="selectedCommand">
+      <mat-option *ngFor="let command of commands" [value]="command.value">
+        {{command.name}}
+      </mat-option>
+    </mat-select>
+    <label class="wrapper" for="numberOfMinutes">Number of minutes to run the simulation</label>
+    <mat-slider min="0" max="5" step="0.5" [(ngModel)]="numberOfMinutes" name="numberOfMinutes"></mat-slider>
+    <label>{{numberOfMinutes}}</label><br/>
+ 
+  <button *ngIf= "selectedCommand" class="buttonpad" mat-flat-button color="primary" (click)="simulate()"><mat-icon>waves</mat-icon>Simulate</button>
+</mat-form-field>

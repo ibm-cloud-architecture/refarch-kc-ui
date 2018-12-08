@@ -8,8 +8,8 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
-<button *ngIf="selectedFleet" (click)="startFleet()">Start Fleet Simulation</button>
-<button *ngIf="selectedFleet" (click)="stopFleet()">Stop Fleet Simulation</button>
+<button mat-flat-button color="primary"  *ngIf="selectedFleet" (click)="startFleet()">Start Fleet Simulation</button>
+<button mat-flat-button color="primary"  *ngIf="selectedFleet" (click)="stopFleet()">Stop Fleet Simulation</button>
 </div>
 <div class="row">
  

@@ -50,8 +50,8 @@ export class FleetService {
     console.log(JSON.stringify(fc));
   }
 
-  public stopFleet() {
-
+  public stopFleet(fc: FleetControl) {
+    console.log(JSON.stringify(fc));
   }
 
   public startShip(sc: ShipControl) {
