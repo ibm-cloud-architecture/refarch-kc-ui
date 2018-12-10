@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Ship } from '../ship/ship';
-import { ShipControl } from '../simulcontrol/shipControl';
 import { FleetService } from '../../fleet.service';
 import { Router } from '@angular/router';
 
+/**
+ * Present the list of ships for the given fleet.
+ */
 @Component({
   selector: 'app-ships',
   templateUrl: './ships.component.html',

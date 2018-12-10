@@ -14,9 +14,7 @@ import { FleetControl } from './simulcontrol/fleetControl';
 export class FleetService {
   // TODO remove those initializations {id: "f1", name: "KC-FleetNorth"}, {id: "f2", name: "KC-FleetSouth"}
   fleets: Fleet[] = [];
-  ships: Ship[] = [{name: "MarieRose",latitude: "37.8044",longitude: "-122.2711",status: "Docked",port: "Oakland",type: "Carrier",maxRow: 3,
-   maxColumn: 7, numberOfContainers: 17 },
- {name: "BlackBear",latitude: "36.8044",longitude: "-140.2711",status: "AtSea",type: "Carrier",maxRow: 4,maxColumn: 8,numberOfContainers : 30 }]
+  ships: Ship[] = [];
 
  fleetsUrl: string = "/api/fleets";
  shipsUrl: string = "/api/ships";
@@ -36,7 +34,7 @@ export class FleetService {
 
   public getShipsForFleet(fleetName: string): Observable<Ship[]> {
     if (this.ships.length == 0)  {
-      return this.http.get<Fleet[]>(this.shipsUrl)
+      return this.http.get<Fleet[]>(this.fleetsUrl + "/" + fleetName)
       .pipe(map(data => {
         this.ships = data;
         return this.ships;

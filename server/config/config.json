@@ -1,5 +1,6 @@
 { "kafkaHost" : "gc-kafka-0.gc-kafka-hl-svc.greencompute.svc.cluster.local:32224",
   "kafkaConnectTimeout" : 15000,
   "kafkaGroupId": "kc-dashboard-group",
-  "port": 3000
+  "port": 3000,
+  "fleetMSURL" : "http://localhost:9080/fleetms"
  }
