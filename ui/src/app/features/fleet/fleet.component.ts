@@ -29,7 +29,7 @@ export class FleetComponent implements OnInit {
     fc.fleetName = this.selectedFleet;
     fc.command = "START";
     fc.numberOfMinutes = 3; 
-    this.service.startFleet(fc);
+    this.service.processFleet(fc);
   }
 
   stopFleet() {
@@ -37,6 +37,6 @@ export class FleetComponent implements OnInit {
     fc.fleetName = this.selectedFleet;
     fc.command = "STOP";
     fc.numberOfMinutes = 3; 
-     this.service.stopFleet(fc);
+     this.service.processFleet(fc);
   }
 }

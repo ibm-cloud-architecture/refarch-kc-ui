@@ -15,14 +15,14 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "node dist/server/server.js",
-    "copy-deps": "copy-newer --cwd node_modules ** ./dist/node_modules && cpx \"../ui/dist/ui/*.*\" ./dist/server/static",
+    "copy-deps": "copy-newer --cwd node_modules ** ./dist/node_modules && cpx \"../ui/dist/ui/*.*\" ./dist/server/static && cpx \"./config/*.*\" ./dist/server/config",
     "preserve": "npm run build",
     "s": "npm run serve",
     "serve": "concurrently \"npm run build.w\" \"nodemon --watch ./dist/server ./dist/server/server.js\"",
     "lint": "tslint \"src/**/*.ts\"",
     "prebuild": "npm install",
     "build": "npm run copy-deps && tsc",
-    "build.w": "npm run copy-deps && tsc -w"
+    "build.w": "npm run copy-deps &&  tsc -w"
   },
   "private": true,
   "dependencies": {

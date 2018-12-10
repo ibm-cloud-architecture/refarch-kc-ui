@@ -1,15 +1,30 @@
+/**
+ * Copyright 2018 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 /*
 Server responsible to support APIs for the Angular App, serving the Single Page App,
 connect to a kafka topic and then
-broadcast Event coming from kafka to the connected dashboard.
+broadcast Event coming from kafka to the connected dashboards.
 */
 
 import * as express from 'express';
 import * as http from 'http';
 import * as kafka from 'kafka-node';
 import * as path from 'path';
+const config = require( './config/config.json');
 
-// const kafka = require('kafka-node');
 const app = express();
 
 //initialize a simple http server
@@ -20,8 +35,9 @@ const topicName = 'bluewaterProblem';
 // setup Kafka client
 const client = new kafka.KafkaClient({
     // kafkaHost: 'gc-kafka-0.gc-kafka-hl-svc.greencompute.svc.cluster.local:32224',
-    kafkaHost: 'kafka03-prod02.messagehub.services.us-south.bluemix.net:9093,kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,kafka05-prod02.messagehub.services.us-south.bluemix.net:9093',
-    connectTimeout: 15000,
+    //"kafka03-prod02.messagehub.services.us-south.bluemix.net:9093,kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,kafka05-prod02.messagehub.services.us-south.bluemix.net:9093", 
+    kafkaHost: config.kafkaHost,
+    connectTimeout: config.kafkaConnectTimeout,
     autoConnect: true
 });
 
@@ -32,7 +48,7 @@ function startConsumer(socket: WebSocket) {
       // array of FetchRequest
       [{ topic: topicName }],
       // options
-       {groupId: 'asset-dashboard-group',
+       { groupId: config.kafkaGroupId, 
          autoCommit: true,
          autoCommitIntervalMs: 5000,
          fetchMaxWaitMs: 10,
@@ -47,7 +63,7 @@ function startConsumer(socket: WebSocket) {
 
     consumer.on('message', (message) => {
 
-        console.log('Asset Metric Event received: ' + JSON.stringify(message, null, 4));
+        console.log('KC Container Metric Event received: ' + JSON.stringify(message, null, 4));
         // push the dashboard via socket
         socket.send(JSON.stringify(message));
     });
@@ -70,6 +86,7 @@ export class ProblemReport {
     ts?: any;
 }
 
+  require('./routes/api')(app,config);
 
   // Point static path to dist
   app.use(express.static(path.join(__dirname, './static')));
@@ -77,7 +94,6 @@ export class ProblemReport {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './static/index.html'));
   });
-
 //start our server
 server.listen(process.env.PORT || 3000, () => {
     let addr: string = JSON.stringify(server.address());

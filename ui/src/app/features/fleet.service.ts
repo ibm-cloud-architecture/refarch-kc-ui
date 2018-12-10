@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, of } from 'rxjs';
 import { map } from  'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Fleet } from './fleet/fleet';
 import { Ship } from './fleet/ship/ship';
 import { BehaviorSubject } from 'rxjs';
@@ -12,14 +12,14 @@ import { FleetControl } from './simulcontrol/fleetControl';
   providedIn: 'root'
 })
 export class FleetService {
-  // TODO remove those initializations
-  fleets: Fleet[] = [{id: "f1", name: "KC-FleetNorth"}, {id: "f2", name: "KC-FleetSouth"}];
+  // TODO remove those initializations {id: "f1", name: "KC-FleetNorth"}, {id: "f2", name: "KC-FleetSouth"}
+  fleets: Fleet[] = [];
   ships: Ship[] = [{name: "MarieRose",latitude: "37.8044",longitude: "-122.2711",status: "Docked",port: "Oakland",type: "Carrier",maxRow: 3,
    maxColumn: 7, numberOfContainers: 17 },
  {name: "BlackBear",latitude: "36.8044",longitude: "-140.2711",status: "AtSea",type: "Carrier",maxRow: 4,maxColumn: 8,numberOfContainers : 30 }]
 
- fleetsUrl: string = "fleets";
- shipsUrl: string = "ships";
+ fleetsUrl: string = "/api/fleets";
+ shipsUrl: string = "/api/ships";
 
   constructor(private http: HttpClient) { }
 
@@ -46,20 +46,19 @@ export class FleetService {
   }
 
 
-  public startFleet(fc: FleetControl) {
-    console.log(JSON.stringify(fc));
+  public processFleet(fc: FleetControl) {
+    let bodyString = JSON.stringify( fc);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.fleetsUrl + "/simulate",bodyString,{ headers: headers });
   }
 
-  public stopFleet(fc: FleetControl) {
-    console.log(JSON.stringify(fc));
+
+
+  public processShip(sc: ShipControl) {
+    let bodyString = JSON.stringify(  sc);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.shipsUrl + "/simulate",bodyString,{ headers: headers });
   }
 
-  public startShip(sc: ShipControl) {
-    console.log(JSON.stringify(sc));
-  }
-
-  public stopShip(sc: ShipControl) {
-    console.log(JSON.stringify(sc));
-  }
-
+ 
 }

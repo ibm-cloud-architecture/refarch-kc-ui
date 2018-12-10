@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Ship } from '../ship/ship';
+import { ShipControl } from '../simulcontrol/shipControl';
 import { FleetService } from '../../fleet.service';
 import { Router } from '@angular/router';
 
@@ -37,7 +38,6 @@ export class ShipsComponent implements OnInit {
     console.log("simulate " + JSON.stringify(ship));
     this.selectedship = ship;
     this.simulControl = true;
-    // call service
   }
 
   getSimulControl():boolean {
