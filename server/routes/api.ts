@@ -15,6 +15,7 @@
  */
 const express = require('express');
 const fleetClient = require('./fleetClient');
+import * as domain from './fleetDomain';
 
 /** Export the APIs for the front end */
 module.exports = function(app:any,config:any) {
@@ -25,24 +26,34 @@ module.exports = function(app:any,config:any) {
 
     app.get('/api/fleets', (req:any,res:any) => {
         console.log("In api GET fleets");
+
         let fleets = [{id: "f1", name: "KC-NorthAtlantic"}, {id: "f2", name: "KC-NorthPacific"},{id: "f2", name: "KC-SouthPacific"}];
-        res.status(200).send(fleets);
+        fleetClient.getFleetNames( (fleets: domain.Fleet[])=> {
+            res.status(200).send(fleets);
+        });
+        
     });
 
     app.get('/api/fleets/:fleetname', (req:any,res:any) => {
         console.log("In api GET fleet ships for " + req.params.fleetname);
-        console.log(' delegat to ' + config.fleeturl);
-        let ships = [{name: "MarieRose",latitude: "37.8044",longitude: "-122.2711",status: "Docked",port: "Oakland",type: "Carrier",maxRow: 3,
+        console.log(' delegate to ' + config.fleeturl);
+        fleetClient.getShips(req.params.fleetname, (aFleet: domain.Fleet) => {
+            res.status(200).send(aFleet);
+        });
+        /**
+         * let ships = [{name: "MarieRose",latitude: "37.8044",longitude: "-122.2711",status: "Docked",port: "Oakland",type: "Carrier",maxRow: 3,
         maxColumn: 7, numberOfContainers: 17 },
       {name: "BlackBear",latitude: "36.8044",longitude: "-140.2711",status: "AtSea",type: "Carrier",maxRow: 4,maxColumn: 8,numberOfContainers : 30 }];
-        res.status(200).send(ships);
+        
+         */
+        
     });
 
 
 
     app.post('/api/fleets/simulate', (req:any,res:any) => {
         console.log("In api POST fleets " + JSON.stringify(req.body));
-        // todo call fleet MS
+        fleetClient.fleetSimulation(req.body);
         res.status(200);
     });
 
@@ -50,6 +61,7 @@ module.exports = function(app:any,config:any) {
     app.post('/api/ships/simulate', (req:any,res:any) => {
         console.log("In api POST ship " + JSON.stringify(req.body));
         // todo call fleet MS
+        fleetClient.shipSimulation(req.body);
         res.status(200);
     });
 } // end exports

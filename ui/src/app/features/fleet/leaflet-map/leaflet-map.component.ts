@@ -38,7 +38,7 @@ export class LeafletMapComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(shipUpdates) {
-     console.log(JSON.stringify(shipUpdates));
+     console.log("On changes " + JSON.stringify(shipUpdates));
      this.ships = shipUpdates.ships.currentValue;
      this.placeMarkers();
    }
