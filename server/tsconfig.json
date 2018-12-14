@@ -5,6 +5,7 @@
         "outDir": "./dist/server",
         "strict": true,
         "sourceMap": true,
+        "resolveJsonModule": true,
         "typeRoots": [
             "node_modules/@types"
         ]

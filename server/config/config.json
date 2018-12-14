@@ -1,6 +1,8 @@
-{ "kafkaHost" : "gc-kafka-0.gc-kafka-hl-svc.greencompute.svc.cluster.local:32224",
+{ "kafkaBrokers" : "kafka03-prod02.messagehub.services.us-south.bluemix.net:9093,kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,kafka05-prod02.messagehub.services.us-south.bluemix.net:9093",
   "kafkaConnectTimeout" : 15000,
   "kafkaGroupId": "kc-dashboard-group",
   "port": 3000,
-  "fleetMSURL" : "http://localhost:9080/fleetms"
+  "fleetMSURL" : "http://localhost:9080/fleetms",
+  "problemTopicName" : "bluewaterProblem",
+  "shipTopicName" : "bluewaterShip"
  }

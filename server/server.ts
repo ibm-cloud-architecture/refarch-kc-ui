@@ -23,21 +23,19 @@ import * as express from 'express';
 import * as http from 'http';
 import * as kafka from 'kafka-node';
 import * as path from 'path';
-const config = require( './config/config.json');
+import AppConfig from './config/AppConfig'; 
+
 
 const app = express();
-
+const config = new AppConfig();
 //initialize a simple http server
 const server = http.createServer(app);
 
 // use kafka client to subscribe to events to push to UI
-const topicName = 'bluewaterProblem';
 // setup Kafka client
 const client = new kafka.KafkaClient({
-    // kafkaHost: 'gc-kafka-0.gc-kafka-hl-svc.greencompute.svc.cluster.local:32224',
-    //"kafka03-prod02.messagehub.services.us-south.bluemix.net:9093,kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,kafka05-prod02.messagehub.services.us-south.bluemix.net:9093", 
-    kafkaHost: config.kafkaHost,
-    connectTimeout: config.kafkaConnectTimeout,
+    kafkaHost: config.getKafkaBrokers(),
+    connectTimeout: config.getKafkaConnectTimeout(),
     autoConnect: true
 });
 
@@ -46,9 +44,9 @@ const client = new kafka.KafkaClient({
 function startConsumer(socket: WebSocket) {
     const consumer = new kafka.Consumer(client,
       // array of FetchRequest
-      [{ topic: topicName }],
+      [{ topic: config.getProblemTopicName() }],
       // options
-       { groupId: config.kafkaGroupId, 
+       { groupId: config.getKafkaGroupId(), 
          autoCommit: true,
          autoCommitIntervalMs: 5000,
          fetchMaxWaitMs: 10,
@@ -71,22 +69,7 @@ function startConsumer(socket: WebSocket) {
 }
 
 
-export class ProblemReport {
-    issue: string = '';
-    containerId: string = '';
-    shipId: string = '';
-    status?: string;
-    weatherC?: number = 0;
-    tempC?: number = 0;
-    amp?: number = 0;
-    latitude?: string;
-    longitude?: string;
-    tag?: string;
-    severity?: string;
-    ts?: any;
-}
-
-  require('./routes/api')(app,config);
+  require('./routes/api')(app);
 
   // Point static path to dist
   app.use(express.static(path.join(__dirname, './static')));
@@ -95,7 +78,7 @@ export class ProblemReport {
     res.sendFile(path.join(__dirname, './static/index.html'));
   });
 //start our server
-server.listen(process.env.PORT || 3000, () => {
+server.listen(config.getPort(), () => {
     let addr: string = JSON.stringify(server.address());
     console.log(`Server started on port ${addr} :)`);
 });

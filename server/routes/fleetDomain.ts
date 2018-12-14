@@ -11,6 +11,10 @@ export class ShipControl {
     numberOfMinutes:number = 2;
 }
 
+export class SimulResponse {
+    status: string = "";
+}
+
 export class Ship {
     name: string = "";
     longitude?: string = "";
@@ -28,4 +32,19 @@ export class Fleet {
     name: string = "";
     color?: string = "";
     ships?: Ship[] ;
+}
+
+export class ProblemReport {
+    issue: string = '';
+    containerId: string = '';
+    shipId: string = '';
+    status?: string;
+    weatherC?: number = 0;
+    tempC?: number = 0;
+    amp?: number = 0;
+    latitude?: string;
+    longitude?: string;
+    tag?: string;
+    severity?: string;
+    ts?: any;
 }
