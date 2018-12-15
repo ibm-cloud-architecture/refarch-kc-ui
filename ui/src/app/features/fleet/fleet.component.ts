@@ -17,10 +17,14 @@ export class FleetComponent implements OnInit {
   constructor(private service: FleetService) { 
     this.service.getFleetList().subscribe( 
       data => {this.fleets = data }, 
-      error => { this.message = "Error retreiving fleets"});
+      error => { this.message = "Error retrieving fleets"});
   }
 
   ngOnInit() {
+  }
+
+  getEnableShip() {
+     return (this.selectedFleet !== undefined);
   }
 
   startFleet() {

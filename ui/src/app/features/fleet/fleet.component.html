@@ -2,16 +2,16 @@
 <div class="row">
 <h4>Fleets</h4>
 <mat-form-field>
-  <mat-select placeholder="Select one fleet" [(ngModel)]="selectedFleet" mame="fleet">
+  <mat-select placeholder="Select one fleet" [(value)]="selectedFleet" mame="fleet">
     <mat-option *ngFor="let fleet of fleets" [value]="fleet.name">
       {{fleet.name}}
     </mat-option>
   </mat-select>
 </mat-form-field>
-<button mat-flat-button color="primary"  *ngIf="selectedFleet" (click)="startFleet()">Start Fleet Simulation</button>
-<button mat-flat-button color="primary"  *ngIf="selectedFleet" (click)="stopFleet()">Stop Fleet Simulation</button>
+<button mat-flat-button color="primary"  *ngIf="getEnableShip()" (click)="startFleet()">Start Fleet Simulation</button>
+<button mat-flat-button color="primary"  *ngIf="getEnableShip()" (click)="stopFleet()">Stop Fleet Simulation</button>
 </div>
 <div class="row">
  
-<app-ships *ngIf="selectedFleet" fleetName={{selectedFleet}}></app-ships>
+<app-ships *ngIf="getEnableShip()" [fleetName]="selectedFleet"></app-ships>
 </div>

@@ -34,9 +34,9 @@ export class FleetService {
 
   public getShipsForFleet(fleetName: string): Observable<Ship[]> {
     if (this.ships.length == 0)  {
-      return this.http.get<Fleet[]>(this.fleetsUrl + "/" + fleetName)
-      .pipe(map(data => {
-        this.ships = data;
+      return this.http.get<Fleet>(this.fleetsUrl + "/" + fleetName)
+      .pipe(map((data: Fleet) => {
+        this.ships = data.ships;
         return this.ships;
       }))
     }
@@ -45,17 +45,18 @@ export class FleetService {
 
 
   public processFleet(fc: FleetControl) {
-    let bodyString = JSON.stringify( fc);
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.fleetsUrl + "/simulate",bodyString,{ headers: headers });
+    return this.http.post<FleetControl>(this.fleetsUrl + "/simulate",fc,{ headers: headers });
   }
 
 
 
   public processShip(sc: ShipControl) {
-    let bodyString = JSON.stringify(  sc);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.shipsUrl + "/simulate",bodyString,{ headers: headers });
+    //let bodyString = JSON.stringify(  sc);
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.post<ShipControl>(this.shipsUrl + "/simulate",sc,httpOptions);
   }
 
  

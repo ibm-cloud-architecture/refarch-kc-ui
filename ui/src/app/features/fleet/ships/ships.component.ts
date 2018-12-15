@@ -21,9 +21,7 @@ export class ShipsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'type','status', 'port','latitude', 'longitude','actions'];
 
   constructor(private router: Router, private service: FleetService) {
-    this.service.getShipsForFleet(this.fleetName).subscribe(
-      data => {this.ships = data },
-      error => { this.message = "Error retrieving ships"});
+    
   }
 
 
@@ -34,6 +32,11 @@ export class ShipsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.fleetName !== undefined) {
+      this.service.getShipsForFleet(this.fleetName).subscribe(
+        data => {this.ships = data },
+        error => { this.message = "Error retrieving ships"});
+    }
   }
 
   simulate(ship:Ship) {

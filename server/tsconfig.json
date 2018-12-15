@@ -3,15 +3,17 @@
         "target": "es6",
         "module": "commonjs",
         "outDir": "./dist/server",
-        "strict": true,
         "sourceMap": true,
-        "resolveJsonModule": true,
+        "noResolve": true,
         "typeRoots": [
             "node_modules/@types"
         ]
     },
     "exclude": [
         "dist",
-        "node_modules"
+        "test",
+        "node_modules",
+        "node_modules/@types/jasmine",
+        "node_modules/@types/mocha"
     ]
 }

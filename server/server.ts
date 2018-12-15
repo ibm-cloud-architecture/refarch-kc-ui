@@ -81,4 +81,6 @@ function startConsumer(socket: WebSocket) {
 server.listen(config.getPort(), () => {
     let addr: string = JSON.stringify(server.address());
     console.log(`Server started on port ${addr} :)`);
+    console.log('Kafka Brokers ' +  config.getKafkaBrokers());
+    console.log('Fleet Simulator ' +  config.getFleetMSURL());
 });

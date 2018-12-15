@@ -6,7 +6,7 @@ import { HeaderComponent } from './header.component';
 import { MatToolbarModule } from '@angular/material';
 import { routes } from '../../features/routes';
 
-fdescribe('HeaderComponent', () => {
+describe('HeaderComponent', () => {
   let location: Location;
   let router: Router;
   let component: HeaderComponent;

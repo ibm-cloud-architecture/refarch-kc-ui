@@ -1,13 +1,10 @@
 FROM node:alpine
 MAINTAINER https://github.com/ibm-cloud-architecture - IBM - Jerome Boyer
 
-COPY . /kc-ui
-WORKDIR /kc-ui
+ADD . /kc-ui
+WORKDIR /kc-ui/server
 
-# RUN npm install && \
-#     npm install -g @angular/cli && \
-#    npm run build
-
+ENV PORT 3000
 EXPOSE 3000
 
-CMD node server/server.js
+CMD node dist/server/server.js
