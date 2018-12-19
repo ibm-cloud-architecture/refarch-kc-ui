@@ -4,16 +4,18 @@
         "module": "commonjs",
         "outDir": "./dist/server",
         "sourceMap": true,
-        "noResolve": true,
+        "noResolve": false,
+        "moduleResolution": "node",
         "typeRoots": [
             "node_modules/@types"
-        ]
+        ],
+        "lib": [
+            "es2017"
+          ]
     },
     "exclude": [
         "dist",
         "test",
-        "node_modules",
-        "node_modules/@types/jasmine",
-        "node_modules/@types/mocha"
+        "node_modules"
     ]
 }

@@ -21,7 +21,7 @@ broadcast Event coming from kafka to the connected dashboards.
 
 import * as express from 'express';
 import * as http from 'http';
-import * as kafka from 'kafka-node';
+
 import * as path from 'path';
 import AppConfig from './config/AppConfig'; 
 
@@ -31,47 +31,9 @@ const config = new AppConfig();
 //initialize a simple http server
 const server = http.createServer(app);
 
-// use kafka client to subscribe to events to push to UI
-// setup Kafka client
-const client = new kafka.KafkaClient({
-    kafkaHost: config.getKafkaBrokers(),
-    connectTimeout: config.getKafkaConnectTimeout(),
-    autoConnect: true
-});
-
-
-// start Kafka consumer
-function startConsumer(socket: WebSocket) {
-    const consumer = new kafka.Consumer(client,
-      // array of FetchRequest
-      [{ topic: config.getProblemTopicName() }],
-      // options
-       { groupId: config.getKafkaGroupId(), 
-         autoCommit: true,
-         autoCommitIntervalMs: 5000,
-         fetchMaxWaitMs: 10,
-         fetchMinBytes: 1,
-          // The maximum bytes to include in the message set for this partition. This helps bound the size of the response.
-          fetchMaxBytes: 1024 * 1024,
-          // If set true, consumer will fetch message from the given offset in the payloads
-          fromOffset: false,
-          // If set to 'buffer', values will be returned as raw buffer objects.
-          encoding: 'utf8',
-          keyEncoding: 'utf8'});
-
-    consumer.on('message', (message) => {
-
-        console.log('KC Container Metric Event received: ' + JSON.stringify(message, null, 4));
-        // push the dashboard via socket
-        socket.send(JSON.stringify(message));
-    });
-    console.log('Kafka consumer is ready');
-}
-
-
   require('./routes/api')(app);
 
-  // Point static path to dist
+  // Point static path to /static
   app.use(express.static(path.join(__dirname, './static')));
   // Catch all other routes and return the index file
   app.get('*', (req, res) => {

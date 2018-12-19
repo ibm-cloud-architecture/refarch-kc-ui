@@ -5,7 +5,7 @@ import * as domain from './fleetDomain';
 import AppConfig  from '../config/AppConfig';
 
 import * as request from 'request-promise-native';
-import { reporters } from 'mocha';
+
 
  export default class FleetClient {
     config:AppConfig;
