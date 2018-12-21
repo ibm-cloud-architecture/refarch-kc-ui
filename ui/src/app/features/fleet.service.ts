@@ -15,9 +15,10 @@ export class FleetService {
   // TODO remove those initializations {id: "f1", name: "KC-FleetNorth"}, {id: "f2", name: "KC-FleetSouth"}
   fleets: Fleet[] = [];
   ships: Ship[] = [];
-
- fleetsUrl: string = "/api/fleets";
- shipsUrl: string = "/api/ships";
+  fleetsUrl: string = "http://localhost:3000/api/fleets";
+  shipsUrl: string = "http://localhost:3000/api/ships";
+  //fleetsUrl: string = "/api/fleets";
+ // shipsUrl: string = "/api/ships";
 
   constructor(private http: HttpClient) { }
 
@@ -33,14 +34,11 @@ export class FleetService {
   }
 
   public getShipsForFleet(fleetName: string): Observable<Ship[]> {
-    if (this.ships.length == 0)  {
       return this.http.get<Fleet>(this.fleetsUrl + "/" + fleetName)
       .pipe(map((data: Fleet) => {
         this.ships = data.ships;
         return this.ships;
       }))
-    }
-    return of(this.ships);
   }
 
 

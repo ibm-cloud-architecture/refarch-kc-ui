@@ -27,6 +27,11 @@ export class FleetComponent implements OnInit {
      return (this.selectedFleet !== undefined);
   }
 
+  loadFleet(fleet) {
+    console.log(fleet);
+    //this.service.getShipsForFleet(fleet).subscribe()
+  }
+
   startFleet() {
     console.log("Start simulate ship movement for the selected fleet");
     let fc: FleetControl = new FleetControl();

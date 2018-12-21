@@ -25,8 +25,10 @@ import * as http from 'http';
 import * as path from 'path';
 import AppConfig from './config/AppConfig'; 
 
+var cors = require('cors');
 
 const app = express();
+app.use(cors())
 const config = new AppConfig();
 //initialize a simple http server
 const server = http.createServer(app);

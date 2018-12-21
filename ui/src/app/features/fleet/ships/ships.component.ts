@@ -12,8 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./ships.component.css']
 })
 export class ShipsComponent implements OnInit {
-  @Input()
-  fleetName : string;
+  
+  fleetNameV : string;
+
   message: string;
   ships: Ship[];
   selectedship: Ship;
@@ -24,6 +25,17 @@ export class ShipsComponent implements OnInit {
     
   }
 
+  @Input()
+  set fleetName(fname: string) {
+    if (this.fleetNameV !== fname) {
+      this.fleetNameV = fname;
+      this.ngOnInit();
+    }    
+  }
+
+  get fleetName() {
+    return this.fleetNameV;
+  }
 
   onSelect(ship: Ship): void {
      console.log("open " + JSON.stringify(ship));

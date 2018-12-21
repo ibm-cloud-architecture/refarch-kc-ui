@@ -12,8 +12,8 @@ declare function require(path: string);
 })
 export class LeafletMapComponent implements OnInit, OnChanges {
 
-  @Input()
-  ships: Ship[];
+  
+  _ships: Ship[];
   seaMap;
 
   basicIcon:L.Icon = L.icon({
@@ -21,6 +21,16 @@ export class LeafletMapComponent implements OnInit, OnChanges {
   });
 
   constructor() { }
+  @Input()
+  set ships(ships: Ship[]) {
+    this._ships = ships;
+    //this.ngOnInit();
+    this.placeMarkers();
+  }
+
+  get ships(){
+    return this._ships;
+  }
 
   ngOnInit() {
      // Render Map centered on California, with a zoom high enough to fit the usa map
@@ -34,7 +44,8 @@ export class LeafletMapComponent implements OnInit, OnChanges {
 
   addMarker(lat,long,iconType,id,myMap){
     console.log('Add Marker run');
-    L.marker([lat,long],{icon: iconType,title: id}).addTo(myMap);
+    var boat=L.marker([lat,long],{icon: iconType,title: id}).addTo(myMap);
+    boat.bindPopup("<b>"+id+"</b>").openPopup();
   }
 
   ngOnChanges(shipUpdates) {

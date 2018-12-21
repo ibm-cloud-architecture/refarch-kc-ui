@@ -2,7 +2,7 @@
 <div class="row">
 <h4>Fleets</h4>
 <mat-form-field>
-  <mat-select placeholder="Select one fleet" [(value)]="selectedFleet" mame="fleet">
+  <mat-select placeholder="Select one fleet" (selectionChange)="loadFleet($event.value)" [(value)]="selectedFleet" mame="fleet">
     <mat-option *ngFor="let fleet of fleets" [value]="fleet.name">
       {{fleet.name}}
     </mat-option>
