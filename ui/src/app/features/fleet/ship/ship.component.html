@@ -16,10 +16,21 @@
     <input [(ngModel)]="ship.name" placeholder="name">
   </label>
 </div> -->
+<div class="grid-container">
+  <div class="row">
+      <div class="col-md-6">
+          <button class="buttonpad" mat-icon-button color="warn"(click)="simulate(ship)"><mat-icon>waves</mat-icon></button>
+      </div>
+      <div class="col-md-6">
+          <app-simulcontrol [ship]="ship"></app-simulcontrol> 
+      </div>
+  </div>
+  <div class="row">
+    <canvas #myCanvas width=1024 height=400></canvas>
+  </div>
+</div>
 
-<p>Get details of the ship</p>
 
-<canvas #myCanvas width=10000 height=10000></canvas>
 
 
 

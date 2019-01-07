@@ -57,9 +57,10 @@ module.exports = function(app:any) {
 
 
     app.post('/api/ships/simulate', (req,res) => {
-        console.log("In api POST ship simulate " + req);
+        console.log("In api POST ship simulate " + JSON.stringify(req.body));
         if (req.body !== undefined) {
             fleetClient.shipSimulation(req.body).then((data: domain.Ship) => {
+                console.log("In api POST ship simulate resp:" + JSON.stringify(data));
                 res.status(200).send(data);
             });
         } 

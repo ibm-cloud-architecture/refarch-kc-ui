@@ -35,10 +35,7 @@ export class SimulcontrolComponent implements OnInit {
     sc.command = this.selectedCommand;
     sc.numberOfMinutes = this.numberOfMinutes;
     sc.shipName = this.ship.name;
-    this.service.processShip(sc).subscribe(
-      (data) => {this.router.navigate(['fleets']);},
-      (error) => { this.message = error.statusText}
-    );
-    
+    this.service.processShip(sc);
+    this.router.navigate(['fleets']);
   }
 }
