@@ -8,13 +8,10 @@ import { ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./ship.component.css']
 })
 export class ShipComponent implements OnInit {
+  // Added for testing remove hardcoded value
+  ship: Ship = {name:'Ship Maha', longitude:'1.77', latitude:'1.08', status:'Active', port:'San Jose', type:'Cargo',numberOfContainers:8, maxRow:7 ,maxColumn:5 };
 
-  @Input()
-  ship: Ship;
-
-  sub: any;
-
-  greetMessage: string = "I am Child";
+  matrix: [][]= this.createMatrix(this.ship.maxRow, this.ship.maxColumn);
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
   public context: CanvasRenderingContext2D;
@@ -24,23 +21,55 @@ export class ShipComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
-    this.context.fillStyle = 'grey';
-    // i<=ship.numberOfContainers to be done
-    for (var i=0; i<20; i++) {
-      this.context.fillRect(2+(i*20), 2, 10, 10);
-    }
-    this.context.fillStyle = 'blue';
-    this.context.fillRect(2, 100, 400, 50);
-  }
-
-  private draw() {
-    this.context.beginPath();
-    this.context.moveTo(0,0);
-    this.context.lineTo(300,300);
-    this.context.stroke();
+    this.generateMatrix(this.matrix);
   }
 
   ngOnInit() {
   }
+
+  createMatrix(row, col){
+    var rows = [];
+    var containerNo = this.ship.numberOfContainers;
+    for (var i = row-1; i >= 0; --i) {
+        rows[i] = [];
+        for (var j = col-1; j >= 0; --j) {
+            if(containerNo<=0){
+              rows[i][j] = 0;
+            }
+            else{
+              rows[i][j] = 1;
+            }
+            containerNo=containerNo-1;
+        }
+    }
+    return rows;
+}
+
+  generateMatrix(matrix){
+    var cellWt = 200 / this.ship.maxColumn;
+    var cellHt = 200 / this.ship.maxRow;
+    matrix.forEach((row, y) =>{
+        row.forEach((value, x) => {
+            this.generateBorder(x * cellWt, y * cellHt, cellWt, cellHt);
+            this.context.fillStyle = this.matrixColor(value);
+            this.context.fillRect(x * cellWt, y * cellHt, cellWt, cellHt);
+        });
+    });
+}
+
+matrixColor(value) {
+    if(value == 0)
+    {
+        return 'white';
+    }
+
+    return 'grey';
+}
+
+generateBorder(cellWt, cellHt, cellwidth, cellheight, thick = 1)
+{
+  this.context.fillStyle='#000';
+  this.context.fillRect(cellWt - (thick), cellHt - (thick), cellwidth + (thick * 2), cellheight + (thick * 2));
+}
 
 }

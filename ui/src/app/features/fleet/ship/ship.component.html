@@ -1,39 +1,20 @@
 <!-- Detail view of a ship with the containers layout in a canvas -->
 
-<!-- <div *ngIf="ship">
-   <h2>{{ship.name | uppercase}} Details</h2>
-   <div><span>Number of Containers: </span>{{ship.numberOfContainers}}</div>
-   <div>
-     <label>name:
-       <input [(ngModel)]="ship.name" placeholder="name">
-     </label>
-   </div>
-</div> -->
-
-<!-- <div><span>Number of Containers: </span>{{ship.numberOfContainers}}</div>
 <div>
-  <label>name:
-    <input [(ngModel)]="ship.name" placeholder="name">
-  </label>
-</div> -->
-<div class="grid-container">
-  <div class="row">
-      <div class="col-md-6">
-          <button class="buttonpad" mat-icon-button color="warn"(click)="simulate(ship)"><mat-icon>waves</mat-icon></button>
-      </div>
-      <div class="col-md-6">
-          <app-simulcontrol [ship]="ship"></app-simulcontrol> 
-      </div>
-  </div>
-  <div class="row">
-    <canvas #myCanvas width=1024 height=400></canvas>
-  </div>
+<table>
+  <td>
+    <tr><h3>Ship Details</h3></tr>
+    <tr><td><b>Name:</b></td> <td>{{ship.name}}</td></tr>
+    <tr><td><b>Longitude:</b></td> <td>{{ship.longitude}}</td></tr>
+    <tr><td><b>Latitude:</b></td> <td>{{ship.latitude}}</td></tr>
+    <tr><td><b>Max Rows Allowed:</b></td> <td>{{ship.maxRow}}</td></tr>
+    <tr><td><b>Max Columns Allowed:</b></td> <td>{{ship.maxColumn}}</td></tr>
+    <tr><td><b>Status:</b></td> <td>{{ship.status}}</td></tr>
+    <tr><td><b>Port:</b></td> <td>{{ship.port}}</td></tr>
+    <tr><td><b>Type:</b></td> <td>{{ship.type}}</td></tr>
+    <tr><td><b>Containers Loaded:</b></td> <td>{{ship.numberOfContainers}}</td></tr>
+  </td>
+</table>
+<canvas #myCanvas width=200 height=200 class="center" style="border:1px solid #000000;"></canvas>
+<img src="assets/images/ship.png" class="center">
 </div>
-
-
-
-
-
-
-<!-- <h2>{{ship.name | uppercase}} Details</h2> -->
-<!-- <h2>{{ship.name | uppercase}} Details</h2> -->
