@@ -12,17 +12,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./ships.component.css']
 })
 export class ShipsComponent implements OnInit {
-  
+
   fleetNameV : string;
 
   message: string;
-  ships: Ship[];
+  // Added for testing remove hardcoded value
+  ships: Ship[] = [{name:'Ship Maha'}];
   selectedship: Ship;
   simulControl: boolean = false;
   displayedColumns: string[] = ['name', 'type','status', 'port','latitude', 'longitude','actions'];
 
   constructor(private router: Router, private service: FleetService) {
-    
+
   }
 
   @Input()
@@ -30,7 +31,7 @@ export class ShipsComponent implements OnInit {
     if (this.fleetNameV !== fname) {
       this.fleetNameV = fname;
       this.ngOnInit();
-    }    
+    }
   }
 
   get fleetName() {

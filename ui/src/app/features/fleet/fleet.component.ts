@@ -9,14 +9,15 @@ import { FleetControl } from '../simulcontrol/fleetControl';
   styleUrls: ['./fleet.component.css']
 })
 export class FleetComponent implements OnInit {
+  // Added for testing remove hardcoded value
+  fleets: Fleet[] = [{id:'f1', name:'KC-NorthAtlantic', color:'red', ships:[{name:'Ship Maha'}]}];
 
-  fleets: Fleet[] = [];
   message: string;
   selectedFleet: string;
 
-  constructor(private service: FleetService) { 
-    this.service.getFleetList().subscribe( 
-      data => {this.fleets = data }, 
+  constructor(private service: FleetService) {
+    this.service.getFleetList().subscribe(
+      data => {this.fleets = data },
       error => { this.message = "Error retrieving fleets"});
   }
 
@@ -37,7 +38,7 @@ export class FleetComponent implements OnInit {
     let fc: FleetControl = new FleetControl();
     fc.fleetName = this.selectedFleet;
     fc.command = "START";
-    fc.numberOfMinutes = 3; 
+    fc.numberOfMinutes = 3;
     this.service.processFleet(fc);
   }
 
@@ -45,7 +46,7 @@ export class FleetComponent implements OnInit {
     let fc: FleetControl = new FleetControl();
     fc.fleetName = this.selectedFleet;
     fc.command = "STOP";
-    fc.numberOfMinutes = 3; 
+    fc.numberOfMinutes = 3;
      this.service.processFleet(fc);
   }
 }

@@ -8,3 +8,18 @@
 .grid-container > div {
     padding: 5px;
 }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.left{
+   float:left;
+}
+
+.canvas {
+        border: dashed .2em #fff;
+        height: 90vh;
+      }

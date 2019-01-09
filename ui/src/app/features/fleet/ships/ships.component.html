@@ -32,22 +32,22 @@
               <!-- Actions Column -->
                <ng-container matColumnDef="actions">
               <mat-header-cell *matHeaderCellDef>
-      
+
               </mat-header-cell>
-      
+
               <mat-cell *matCellDef="let ship">
                 <button class="buttonpad" mat-icon-button color="primary" (click)="onSelect(ship)" [routerLink]="['/ship', ship.name]"><mat-icon>edit</mat-icon></button>
                 <button class="buttonpad" mat-icon-button color="warn"(click)="simulate(ship)"><mat-icon>waves</mat-icon></button>
               </mat-cell>
             </ng-container>
-      
+
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </table>
       </div>
       <div class="col-md-4">
           <!-- app-ship *ngIf="selectedship" [ship]="selectedship"></app-ship>-->
-          <app-simulcontrol *ngIf="getSimulControl()" [ship]="selectedship"></app-simulcontrol> 
+          <app-simulcontrol *ngIf="getSimulControl()" [ship]="selectedship"></app-simulcontrol>
       </div>
     </div>
   </div>
@@ -57,8 +57,8 @@
               <app-leaflet-map [ships]="ships"></app-leaflet-map>
           </div>
        </div>
-  </div>  
+  </div>
 
-  
+
 
 <!-- <app-ship [ship]="selectedship"></app-ship> -->
