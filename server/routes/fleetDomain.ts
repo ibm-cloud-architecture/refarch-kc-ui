@@ -48,3 +48,13 @@ export class ProblemReport {
     severity?: string;
     ts?: any;
 }
+
+export class ShipPosition {
+    shipId: string = '';
+    latitude?: string;
+    longitude?: string;
+    speed?: number;
+	ambiantTemperature?: number;
+    compass?: number;
+    ts?: any;
+}

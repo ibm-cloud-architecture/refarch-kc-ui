@@ -22,6 +22,23 @@ The `scripts` folder has two scripts to build the UI, and a docker image for the
  ```
 * Start the Fleet simulator.  For the fleet simulator [see instructions here](https://github.com/ibm-cloud-architecture/refarch-kc-ms/tree/master/fleet-ms#run) to run the simulator locally.
 
+* Build UI and server and a docker image with the command: `./scripts/build.sh`. The trace looks like:
+> .... chunk {main} main.js, main.js.map (main) 78.9 kB [initial] [rendered]
+chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 223 kB [initial] [rendered]
+chunk {runtime} runtime.js, runtime.js.map (runtime) 6.08 kB [entry] [rendered]
+chunk {styles} styles.js, styles.js.map (styles) 387 kB [initial] [rendered]
+chunk {vendor} vendor.js, vendor.js.map (vendor) 6.81 MB [initial] [rendered]
+...   
+> kcbff@0.0.1 copy-deps /Users/jeromeboyer/Code/GreenCompute/refarch-kc-ui/server
+> cpx "../ui/dist/ui/*.*" ./dist/server/static && cpx "./config/config.json" ./dist/server/config   
+Successfully built 0226a1748fd9  
+Successfully tagged ibmcase/kc-ui:latest
+
+* Start locally with `./script/run.sh` or with a docker `./script/runDocker.sh`. 
+
+* Use your web browser at http://localhost:3000/#/home 
+
+
 ## UI Development
 
 This is a traditional Angular 7 app with the app.module.ts using `shared` and `features` modules. `Shared` is for UI generic widgets, while `features` are for supporting the UI specific components linked to the business logic. 

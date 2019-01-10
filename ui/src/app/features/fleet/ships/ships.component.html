@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="row">
       <h4>Ships in {{fleetName}}</h4>
-      <div class="col-md-8">
+      <div class="col-md-10">
           <table mat-table [dataSource]="ships" class="mat-elevation-z8">
               <!-- Name Column -->
               <ng-container matColumnDef="name">
@@ -37,17 +37,15 @@
 
               <mat-cell *matCellDef="let ship">
                 <button class="buttonpad" mat-icon-button color="primary" (click)="onSelect(ship)" [routerLink]="['/ship', ship.name]"><mat-icon>edit</mat-icon></button>
-                <button class="buttonpad" mat-icon-button color="warn"(click)="simulate(ship)"><mat-icon>waves</mat-icon></button>
+                <!--
+   <button class="buttonpad" mat-icon-button color="warn"(click)="simulate(ship)"><mat-icon>waves</mat-icon></button>
+                -->
               </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </table>
-      </div>
-      <div class="col-md-4">
-          <!-- app-ship *ngIf="selectedship" [ship]="selectedship"></app-ship>-->
-          <app-simulcontrol *ngIf="getSimulControl()" [ship]="selectedship"></app-simulcontrol>
       </div>
     </div>
   </div>

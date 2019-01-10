@@ -8,7 +8,7 @@ describe('Config', () => {
     it('should return a broker lists', () => {
         let appCfg = new AppConfig();
         let brokers = appCfg.getKafkaBrokers();
-        expect(brokers).to.contain("kafka03");
+        expect(brokers).to.contain("9092");
     });
 
     it('should have a problem topic name', () => {
