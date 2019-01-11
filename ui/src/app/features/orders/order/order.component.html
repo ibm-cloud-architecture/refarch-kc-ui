@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-12 order-part">
+          <form class="order-form">
+            <mat-form-field class="order-full-width">
+              <label for="productID">Product ID</label>
+              <input matInput [(ngModel)]="order.productID" name="productID">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="quantity">Quantity</label>
+              <input matInput [(ngModel)]="order.quantity" name="quantity">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="expectedDeliveryDate">Expected Delivery Date</label>
+              <input matInput [(ngModel)]="order.expectedDeliveryDate" name="expectedDeliveryDate">
+            </mat-form-field>
+          </form>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 order-part">
+        <form class="order-form">
+            <label for="pStreet">Pickup Address</label>
+            <mat-form-field class="order-full-width">
+              <label for="pStreet">Street</label>
+              <input matInput [(ngModel)]="order.pickupAddress.street" name="pStreet">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="pCity">City</label>
+              <input matInput [(ngModel)]="order.pickupAddress.city" name="pCity">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="pCountry">Country</label>
+              <input matInput [(ngModel)]="order.pickupAddress.country" name="pCountry">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="pState">State</label>
+              <input matInput [(ngModel)]="order.pickupAddress.state" name="pState">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="pZipcode">Zip Code</label>
+              <input matInput [(ngModel)]="order.pickupAddress.zipcode" name="pZipcode">
+            </mat-form-field>
+          </form>
+    </div>
+    <div class="col-md-6 order-part">
+        <form class="order-form">
+            <label for="pStreet">Destination Address</label>
+            <mat-form-field class="order-full-width">
+              <label for="dStreet">Street</label>
+              <input matInput [(ngModel)]="order.destinationAddress.street" name="dStreet">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="dCity">City</label>
+              <input matInput [(ngModel)]="order.destinationAddress.city" name="dCity">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="dCountry">Country</label>
+              <input matInput [(ngModel)]="order.destinationAddress.country" name="dCountry">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="dState">State</label>
+              <input matInput [(ngModel)]="order.destinationAddress.state" name="dState">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
+              <label for="dZipcode">Zip Code</label>
+              <input matInput [(ngModel)]="order.destinationAddress.zipcode" name="dZipcode">
+            </mat-form-field>
+          </form>
+    </div>
+  </div>
+  <div class="row">
+      <div class="button-row">
+          <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+          <button mat-raised-button (click)="cancel()">Cancel</button>
+        </div>
+  </div>
+</div>

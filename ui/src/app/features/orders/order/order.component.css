@@ -1,0 +1,23 @@
+.wrapper {
+    padding: 2rem 3%;
+  }
+
+.order-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.order-part {
+  border: 2px solid #002699;
+  padding: 10px;
+}
+
+.order-full-width {
+  width: 100%;
+}
+
+.button-row button,
+.button-row a {
+  margin-right: 8px;
+}

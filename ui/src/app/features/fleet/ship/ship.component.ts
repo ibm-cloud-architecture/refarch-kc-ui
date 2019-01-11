@@ -27,6 +27,10 @@ export class ShipComponent implements OnInit {
   ngOnInit() {
   }
 
+  doneSimul(){
+    
+  }
+
   createMatrix(row, col){
     var rows = [];
     var containerNo = this.ship.numberOfContainers;

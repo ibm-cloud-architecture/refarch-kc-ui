@@ -15,8 +15,11 @@
  */
 const express = require('express');
 import FleetClient from './FleetClient';
-import * as domain from './fleetDomain';
+import * as fleetDomain from './fleetDomain';
+import OrderClient from './OrderClient';
+import * as orderDomain from './orderDomain';
 
+const orderClient = new OrderClient();
 const fleetClient = new FleetClient();
 
 /** Export the APIs for the front end */
@@ -29,7 +32,7 @@ module.exports = function(app:any) {
     app.get('/api/fleets', (req:any,res:any) => {
         console.log("In api GET fleets");
         let fleets = [{id: "f1", name: "KC-NorthAtlantic"}, {id: "f2", name: "KC-NorthPacific"},{id: "f2", name: "KC-SouthPacific"}];
-        fleetClient.getFleetNames().then((fleets: domain.Fleet[])=> {
+        fleetClient.getFleetNames().then((fleets: fleetDomain.Fleet[])=> {
             console.log("Got this " + JSON.stringify(fleets));
             res.status(200).send(fleets);
         });
@@ -38,7 +41,7 @@ module.exports = function(app:any) {
 
     app.get('/api/fleets/:fleetname', (req,res) => {
         console.log("In api GET fleet ships for " + req.params.fleetname);       
-        fleetClient.getFleetByName(req.params.fleetname).then( (aFleet: domain.Fleet) => {
+        fleetClient.getFleetByName(req.params.fleetname).then( (aFleet: fleetDomain.Fleet) => {
             console.log("Got this " + JSON.stringify(aFleet));
             res.status(200).send(aFleet);
         });
@@ -49,7 +52,7 @@ module.exports = function(app:any) {
     app.post('/api/fleets/simulate', (req,res) => {
         console.log("In api POST fleets simulate " + JSON.stringify(req.body));
         if (req.body !== undefined) {
-            fleetClient.fleetSimulation(req.body).then((data: domain.SimulResponse) => {
+            fleetClient.fleetSimulation(req.body).then((data: fleetDomain.SimulResponse) => {
                 res.status(200).send(data);
             });
         }
@@ -59,10 +62,28 @@ module.exports = function(app:any) {
     app.post('/api/ships/simulate', (req,res) => {
         console.log("In api POST ship simulate " + JSON.stringify(req.body));
         if (req.body !== undefined) {
-            fleetClient.shipSimulation(req.body).then((data: domain.Ship) => {
+            fleetClient.shipSimulation(req.body).then((data: fleetDomain.Ship) => {
                 console.log("In api POST ship simulate resp:" + JSON.stringify(data));
                 res.status(200).send(data);
             });
         } 
+    });
+
+    // Orders
+    app.get('/api/orders/:manuf',(req,res) => {
+        console.log("In api GET orders for " + req.params.manuf);       
+        orderClient.getOrders(req.params.manuf).then( (orders: orderDomain.Order[]) => {
+            console.log("Got this " + JSON.stringify(orders));
+            res.status(200).send(orders);
+        });
+    });
+
+    app.post('/api/orders',(req,res) => {
+        console.log("In api POST new orders " + JSON.stringify(req.body));
+        if (req.body !== undefined) {
+            orderClient.saveOrder(req.body).then((data: orderDomain.Order) => {
+                res.status(200).send(data);
+            });
+        }
     });
 } // end exports

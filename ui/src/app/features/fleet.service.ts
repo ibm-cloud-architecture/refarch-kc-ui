@@ -51,10 +51,11 @@ export class FleetService {
 
   public processShip(sc: ShipControl) {
     //let bodyString = JSON.stringify(  sc);
-    let httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-    return this.http.post<ShipControl>(this.shipsUrl + "/simulate",sc,httpOptions);
+
+    return this.http.post<ShipControl>(this.shipsUrl + "/simulate",sc).subscribe( 
+      (data) => {console.log(data)},
+      (error) => {console.log(error)}
+    );
   }
 
  

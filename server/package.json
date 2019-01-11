@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "node dist/server/server.js",
-    "copy-deps": "cpx \"../ui/dist/ui/*.*\" ./dist/server/static && cpx \"./config/config.json\" ./dist/server/config",
+    "copy-deps": "cpx \"../ui/dist/ui/**/*.*\" ./dist/server/static && cpx \"./config/config.json\" ./dist/server/config",
     "preserve": "npm run build",
     "s": "npm run serve",
     "serve": "concurrently \"npm run build.w\" \"nodemon --watch ./dist/server ./dist/server/server.js\"",
