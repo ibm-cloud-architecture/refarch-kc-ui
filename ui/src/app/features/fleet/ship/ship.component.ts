@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Ship } from './ship';
 import { ViewChild, ElementRef } from '@angular/core';
+import { FleetService } from '../../fleet.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ship',
@@ -9,14 +11,16 @@ import { ViewChild, ElementRef } from '@angular/core';
 })
 export class ShipComponent implements OnInit {
   // Added for testing remove hardcoded value
-  ship: Ship = {name:'Ship Maha', longitude:'1.77', latitude:'1.08', status:'Active', port:'San Jose', type:'Cargo',numberOfContainers:8, maxRow:7 ,maxColumn:5 };
+  ship: Ship;
 
-  matrix: [][]= this.createMatrix(this.ship.maxRow, this.ship.maxColumn);
+  matrix: [][] ;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
   public context: CanvasRenderingContext2D;
 
-  constructor() {
+  constructor(private router: Router, private service: FleetService) {
+    this.ship = service.getSelectedShip();
+    this.matrix = this.createMatrix(this.ship.maxRow, this.ship.maxColumn);
   }
 
   ngAfterViewInit(): void {
@@ -28,7 +32,11 @@ export class ShipComponent implements OnInit {
   }
 
   doneSimul(){
-    
+    // todo decide what to do when simulation result is cmpleted
+  }
+
+  back() {
+    this.router.navigate(['fleets']);
   }
 
   createMatrix(row, col){

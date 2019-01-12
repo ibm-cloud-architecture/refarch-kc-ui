@@ -37,7 +37,10 @@ export class SimulcontrolComponent implements OnInit {
     sc.command = this.selectedCommand;
     sc.numberOfMinutes = this.numberOfMinutes;
     sc.shipName = this.ship.name;
-    this.service.processShip(sc);
-    this.done.emit(true);
+    this.service.processShip(sc).subscribe( data => {
+      console.log(data);
+      this.done.emit(true);
+    });
+    
   }
 }

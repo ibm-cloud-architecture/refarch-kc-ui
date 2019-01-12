@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {  MatSelectModule,
           MatTableModule,
           MatIconModule,
+          MatToolbarModule,
           MatSortModule,
           MatSliderModule
          } from '@angular/material';
@@ -29,6 +30,7 @@ import { OrdersModule } from './orders/orders.module';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatToolbarModule,
     MatTableModule,
     MatIconModule,
     MatSortModule,

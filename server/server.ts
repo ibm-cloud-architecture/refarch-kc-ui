@@ -24,11 +24,18 @@ import * as http from 'http';
 
 import * as path from 'path';
 import AppConfig from './config/AppConfig'; 
+const bodyParser = require('body-parser');
+
+
 
 var cors = require('cors');
 
 const app = express();
 app.use(cors())
+// Parsers for POST JSON PAYLOAD
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 const config = new AppConfig();
 //initialize a simple http server
 const server = http.createServer(app);

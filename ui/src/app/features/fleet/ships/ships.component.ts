@@ -19,7 +19,6 @@ export class ShipsComponent implements OnInit {
   // Added for testing remove hardcoded value
   ships: Ship[] = [{name:'Ship Maha'}];
   selectedship: Ship;
-  simulControl: boolean = false;
   displayedColumns: string[] = ['name', 'type','status', 'port','latitude', 'longitude','actions'];
 
   constructor(private router: Router, private service: FleetService) {
@@ -41,7 +40,7 @@ export class ShipsComponent implements OnInit {
   onSelect(ship: Ship): void {
      console.log("open " + JSON.stringify(ship));
      this.selectedship = ship;
-     this.simulControl = false;
+     this.service.setSelectedShip(ship);
   }
 
   ngOnInit() {
@@ -55,10 +54,7 @@ export class ShipsComponent implements OnInit {
   simulate(ship:Ship) {
     console.log("simulate " + JSON.stringify(ship));
     this.selectedship = ship;
-    this.simulControl = true;
   }
 
-  getSimulControl():boolean {
-    return (this.selectedship !== undefined && this.simulControl);
-  }
+
 }

@@ -24,7 +24,7 @@ export class OrdersService {
     let httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<Order>(this.ordersUrl + "/simulate",order,httpOptions);
+    return this.http.post<Order>(this.ordersUrl ,order,httpOptions);
 
   }
 }

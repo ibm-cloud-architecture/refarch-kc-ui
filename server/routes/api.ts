@@ -55,6 +55,8 @@ module.exports = function(app:any) {
             fleetClient.fleetSimulation(req.body).then((data: fleetDomain.SimulResponse) => {
                 res.status(200).send(data);
             });
+        } else {
+            res.status(400).send({error:'no post body'});
         }
     });
 
@@ -66,7 +68,9 @@ module.exports = function(app:any) {
                 console.log("In api POST ship simulate resp:" + JSON.stringify(data));
                 res.status(200).send(data);
             });
-        } 
+        } else {
+            res.status(400).send({error:'no post body'});
+        }
     });
 
     // Orders
@@ -84,6 +88,8 @@ module.exports = function(app:any) {
             orderClient.saveOrder(req.body).then((data: orderDomain.Order) => {
                 res.status(200).send(data);
             });
+        }  else {
+            res.status(400).send({error:'no post body'});
         }
     });
 } // end exports
