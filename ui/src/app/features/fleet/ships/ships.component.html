@@ -37,7 +37,6 @@
 
               <mat-cell *matCellDef="let ship">
                 <button class="buttonpad" mat-icon-button color="primary" (click)="onSelect(ship)" [routerLink]="['/ship', ship.name]"><mat-icon>edit</mat-icon></button>
-                <button class="buttonpad" mat-icon-button color="warn"(click)="simulate(ship)"><mat-icon>waves</mat-icon></button>
               </mat-cell>
             </ng-container>
 

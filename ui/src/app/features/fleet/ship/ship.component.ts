@@ -9,7 +9,23 @@ import { ViewChild, ElementRef } from '@angular/core';
 })
 export class ShipComponent implements OnInit {
   // Added for testing remove hardcoded value
-  ship: Ship = {name:'Ship Maha', longitude:'1.77', latitude:'1.08', status:'Active', port:'San Jose', type:'Cargo',numberOfContainers:8, maxRow:7 ,maxColumn:5 };
+  ship: Ship = { name:'Ship Maha',
+                 longitude:'1.77',
+                 latitude:'1.08',
+                 status:'Active',
+                 port:'San Jose',
+                 type:'Cargo',
+                 numberOfContainers:5,
+                 maxRow:7,
+                 maxColumn:5,
+                 containers: [
+                   {id:'1',status:'safe'},
+                   {id:'2',status:'damage'},
+                   {id:'3',status:'safe'},
+                   {id:'4',status:'damage'},
+                   {id:'5',status:'safe'}
+                 ]
+               };
 
   matrix: [][]= this.createMatrix(this.ship.maxRow, this.ship.maxColumn);
 
@@ -34,16 +50,29 @@ export class ShipComponent implements OnInit {
         rows[i] = [];
         for (var j = col-1; j >= 0; --j) {
             if(containerNo<=0){
-              rows[i][j] = 0;
+              rows[i][j] = 'empty';
             }
             else{
-              rows[i][j] = 1;
+              rows[i][j] = this.ship.containers[containerNo-1].id;
             }
             containerNo=containerNo-1;
         }
     }
     return rows;
-}
+  }
+
+  modifyMatrix(matrix){
+    for(var i=this.ship.maxRow-1; i >= 0; --i){
+            for(var j=this.ship.maxColumn-1; j >= 0; --j){
+            if(matrix[i][j]!='empty'){
+              if(this.ship.containers[j].status==='damage'){
+                matrix[i][j] = 'damage';
+              }
+              }
+            }
+        }
+        this.generateMatrix(matrix);
+  }
 
   generateMatrix(matrix){
     var cellWt = 200 / this.ship.maxColumn;
@@ -58,9 +87,13 @@ export class ShipComponent implements OnInit {
 }
 
 matrixColor(value) {
-    if(value == 0)
+    if(value == 'empty')
     {
         return 'white';
+    }
+
+    if(value == 'damage'){
+      return 'red';
     }
 
     return 'grey';
@@ -70,6 +103,10 @@ generateBorder(cellWt, cellHt, cellwidth, cellheight, thick = 1)
 {
   this.context.fillStyle='#000';
   this.context.fillRect(cellWt - (thick), cellHt - (thick), cellwidth + (thick * 2), cellheight + (thick * 2));
+}
+
+simulate() {
+  this.modifyMatrix(this.matrix);
 }
 
 }

@@ -1,3 +1,5 @@
+import { Container } from './container';
+
 export class Ship {
     name: string;
     longitude?: string = '';
@@ -8,4 +10,5 @@ export class Ship {
     port?: string;
     type?: string;
     numberOfContainers?: number = 0;
+    containers?: Container[];
 }
