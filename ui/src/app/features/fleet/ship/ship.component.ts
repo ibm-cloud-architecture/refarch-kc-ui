@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./ship.component.css']
 })
 export class ShipComponent implements OnInit {
-  // Added for testing remove hardcoded value
+
   ship: Ship;
 
   matrix: [][] ;
@@ -19,8 +19,10 @@ export class ShipComponent implements OnInit {
   public context: CanvasRenderingContext2D;
 
   constructor(private router: Router, private service: FleetService) {
-    this.ship = service.getSelectedShip();
-    this.matrix = this.createMatrix(this.ship.maxRow, this.ship.maxColumn);
+    this.ship = this.service.getSelectedShip();
+    const rows = this.ship.maxRow+1;
+    const cols = this.ship.maxColumn+1;
+    this.matrix = this.createMatrix(rows,cols);
   }
 
   ngAfterViewInit(): void {
@@ -28,38 +30,69 @@ export class ShipComponent implements OnInit {
     this.generateMatrix(this.matrix);
   }
 
-  ngOnInit() {
+  ngOnInit(){
+
   }
 
   doneSimul(){
-    // todo decide what to do when simulation result is cmpleted
+    this.modifyMatrix(this.matrix);
   }
 
   back() {
     this.router.navigate(['fleets']);
   }
 
-  createMatrix(row, col){
+  createMatrix(row, col) {
+    console.log("Entered matrix creation");
     var rows = [];
     var containerNo = this.ship.numberOfContainers;
+    console.log("container no"+containerNo);
     for (var i = row-1; i >= 0; --i) {
+        console.log("i value "+i);
         rows[i] = [];
         for (var j = col-1; j >= 0; --j) {
+            console.log("j value "+j);
             if(containerNo<=0){
-              rows[i][j] = 0;
+              rows[i][j] = 'empty';
             }
             else{
-              rows[i][j] = 1;
+              rows[i][j] = this.ship.containers[i][j].id;
             }
             containerNo=containerNo-1;
         }
     }
     return rows;
-}
+  }
 
-  generateMatrix(matrix){
-    var cellWt = 200 / this.ship.maxColumn;
-    var cellHt = 200 / this.ship.maxRow;
+  modifyMatrix(matrix) {
+    console.log("simulation finished");
+    for(var i=this.ship.maxRow; i >= 0; --i){
+      console.log("Entered rows"+i);
+            for(var j=this.ship.maxColumn; j >= 0; --j){
+              console.log("Entered cols"+j);
+            if(matrix[i][j]!='empty'){
+              console.log("Status"+this.ship.containers[i][j].status);
+              if(this.ship.containers[i][j].status==='DOWN'){
+                matrix[i][j] = 'DOWN';
+              }
+              else if(this.ship.containers[i][j].status==='FIRE'){
+                matrix[i][j] = 'FIRE';
+              }
+              else if(this.ship.containers[i][j].status==='HEAT'){
+                matrix[i][j] = 'HEAT';
+              }
+              }
+            else{
+              console.log("didnot enter the empty spot"+matrix[i][j]);
+            }
+            }
+        }
+        this.generateMatrix(matrix);
+  }
+
+  generateMatrix(matrix) {
+    var cellWt = 200 / (this.ship.maxColumn+1);
+    var cellHt = 200 / (this.ship.maxRow+1);
     matrix.forEach((row, y) =>{
         row.forEach((value, x) => {
             this.generateBorder(x * cellWt, y * cellHt, cellWt, cellHt);
@@ -67,21 +100,31 @@ export class ShipComponent implements OnInit {
             this.context.fillRect(x * cellWt, y * cellHt, cellWt, cellHt);
         });
     });
-}
+  }
 
-matrixColor(value) {
-    if(value == 0)
-    {
-        return 'white';
+  matrixColor(value) {
+    if(value == 'empty'){
+      return 'white';
     }
-
+    if(value == 'FIRE'){
+      return 'darkorange';
+    }
+    if(value == 'HEAT'){
+      return 'crimson';
+    }
+    if(value == 'DOWN'){
+      return 'red';
+    }
     return 'grey';
-}
+  }
 
-generateBorder(cellWt, cellHt, cellwidth, cellheight, thick = 1)
-{
-  this.context.fillStyle='#000';
-  this.context.fillRect(cellWt - (thick), cellHt - (thick), cellwidth + (thick * 2), cellheight + (thick * 2));
-}
+  generateBorder(cellWt, cellHt, cellwidth, cellheight, thick = 1) {
+    this.context.fillStyle='#000';
+    this.context.fillRect(cellWt - (thick), cellHt - (thick), cellwidth + (thick * 2), cellheight + (thick * 2));
+  }
+
+  simulate() {
+    this.modifyMatrix(this.matrix);
+  }
 
 }

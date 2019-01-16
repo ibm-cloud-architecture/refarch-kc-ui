@@ -6,21 +6,19 @@ import { Fleet } from './fleet/fleet';
 import { Ship } from './fleet/ship/ship';
 import { BehaviorSubject } from 'rxjs';
 import { ShipControl } from './simulcontrol/shipControl';
-import { FleetControl } from './simulcontrol/fleetControl'; 
+import { FleetControl } from './simulcontrol/fleetControl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FleetService {
-  // TODO remove those initializations {id: "f1", name: "KC-FleetNorth"}, {id: "f2", name: "KC-FleetSouth"}
+
   fleets: Fleet[] = [];
   ships: Ship[] = [];
   selectedShip: Ship;
   fleetsUrl: string = "http://localhost:3000/api/fleets";
   shipsUrl: string = "http://localhost:3000/api/ships";
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-  //fleetsUrl: string = "/api/fleets";
- // shipsUrl: string = "/api/ships";
 
   constructor(private http: HttpClient) { }
 
