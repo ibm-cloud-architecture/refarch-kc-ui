@@ -1,24 +1,29 @@
 <!-- Detail view of a ship with the containers layout in a canvas -->
-
-<div>
-  <br/><br/>
-  <h3 class="right"><b>Simulation</b><br/>
-    <button class="buttonpad" mat-icon-button color="warn"(click)="simulate()" class="right"><mat-icon>waves</mat-icon></button>
-  </h3>
-  <table>
-    <td>
-      <tr><h3>Ship Details</h3></tr>
-      <tr><td><b>Name:</b></td> <td>{{ship.name}}</td></tr>
-      <tr><td><b>Longitude:</b></td> <td>{{ship.longitude}}</td></tr>
-      <tr><td><b>Latitude:</b></td> <td>{{ship.latitude}}</td></tr>
-      <tr><td><b>Max Rows Allowed:</b></td> <td>{{ship.maxRow}}</td></tr>
-      <tr><td><b>Max Columns Allowed:</b></td> <td>{{ship.maxColumn}}</td></tr>
-      <tr><td><b>Status:</b></td> <td>{{ship.status}}</td></tr>
-      <tr><td><b>Port:</b></td> <td>{{ship.port}}</td></tr>
-      <tr><td><b>Type:</b></td> <td>{{ship.type}}</td></tr>
-    <tr><td><b>Containers Loaded:</b></td> <td>{{ship.numberOfContainers}}</td></tr>
-  </td>
-</table>
-<canvas #myCanvas width=200 height=200 class="center" style="border:1px solid #000000;"></canvas>
-<img src="assets/images/ship.png" class="center">
-</div>
+<mat-toolbar>
+    <a (click)="back()"><span><i class="header-icon material-icons">arrow_back</i></span></a>
+    <span class="header-spacer"></span>
+</mat-toolbar>
+<div class="container-fluid">
+  <div class="col-md-4">
+    <table>
+        <td>
+          <tr><h3>Ship Details</h3></tr>
+          <tr><td><b>Name:</b></td> <td>{{ship.name}}</td></tr>
+          <tr><td><b>Longitude:</b></td> <td>{{ship.longitude}}</td></tr>
+          <tr><td><b>Latitude:</b></td> <td>{{ship.latitude}}</td></tr>
+          <tr><td><b>Max Rows Allowed:</b></td> <td>{{ship.maxRow}}</td></tr>
+          <tr><td><b>Max Columns Allowed:</b></td> <td>{{ship.maxColumn}}</td></tr>
+          <tr><td><b>Status:</b></td> <td>{{ship.status}}</td></tr>
+          <tr><td><b>Port:</b></td> <td>{{ship.port}}</td></tr>
+          <tr><td><b>Type:</b></td> <td>{{ship.type}}</td></tr>
+          <tr><td><b>Containers Loaded:</b></td> <td>{{ship.numberOfContainers}}</td></tr>
+        </td>
+      </table>
+  </div>
+  <div class="col-md-4">
+      <app-simulcontrol [ship]="ship" (done)="doneSimul()"></app-simulcontrol>
+  </div>
+  <div class="col-md-4">
+      <canvas #myCanvas width=200 height=200 class="center" style="border:1px solid #000000;"></canvas>
+      <img src="assets/images/ship.png" class="center">
+  </div>

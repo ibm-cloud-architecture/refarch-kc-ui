@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="row">
       <h4>Ships in {{fleetName}}</h4>
-      <div class="col-md-8">
+      <div class="col-md-10">
           <table mat-table [dataSource]="ships" class="mat-elevation-z8">
               <!-- Name Column -->
               <ng-container matColumnDef="name">
@@ -43,10 +43,6 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </table>
-      </div>
-      <div class="col-md-4">
-          <!-- app-ship *ngIf="selectedship" [ship]="selectedship"></app-ship>-->
-          <app-simulcontrol *ngIf="getSimulControl()" [ship]="selectedship"></app-simulcontrol>
       </div>
     </div>
   </div>

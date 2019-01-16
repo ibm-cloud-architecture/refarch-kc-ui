@@ -1,26 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, of } from 'rxjs';
-import { map } from  'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject, of, throwError } from 'rxjs';
+import { map, catchError } from  'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Fleet } from './fleet/fleet';
 import { Ship } from './fleet/ship/ship';
 import { BehaviorSubject } from 'rxjs';
 import { ShipControl } from './simulcontrol/shipControl';
-import { FleetControl } from './simulcontrol/fleetControl'; 
+import { FleetControl } from './simulcontrol/fleetControl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FleetService {
-  // TODO remove those initializations {id: "f1", name: "KC-FleetNorth"}, {id: "f2", name: "KC-FleetSouth"}
+
   fleets: Fleet[] = [];
   ships: Ship[] = [];
+  selectedShip: Ship;
   fleetsUrl: string = "http://localhost:3000/api/fleets";
   shipsUrl: string = "http://localhost:3000/api/ships";
-  //fleetsUrl: string = "/api/fleets";
- // shipsUrl: string = "/api/ships";
+  headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
+
+  setSelectedShip(ship: Ship) {
+    this.selectedShip = ship;
+  }
+
+  getSelectedShip(){
+    return this.selectedShip;
+  }
 
   public getFleetList(): Observable<Fleet[]> {
     if (this.fleets.length == 0)  {
@@ -43,19 +51,28 @@ export class FleetService {
 
 
   public processFleet(fc: FleetControl) {
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<FleetControl>(this.fleetsUrl + "/simulate",fc,{ headers: headers });
+    return this.http.post<FleetControl>(this.fleetsUrl + "/simulate",fc,{ headers: this.headers });
   }
 
 
 
-  public processShip(sc: ShipControl) {
-    //let bodyString = JSON.stringify(  sc);
-    let httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-    return this.http.post<ShipControl>(this.shipsUrl + "/simulate",sc,httpOptions);
+  public processShip(sc: ShipControl): Observable<ShipControl> {
+    return this.http.post<ShipControl>(this.shipsUrl + "/simulate",sc ,{ headers: this.headers });
   }
 
- 
+  private handleError(where:string, error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  };
 }

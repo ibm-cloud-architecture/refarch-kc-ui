@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "kc-ui.fullname" . }}
+  labels:
+    app: {{ template "kc-ui.name" . }}
+    chart: {{ template "kc-ui.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "kc-ui.name" . }}
+    release: {{ .Release.Name }}

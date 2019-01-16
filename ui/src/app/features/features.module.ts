@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {  MatSelectModule,
           MatTableModule,
           MatIconModule,
+          MatToolbarModule,
           MatSortModule,
           MatSliderModule
          } from '@angular/material';
@@ -13,11 +15,12 @@ import { SharedModule } from '../shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { FleetComponent } from './fleet/fleet.component';
-import { HttpClientModule } from '@angular/common/http';
+
 import { ShipsComponent } from './fleet/ships/ships.component';
 import { ShipComponent } from './fleet/ship/ship.component';
 import { LeafletMapComponent } from './fleet/leaflet-map/leaflet-map.component';
 import { SimulcontrolComponent } from './simulcontrol/simulcontrol.component';
+import { OrdersModule } from './orders/orders.module';
 
 @NgModule({
   imports: [
@@ -27,6 +30,7 @@ import { SimulcontrolComponent } from './simulcontrol/simulcontrol.component';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatToolbarModule,
     MatTableModule,
     MatIconModule,
     MatSortModule,
@@ -35,8 +39,9 @@ import { SimulcontrolComponent } from './simulcontrol/simulcontrol.component';
       useHash: true,
       enableTracing: false
       }),
+      OrdersModule
   ],
-  declarations: [HomeComponent, LoginComponent, FleetComponent, ShipsComponent, ShipComponent, SimulcontrolComponent, LeafletMapComponent, SimulcontrolComponent],
+  declarations: [HomeComponent, LoginComponent, FleetComponent, ShipsComponent, ShipComponent, SimulcontrolComponent, LeafletMapComponent],
   exports: [ RouterModule, MatSelectModule ]
 })
 export class FeaturesModule { }

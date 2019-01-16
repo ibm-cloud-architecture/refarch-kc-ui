@@ -3,17 +3,19 @@
 <div class="row">
   <p>{{message}}</p>
 </div>
-<mat-form-field>
-    <label class="wrapper" for="selectedCommand">Select a simulation</label>
-    <mat-select  [(value)]="selectedCommand" mame="selectedCommand">
-      <mat-option *ngFor="let command of commands" [value]="command.value">
-        {{command.name}}
-      </mat-option>
-    </mat-select>
-    <label class="wrapper" for="numberOfMinutes">Number of minutes to run the simulation</label>
-    <mat-slider min="0" max="5" step="0.5" [(ngModel)]="numberOfMinutes" name="numberOfMinutes"></mat-slider>
-    <label>{{numberOfMinutes}}</label><br/>
- 
- 
-</mat-form-field>
-<button  class="buttonpad" mat-flat-button color="primary" (click)="startSimulation()"><mat-icon>waves</mat-icon>Simulate</button>
+<div class="row">
+    <mat-form-field>
+        <label class="wrapper" for="selectedCommand">Select a simulation</label>
+        <mat-select  [(value)]="selectedCommand" mame="selectedCommand" style="width=200px;">
+          <mat-option *ngFor="let command of commands" [value]="command.value">
+            {{command.name}}
+          </mat-option>
+        </mat-select>
+        <label class="wrapper" for="numberOfMinutes">Number of minutes to run the simulation</label>
+        <mat-slider min="0" max="5" step="0.5" [(ngModel)]="numberOfMinutes" name="numberOfMinutes"></mat-slider>
+        <label>{{numberOfMinutes}}</label><br/>
+    </mat-form-field>
+</div>
+<div class="row">
+    <button  class="buttonpad" mat-flat-button color="primary" (click)="startSimulation()"><mat-icon>waves</mat-icon>Simulate</button>
+</div>

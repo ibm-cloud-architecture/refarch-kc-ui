@@ -1,0 +1,57 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <h4>Manufacturer</h4>
+    <p>This is a demonstration, so here just pick up a name of a manufacturer. It is used to get the orders for this manufacturer.</p>
+    <mat-form-field>
+      <mat-select placeholder="Select one manufacturer" (selectionChange)="loadOrders($event)" [(value)]="selectedManufacturer" name="manufacturer">
+        <mat-option *ngFor="let m of manufacturers" [value]="m">
+          {{m}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="newOrder()">New Order</button>
+  </div>
+
+  <div class="row" >
+      <div class="col-md-8" *ngIf="orders">
+        <h3>Orders</h3>
+        <table mat-table [dataSource]="orders" matSort class="mat-elevation-z8">
+          <!-- Name Column -->
+          <ng-container matColumnDef="OrderID">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Order ID </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.orderID}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="From">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>From </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.pickupAddress.city}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="To">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>From </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.destinationAddress.city}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Status </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+          </ng-container>
+          
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>
+      
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button *ngIf="element.completion !== 1" mat-icon-button color="primary" (click)="open(element)"><mat-icon>play_arrow</mat-icon></button>
+            </mat-cell>
+          </ng-container>
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </table>
+      </div>
+      <div class="col-md-4" *ngIf="selectedOrder">
+        <app-order [order]="selectedOrder" (done)="handleOrderEdit($event)"></app-order>
+      </div>
+    </div>
+</div>
+

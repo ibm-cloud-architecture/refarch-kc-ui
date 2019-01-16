@@ -17,14 +17,13 @@ export default class ProblemTopicConsumer {
         autoConnect: true
     });
 
-
     // start Kafka consumer
     startConsumer(socket: any) {
         const consumer = new kafka.Consumer(this.client,
         // array of FetchRequest
         [{ topic: this.config.getProblemTopicName() }],
         // options
-        { groupId: this.config.getKafkaGroupId(), 
+        { groupId: this.config.getKafkaGroupId(),
             autoCommit: true,
             autoCommitIntervalMs: 5000,
             fetchMaxWaitMs: 10,
