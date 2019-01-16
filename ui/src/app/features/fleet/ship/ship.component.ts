@@ -35,7 +35,7 @@ export class ShipComponent implements OnInit {
   }
 
   doneSimul(){
-    // todo decide what to do when simulation result is cmpleted
+    this.modifyMatrix(this.matrix);
   }
 
   back() {
@@ -65,13 +65,26 @@ export class ShipComponent implements OnInit {
   }
 
   modifyMatrix(matrix) {
-    for(var i=this.ship.maxRow-1; i >= 0; --i){
-            for(var j=this.ship.maxColumn-1; j >= 0; --j){
+    console.log("simulation finished");
+    for(var i=this.ship.maxRow; i >= 0; --i){
+      console.log("Entered rows"+i);
+            for(var j=this.ship.maxColumn; j >= 0; --j){
+              console.log("Entered cols"+j);
             if(matrix[i][j]!='empty'){
-              if(this.ship.containers[j].status==='damage'){
-                matrix[i][j] = 'damage';
+              console.log("Status"+this.ship.containers[i][j].status);
+              if(this.ship.containers[i][j].status==='DOWN'){
+                matrix[i][j] = 'DOWN';
+              }
+              else if(this.ship.containers[i][j].status==='FIRE'){
+                matrix[i][j] = 'FIRE';
+              }
+              else if(this.ship.containers[i][j].status==='HEAT'){
+                matrix[i][j] = 'HEAT';
               }
               }
+            else{
+              console.log("didnot enter the empty spot"+matrix[i][j]);
+            }
             }
         }
         this.generateMatrix(matrix);
@@ -93,7 +106,13 @@ export class ShipComponent implements OnInit {
     if(value == 'empty'){
       return 'white';
     }
-    if(value == 'damage'){
+    if(value == 'FIRE'){
+      return 'darkorange';
+    }
+    if(value == 'HEAT'){
+      return 'crimson';
+    }
+    if(value == 'DOWN'){
       return 'red';
     }
     return 'grey';
