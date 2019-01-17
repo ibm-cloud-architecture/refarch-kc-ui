@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Fleet } from './fleet';
-import { FleetService } from '../fleet.service';
+import { FleetService } from './fleet.service';
 import { FleetControl } from '../simulcontrol/fleetControl';
 
 @Component({

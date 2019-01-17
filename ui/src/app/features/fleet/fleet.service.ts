@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, of, throwError } from 'rxjs';
 import { map, catchError } from  'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Fleet } from './fleet/fleet';
-import { Ship } from './fleet/ship/ship';
+import { Fleet } from './fleet';
+import { Ship } from './ship/ship';
 import { BehaviorSubject } from 'rxjs';
-import { ShipControl } from './simulcontrol/shipControl';
-import { FleetControl } from './simulcontrol/fleetControl'; 
+import { ShipControl } from '../simulcontrol/shipControl';
+import { FleetControl } from '../simulcontrol/fleetControl'; 
 
 @Injectable({
   providedIn: 'root'

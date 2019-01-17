@@ -8,6 +8,7 @@ export class Address {
 
 export class Order {
     orderID: string;
+    customerID:string;
     pickupAddress: Address;
     destinationAddress: Address;
     productID: string;

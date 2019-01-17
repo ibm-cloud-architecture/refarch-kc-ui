@@ -5,8 +5,8 @@
     <p>This is a demonstration, so here just pick up a name of a manufacturer. It is used to get the orders for this manufacturer.</p>
     <mat-form-field>
       <mat-select placeholder="Select one manufacturer" (selectionChange)="loadOrders($event)" [(value)]="selectedManufacturer" name="manufacturer">
-        <mat-option *ngFor="let m of manufacturers" [value]="m">
-          {{m}}
+        <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer">
+          {{manufacturer}}
         </mat-option>
       </mat-select>
     </mat-form-field>

@@ -9,6 +9,7 @@ import * as request from 'request-promise-native';
         pickupAddress: {street: "200 1st street", city: "Shanghai", country: "China", state: "", zipcode: "09430"},
         destinationAddress: {street: "500 main street", city: "San Leonardo", country: "USA", state: "CA", zipcode: "95030"},
         productID: "FreshProduct01", 
+        customerID: "GoodManuf",
         quantity: "100",
         expectedDeliveryDate: "03/2019",
         status:"Pending"}];

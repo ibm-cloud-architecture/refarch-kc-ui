@@ -33,4 +33,3 @@ We want to have the user interface polling every x seconds the state of ship so 
 
 To illustrate a TDD approach on consuming ship event in the BFF we define a new test case: `test/GetShipEvent.spec.ts`.
 
-

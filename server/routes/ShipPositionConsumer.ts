@@ -67,6 +67,5 @@ export default class ShipPositionConsumer {
         this.shipConsumer.close(true, () => {
             console.log("Stop ship consumer");
         })
-    }
-    
+    }   
 }

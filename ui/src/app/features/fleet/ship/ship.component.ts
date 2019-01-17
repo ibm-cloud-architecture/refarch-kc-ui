@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Ship } from './ship';
 import { ViewChild, ElementRef } from '@angular/core';
-import { FleetService } from '../../fleet.service';
+import { FleetService } from '../fleet.service';
 import { Router } from '@angular/router';
 
 @Component({

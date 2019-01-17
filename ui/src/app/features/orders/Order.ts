@@ -8,4 +8,5 @@ export class Order {
     quantity: string;
     expectedDeliveryDate: string;
     status: string;
+    customerID:string;
 }
