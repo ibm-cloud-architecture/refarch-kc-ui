@@ -9,8 +9,8 @@ import { FleetControl } from '../simulcontrol/fleetControl';
   styleUrls: ['./fleet.component.css']
 })
 export class FleetComponent implements OnInit {
-  // Added for testing remove hardcoded value
-  fleets: Fleet[] = [{id:'f1', name:'KC-NorthAtlantic', color:'red', ships:[{name:'Ship Maha'}]}];
+  
+  fleets: Fleet[];
 
   message: string;
   selectedFleet: string;

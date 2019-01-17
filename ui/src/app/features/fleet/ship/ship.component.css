@@ -19,6 +19,11 @@
    float:left;
 }
 
+.right{
+   margin-top: auto;
+   float:right;
+}
+
 .canvas {
         border: dashed .2em #fff;
         height: 90vh;

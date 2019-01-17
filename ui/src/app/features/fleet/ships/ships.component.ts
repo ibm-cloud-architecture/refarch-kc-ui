@@ -16,8 +16,8 @@ export class ShipsComponent implements OnInit {
   fleetNameV : string;
 
   message: string;
-  // Added for testing remove hardcoded value
-  ships: Ship[] = [{name:'Ship Maha'}];
+  
+  ships: Ship[];
   selectedship: Ship;
   displayedColumns: string[] = ['name', 'type','status', 'port','latitude', 'longitude','actions'];
 
