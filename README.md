@@ -22,6 +22,8 @@ The `scripts` folder has two scripts to build the UI, and a docker image for the
  ```
 * Start the Fleet simulator.  For the fleet simulator [see instructions here](https://github.com/ibm-cloud-architecture/refarch-kc-ms/tree/master/fleet-ms#run) to run the simulator locally.
 
+* Make sure you have the angular cli installed via `npm install -g @angular/cli` and run an initial `npm install` inside the ui folder to pull all dependencies.
+
 * Build UI and server and a docker image with the command: `./scripts/build.sh`. The trace looks like:
 > .... chunk {main} main.js, main.js.map (main) 78.9 kB [initial] [rendered]
 chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 223 kB [initial] [rendered]
