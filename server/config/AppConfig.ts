@@ -14,6 +14,15 @@ export default class AppConfig {
         return process.env.FLEET_MS_URL || config.fleetMSURL;
     }
 
+    public getOrderMSURL(): string {
+        return process.env.ORDER_MS_URL || config.orderMSURL;
+    }
+
+    public getOrderQueryMSURL(): string {
+        return process.env.ORDER_QUERY_MS_URL || config.orderQueryMSURL;
+    }
+    
+
     public getKafkaConnectTimeout(): number {
        return config.kafkaConnectTimeout;
     }

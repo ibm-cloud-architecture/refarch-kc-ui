@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Ship } from '../fleet/ship/ship';
 import { Command } from './command';
 import { ShipControl } from './shipControl';
-import { FleetService } from '../fleet.service';
+import { FleetService } from '../fleet/fleet.service';
 import { Router } from '@angular/router';
 
 @Component({

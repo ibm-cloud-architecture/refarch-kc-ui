@@ -37,6 +37,7 @@ export class OrdersComponent implements OnInit {
     this.selectedOrder = new Order();
     this.selectedOrder.destinationAddress = new Address();
     this.selectedOrder.pickupAddress = new Address();
+    this.selectedOrder.customerID=this.selectedManufacturer;
   }
 
   handleOrderEdit(newOrder){

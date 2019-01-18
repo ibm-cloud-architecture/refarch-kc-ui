@@ -36,11 +36,11 @@ module.exports = function(app:any) {
             console.log("Got this " + JSON.stringify(fleets));
             res.status(200).send(fleets);
         });
-        
+
     });
 
     app.get('/api/fleets/:fleetname', (req,res) => {
-        console.log("In api GET fleet ships for " + req.params.fleetname);       
+        console.log("In api GET fleet ships for " + req.params.fleetname);
         fleetClient.getFleetByName(req.params.fleetname).then( (aFleet: fleetDomain.Fleet) => {
             console.log("Got this " + JSON.stringify(aFleet));
             res.status(200).send(aFleet);
@@ -75,7 +75,7 @@ module.exports = function(app:any) {
 
     // Orders
     app.get('/api/orders/:manuf',(req,res) => {
-        console.log("In api GET orders for " + req.params.manuf);       
+        console.log("In api GET orders for " + req.params.manuf);
         orderClient.getOrders(req.params.manuf).then( (orders: orderDomain.Order[]) => {
             console.log("Got this " + JSON.stringify(orders));
             res.status(200).send(orders);

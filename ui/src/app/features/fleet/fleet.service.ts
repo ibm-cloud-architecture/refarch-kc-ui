@@ -2,25 +2,23 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, of, throwError } from 'rxjs';
 import { map, catchError } from  'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Fleet } from './fleet/fleet';
-import { Ship } from './fleet/ship/ship';
+import { Fleet } from './fleet';
+import { Ship } from './ship/ship';
 import { BehaviorSubject } from 'rxjs';
-import { ShipControl } from './simulcontrol/shipControl';
-import { FleetControl } from './simulcontrol/fleetControl'; 
+import { ShipControl } from '../simulcontrol/shipControl';
+import { FleetControl } from '../simulcontrol/fleetControl'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class FleetService {
-  // TODO remove those initializations {id: "f1", name: "KC-FleetNorth"}, {id: "f2", name: "KC-FleetSouth"}
+
   fleets: Fleet[] = [];
   ships: Ship[] = [];
   selectedShip: Ship;
   fleetsUrl: string = "http://localhost:3000/api/fleets";
   shipsUrl: string = "http://localhost:3000/api/ships";
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-  //fleetsUrl: string = "/api/fleets";
- // shipsUrl: string = "/api/ships";
 
   constructor(private http: HttpClient) { }
 
@@ -58,8 +56,12 @@ export class FleetService {
 
 
 
-  public processShip(sc: ShipControl): Observable<ShipControl> {
-    return this.http.post<ShipControl>(this.shipsUrl + "/simulate",sc ,{ headers: this.headers });
+  public processShip(sc: ShipControl): Observable<Ship> {
+    return this.http.post(this.shipsUrl + "/simulate",sc ,{ headers: this.headers })
+    .pipe(map((data: Ship) => {
+        this.selectedShip = data;
+        return data;
+    }))
   }
 
   private handleError(where:string, error: HttpErrorResponse) {

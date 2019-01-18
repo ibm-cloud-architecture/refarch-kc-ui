@@ -55,4 +55,6 @@ server.listen(config.getPort(), () => {
     console.log(`Server started on port ${addr} :)`);
     console.log('Kafka Brokers ' +  config.getKafkaBrokers());
     console.log('Fleet Simulator ' +  config.getFleetMSURL());
+    console.log('Order MS Command ' +  config.getOrderMSURL());
+    console.log('Order MS Query ' +  config.getOrderQueryMSURL());
 });
