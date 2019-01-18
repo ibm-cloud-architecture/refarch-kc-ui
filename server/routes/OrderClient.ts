@@ -20,18 +20,57 @@ import * as request from 'request-promise-native';
 
     public getOrders(manuf:string): Promise<orderDomain.Order[]>  {
         // todo call orders microservice
-       
-        return new Promise((res,rej) => {
-            res(this.orders);
+        return request.get(this.config.getOrderQueryMSURL() + '/byManuf/' +manuf,
+        {json: true})
+        .then( (body) => {
+            return <orderDomain.Order[]>body;
+        })
+        .catch( (err:any) => {
+            console.log(err);
+            return new Promise((resolv,reject) => {
+                resolv(this.orders);
+            });
         });
+        
+    }
+
+    public getOrderByID(id:string): Promise<orderDomain.Order>  {
+        // todo call orders microservice
+        return request.get(this.config.getOrderQueryMSURL() + '/' +id,
+        {json: true})
+        .then( (body) => {
+            console.log(body);
+            return <orderDomain.Order>body;
+        })
+        .catch( (err:any) => {
+            console.log(err);
+            return new Promise((resolv,reject) => {
+                resolv(new orderDomain.Order());
+            });
+        });
+        
     }
 
     public saveOrder(order: orderDomain.Order): Promise<orderDomain.Order> {
         // mockup
-        this.orders.push(order);
-        order.orderID="super-save-01";
-        return  new Promise((res,rej) => {
-            res(order);
-        });
+        return request.post(
+            this.config.getOrderMSURL(),
+            {json: true,
+             headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json'}, 
+             body: order 
+            })
+            .then( (body ) => {
+                this.orders.push(body);
+                return <orderDomain.Order>body;
+            })
+            .catch( (err: any) => {
+                console.log(err);
+                order.status = " Error " + err;
+                return new Promise((resolv,reject) => {
+                    resolv(order);
+                });
+            });  
     }
  }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Ship } from './ship';
+import { Container } from './container';
 import { ViewChild, ElementRef } from '@angular/core';
 import { FleetService } from '../fleet.service';
 import { Router } from '@angular/router';
@@ -12,97 +13,80 @@ import { Router } from '@angular/router';
 export class ShipComponent implements OnInit {
 
   ship: Ship;
-
-  matrix: [][] ;
+  img: HTMLImageElement;
+  canvasH:number = 200;
+  canvasW:number = 230;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
   public context: CanvasRenderingContext2D;
 
   constructor(private router: Router, private service: FleetService) {
     this.ship = this.service.getSelectedShip();
-    const rows = this.ship.maxRow+1;
-    const cols = this.ship.maxColumn+1;
-    this.matrix = this.createMatrix(rows,cols);
+    const rows = this.ship.maxRow;
+    const cols = this.ship.maxColumn;
+    this.img= new Image();
+    this.img.src = 'assets/images/ship2.png';
   }
 
   ngAfterViewInit(): void {
     this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
-    this.generateMatrix(this.matrix);
+    this.img.onload = ()=> {
+      this.context.drawImage(this.img, 0, this.canvasH-80,220,80);
+  }
+    this.draw();
+  }
+
+  draw() {
+    this.context.clearRect(0, 0, this.canvasW, this.canvasH);
+    this.context.drawImage(this.img, 0, this.canvasH-80,220,80);
+    this.drawMatrix();
   }
 
   ngOnInit(){
 
   }
 
+  /*
+  Call back so when the simulation is started the ship component can start listening to problem or containers
+  The ship instance now has loaded containers.
+  */
   doneSimul(){
-    this.modifyMatrix(this.matrix);
+    this.ship = this.service.getSelectedShip();
+    // this.modifyMatrix(this.matrix);
+    this.draw()
+    this.listenToContainerOrProblem();
+  }
+
+  listenToContainerOrProblem(){
+    // call BFF to get problems and container update
+    // modify the UI
   }
 
   back() {
     this.router.navigate(['fleets']);
   }
 
-  createMatrix(row, col) {
-    console.log("Entered matrix creation");
-    var rows = [];
-    var containerNo = this.ship.numberOfContainers;
-    console.log("container no"+containerNo);
-    for (var i = row-1; i >= 0; --i) {
-        console.log("i value "+i);
-        rows[i] = [];
-        for (var j = col-1; j >= 0; --j) {
-            console.log("j value "+j);
-            if(containerNo<=0){
-              rows[i][j] = 'empty';
-            }
-            else{
-              rows[i][j] = this.ship.containers[i][j].id;
-            }
-            containerNo=containerNo-1;
-        }
+  
+  drawMatrix() {
+    var cellWt = 180 / (this.ship.maxColumn+1);
+    var cellHt = 180 / (this.ship.maxRow+1);
+    var topRow = this.ship.containers.length-1;
+    for(var i=topRow; i >= 0; --i){
+      let y = this.canvasH - 20 - (i+1) * cellHt;
+      let row = this.ship.containers[i];
+      for(var j=0; j <= row.length -1; j++){
+        let x = 30 + (j+1)* cellWt;
+       
+        let container: Container = row[j];
+        console.log(x+" "+y+" "+ JSON.stringify(container));
+        this.generateBorder(x, y, cellWt, cellHt);
+        this.context.fillStyle = this.containerColor(container.status);
+        this.context.fillRect(x , y , cellWt, cellHt);
+      }
     }
-    return rows;
   }
 
-  modifyMatrix(matrix) {
-    console.log("simulation finished");
-    for(var i=this.ship.maxRow; i >= 0; --i){
-      console.log("Entered rows"+i);
-            for(var j=this.ship.maxColumn; j >= 0; --j){
-              console.log("Entered cols"+j);
-            if(matrix[i][j]!='empty'){
-              console.log("Status"+this.ship.containers[i][j].status);
-              if(this.ship.containers[i][j].status==='DOWN'){
-                matrix[i][j] = 'DOWN';
-              }
-              else if(this.ship.containers[i][j].status==='FIRE'){
-                matrix[i][j] = 'FIRE';
-              }
-              else if(this.ship.containers[i][j].status==='HEAT'){
-                matrix[i][j] = 'HEAT';
-              }
-              }
-            else{
-              console.log("didnot enter the empty spot"+matrix[i][j]);
-            }
-            }
-        }
-        this.generateMatrix(matrix);
-  }
-
-  generateMatrix(matrix) {
-    var cellWt = 200 / (this.ship.maxColumn+1);
-    var cellHt = 200 / (this.ship.maxRow+1);
-    matrix.forEach((row, y) =>{
-        row.forEach((value, x) => {
-            this.generateBorder(x * cellWt, y * cellHt, cellWt, cellHt);
-            this.context.fillStyle = this.matrixColor(value);
-            this.context.fillRect(x * cellWt, y * cellHt, cellWt, cellHt);
-        });
-    });
-  }
-
-  matrixColor(value) {
+  containerColor(value) {
     if(value == 'empty'){
       return 'white';
     }
@@ -123,8 +107,6 @@ export class ShipComponent implements OnInit {
     this.context.fillRect(cellWt - (thick), cellHt - (thick), cellwidth + (thick * 2), cellheight + (thick * 2));
   }
 
-  simulate() {
-    this.modifyMatrix(this.matrix);
-  }
+ 
 
 }

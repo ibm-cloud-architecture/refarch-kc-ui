@@ -10,5 +10,5 @@ export class Ship {
     port?: string;
     type?: string;
     numberOfContainers?: number;
-    containers?: Container[]
+    containers?: Container[][];
 }

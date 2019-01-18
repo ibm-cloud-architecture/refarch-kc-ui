@@ -56,8 +56,12 @@ export class FleetService {
 
 
 
-  public processShip(sc: ShipControl): Observable<ShipControl> {
-    return this.http.post<ShipControl>(this.shipsUrl + "/simulate",sc ,{ headers: this.headers });
+  public processShip(sc: ShipControl): Observable<Ship> {
+    return this.http.post(this.shipsUrl + "/simulate",sc ,{ headers: this.headers })
+    .pipe(map((data: Ship) => {
+        this.selectedShip = data;
+        return data;
+    }))
   }
 
   private handleError(where:string, error: HttpErrorResponse) {
