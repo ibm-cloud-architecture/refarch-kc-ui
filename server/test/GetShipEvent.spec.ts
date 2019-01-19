@@ -9,16 +9,16 @@ async function delay(ms: number) {
 
 describe('Get ship status api', function() {
     it('should return no ship event', async function(){
-        let service = new ShipPositionConsumer();
-        let shipEvent = service.getShipPosition("JimminyCricket")
+        let consumer = new ShipPositionConsumer();
+        let shipEvent = consumer.getShipPosition("JimminyCricket")
         assert.isNotOk(shipEvent);
       });  
     
     it('should return one ship event', function(){
-        let service: ShipPositionConsumer = new ShipPositionConsumer();
+        let consumer: ShipPositionConsumer = new ShipPositionConsumer();
         let producer: ShipPositionProducer = new ShipPositionProducer();
 
-        service.startConsumer();
+        consumer.startConsumer();
         producer.startProducer();
        
         async () => {
@@ -28,13 +28,13 @@ describe('Get ship status api', function() {
                 }
         }
         console.log(" confirm ready")
-        producer.produceShipPosition({shipId:"JimminyCricket"});
+        producer.produceShipPosition({shipID:"JimminyCricket",status:"AtSea"});
         
         async () => {await delay(3000);}
-        let shipEvent:domain.ShipPosition = service.getShipPosition("JimminyCricket")
+        let shipEvent:domain.ShipPosition = consumer.getShipPosition("JimminyCricket")
         assert.isOk(shipEvent);
       
         producer.stopProducer();
-        service.stopConsumer();
+        consumer.stopConsumer();
     });
 });

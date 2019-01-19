@@ -50,10 +50,11 @@ export class ProblemReport {
 }
 
 export class ShipPosition {
-    shipId: string = '';
+    shipID: string = '';
     latitude?: string;
     longitude?: string;
     speed?: number;
+    status?: string;
 	ambiantTemperature?: number;
     compass?: number;
     ts?: any;

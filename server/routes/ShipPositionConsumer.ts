@@ -21,7 +21,7 @@ export default class ShipPositionConsumer {
         return this.lastPosition[shipID];
     }
 
-    public startConsumer(){
+    public start(){
         const client = new kafka.KafkaClient({
             kafkaHost: this.config.getKafkaBrokers(),
             connectTimeout: 10000, // in ms it takes to wait for a successful connection before moving to the next host 
@@ -31,11 +31,11 @@ export default class ShipPositionConsumer {
             maxAsyncRequests: 10 // maximum async operations at a time toward the kafka cluster
         });
         this.shipConsumer = new Consumer(client,
-            [{ topic: this.config.getShipTopicName()
+            [{ topic: this.config.getShipTopicName(),offset:0, partition:0
             }],
             {
-                groupId: 'ship-consumer-group',//consumer group id
-                autoCommit: true,
+                groupId: 'kcsolution',//consumer group id
+                autoCommit: false,
                 autoCommitIntervalMs: 5000, 
                 // The max wait time is the maximum amount of time in milliseconds to block waiting if insufficient data is available at the time the request is issued, default 100ms
                 fetchMaxWaitMs: 100, 
@@ -54,7 +54,7 @@ export default class ShipPositionConsumer {
             // By default, we will consume messages from the last committed offset of the current group
         this.shipConsumer.on('message', function (message) {
             let aPosition: domain.ShipPosition = JSON.parse(message.value.toString());
-            this.lastPosition[aPosition.shipId] = aPosition;
+            this.lastPosition[aPosition.shipID] = aPosition;
             console.log(this.aPosition);
         });
         
@@ -63,9 +63,12 @@ export default class ShipPositionConsumer {
         });
     } // start consumer
 
-    public stopConsumer(){
+    public stop(){
         this.shipConsumer.close(true, () => {
             console.log("Stop ship consumer");
         })
     }   
-}
+}// class
+
+(()=> {
+})();
