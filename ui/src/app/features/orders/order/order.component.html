@@ -11,6 +11,10 @@
               <input matInput [(ngModel)]="order.quantity" name="quantity">
             </mat-form-field>
             <mat-form-field class="order-full-width">
+              <label for="pickupDate">Pickup Date</label>
+              <input matInput [(ngModel)]="order.pickupDate" name="pickupDate">
+            </mat-form-field>
+            <mat-form-field class="order-full-width">
               <label for="expectedDeliveryDate">Expected Delivery Date</label>
               <input matInput [(ngModel)]="order.expectedDeliveryDate" name="expectedDeliveryDate">
             </mat-form-field>

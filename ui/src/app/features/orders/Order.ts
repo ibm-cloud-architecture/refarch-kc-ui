@@ -6,6 +6,7 @@ export class Order {
     destinationAddress: Address;
     productID: string;
     quantity: string;
+    pickupDate: string;
     expectedDeliveryDate: string;
     status: string;
     customerID:string;
