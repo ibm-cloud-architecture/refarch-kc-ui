@@ -90,7 +90,7 @@ module.exports = function(app:any) {
             });
         }  else {
             res.status(400).send({error:'No POST body'});
-        }  
+        }
     });
 
     app.put('/api/orders/:orderID', (req, res) => {

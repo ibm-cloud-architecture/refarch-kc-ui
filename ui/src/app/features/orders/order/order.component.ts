@@ -23,6 +23,7 @@ export class OrderComponent implements OnInit {
   submit(){
     let callback = newOrder => this.done.emit(newOrder)
 
+    // if there is no orderID we are creating a new order
     if(this.order.orderID == null) {
       this.orderService.saveOrder(this.order).subscribe(callback);
     } else {
