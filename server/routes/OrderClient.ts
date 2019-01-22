@@ -35,8 +35,7 @@ import * as request from 'request-promise-native';
     }
 
     public getOrderByID(id:string): Promise<orderDomain.Order>  {
-        // todo call orders microservice
-        return request.get(this.config.getOrderQueryMSURL() + '/' +id,
+        return request.get(this.config.getOrderQueryMSURL() + '/' + id,
         {json: true})
         .then( (body) => {
             console.log(body);

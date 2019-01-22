@@ -27,7 +27,7 @@ export class OrdersService {
     return this.http.post<Order>(this.ordersUrl, order, httpOptions);
   }
 
-  updateOdrer(order:Order): Observable<Order> {
+  updateOrder(order:Order): Observable<Order> {
     console.log('Update order: ' + order.orderID);
     let httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
