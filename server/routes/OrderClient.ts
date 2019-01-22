@@ -61,13 +61,35 @@ import * as request from 'request-promise-native';
                 'Content-Type': 'application/json'}, 
              body: order 
             })
-            .then( (body ) => {
+            .then(body => {
                 this.orders.push(body);
                 return <orderDomain.Order>body;
             })
-            .catch( (err: any) => {
+            .catch(err => {
                 console.log(err);
-                order.status = " Error " + err;
+                order.status = "Error " + err;
+                return new Promise((resolv,reject) => {
+                    resolv(order);
+                });
+            });  
+    }
+
+    public updateOrder(order: orderDomain.Order): Promise<orderDomain.Order> {
+        return request.put(
+            `${this.config.getOrderMSURL()}/${order.orderID}`,
+            {json: true,
+             headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json'}, 
+             body: order 
+            })
+            .then(body => {
+                ///this.orders.push(body);
+                return <orderDomain.Order>body;
+            })
+            .catch(err => {
+                console.log(err);
+                order.status = "Error " + err;
                 return new Promise((resolv,reject) => {
                     resolv(order);
                 });
