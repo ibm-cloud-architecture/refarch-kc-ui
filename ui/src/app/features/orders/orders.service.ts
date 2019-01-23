@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from  'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Order } from './Order';
@@ -20,11 +20,18 @@ export class OrdersService {
   }
 
   saveOrder(order:Order): Observable<Order> {
-    console.log('let save the order');
+    console.log('Save order');
     let httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<Order>(this.ordersUrl ,order,httpOptions);
+    return this.http.post<Order>(this.ordersUrl, order, httpOptions);
+  }
 
+  updateOrder(order:Order): Observable<Order> {
+    console.log('Update order: ' + order.orderID);
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.put<Order>(`${this.ordersUrl}/${order.orderID}`, order, httpOptions);
   }
 }

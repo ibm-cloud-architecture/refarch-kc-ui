@@ -89,7 +89,18 @@ module.exports = function(app:any) {
                 res.status(200).send(data);
             });
         }  else {
-            res.status(400).send({error:'no post body'});
+            res.status(400).send({error:'No POST body'});
         }
     });
+
+    app.put('/api/orders/:orderID', (req, res) => {
+        console.log("In api PUT existing order " + JSON.stringify(req.body));
+        if (req.body !== undefined) {
+            orderClient.updateOrder(req.body).then((data: orderDomain.Order) => {
+                res.status(200).send(data);
+            });
+        }  else {
+            res.status(400).send({error:'No PUT body'});
+        }   
+    })
 } // end exports
