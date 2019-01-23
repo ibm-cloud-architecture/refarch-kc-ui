@@ -7,17 +7,17 @@ var Producer = kafka.Producer;
 declare const Buffer;
 
 export default class ProblemProducer {
-    config:AppConfig; 
+    config:AppConfig;
     producer: any;
     producerReady: boolean = false;
-   
+
 
     constructor() {
         this.config =  new AppConfig();
         console.log(this.config.getKafkaBrokers());
         let client = new kafka.KafkaClient({
             kafkaHost: this.config.getKafkaBrokers(),
-            connectTimeout: 2000, // in ms it takes to wait for a successful connection before moving to the next host 
+            connectTimeout: 2000, // in ms it takes to wait for a successful connection before moving to the next host
             requestTimeout: 2000,
             autoConnect: true, // automatically connect when KafkaClient is instantiated
             idleConnection: 10000, // allows the broker to disconnect an idle connection from a client 5 min default.
@@ -74,6 +74,11 @@ export default class ProblemProducer {
     problem.containerId = "C_02";
     problem.shipId = "JimminyCricket";
     problem.severity = "SEVERE";
-    producer.produceProblem(problem);
+    let probReport = { "shipID": problem.shipId,
+                       "latitude" : problem.latitude,
+                       "longitude" : problem.longitude,
+                       "status" : problem.status,
+                       "ts" : problem.ts }
+    producer.produceProblem(probReport);
     // producer.stopProducer();
 })();
