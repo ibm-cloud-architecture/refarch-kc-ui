@@ -18,9 +18,11 @@ import FleetClient from './FleetClient';
 import * as fleetDomain from './fleetDomain';
 import OrderClient from './OrderClient';
 import * as orderDomain from './orderDomain';
+import ShipmentClient from './ShipmentClient';
 
 const orderClient = new OrderClient();
 const fleetClient = new FleetClient();
+const shipmentClient = new ShipmentClient();
 
 /** Export the APIs for the front end */
 module.exports = function(app:any) {
@@ -103,4 +105,38 @@ module.exports = function(app:any) {
             res.status(400).send({error:'No PUT body'});
         }   
     })
+
+    app.get('/api/shipments',(req,res) => {
+        console.log("In api GET all ordered shipments" );
+        shipmentClient.getOrderedShipments().subscribe( (orders: orderDomain.OrderedShipment[]) => {
+            console.log("Got this " + JSON.stringify(orders));
+            res.status(200).send(orders);
+        });
+    });
+    app.put('/api/shipments/:orderID', (req,res) => {
+        console.log("In api PUT existing order shipment " + JSON.stringify(req.body));
+        if (req.body !== undefined) {
+            shipmentClient.updateOrder(req.body).subscribe((data: orderDomain.OrderedShipment) => {
+                res.status(200).send(data);
+            });
+        }  else {
+            res.status(400).send({error:'No PUT body'});
+        }   
+    });
+
+    app.get('/api/voyages',(req,res) => {
+        console.log("In api GET all scheduled voyages" );
+        shipmentClient.getVoyages().subscribe( (voyages: orderDomain.Voyage[]) => {
+            console.log("Got this " + JSON.stringify(voyages));
+            res.status(200).send(voyages);
+        });
+    });
+
+    app.get('/api/voyages/:voyageID',(req,res) => {
+        console.log("In api GET voyage" + req.params.voyageID);
+        shipmentClient.getVoyage(req.params.voyageID).subscribe( (voyage: orderDomain.Voyage) => {
+            console.log("Got this " + JSON.stringify(voyage));
+            res.status(200).send(voyage);
+        });
+    });
 } // end exports

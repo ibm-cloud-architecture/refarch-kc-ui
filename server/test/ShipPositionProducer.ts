@@ -72,7 +72,7 @@ export default class ShipPositionProducer {
       console.log("Producer is ready");
 
         this.producer.on("ready", function(){
-            //this.producerReady = true;
+            this.producerReady = true;
             // let positionvarAsString = JSON.stringify(p);
             // console.log("Try to send " + positionvarAsString);
             // const buffer = new Buffer.from(positionvarAsString);
@@ -114,3 +114,5 @@ export default class ShipPositionProducer {
         })
     }
 }
+
+

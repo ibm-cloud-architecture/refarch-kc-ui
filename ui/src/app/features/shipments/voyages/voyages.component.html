@@ -1,0 +1,59 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <h3>Voyages for {{order.orderID}}</h3>
+    <button *ngIf="selectedVoyage" mat-icon-button color="primary" (click)="save()">
+      <mat-icon>save</mat-icon>
+    </button>
+  </div>
+    <div class="row">
+    <table mat-table [dataSource]="voyages" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="VoyageID">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><b>Voyage</b></mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.voyageID}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><b>Status</b></mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Ship">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Ship </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.shipID}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="StartDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="StartPort">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Origin Port </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.startPort}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="EndDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>End Date</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.endDate}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="EndPort">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Destination Port </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.endPort}} </mat-cell>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-radio-group class="voyage-radio-group" [(ngModel)]="selectedVoyage">
+
+          <mat-cell *matCellDef="let element">
+            <mat-radio-button class="voyage-radio-button" [value]="element.voyageID">
+            </mat-radio-button>
+
+          </mat-cell>
+
+        </mat-radio-group>
+
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </table>
+  </div>
