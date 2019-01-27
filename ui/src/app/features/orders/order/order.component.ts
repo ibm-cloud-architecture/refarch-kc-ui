@@ -34,4 +34,8 @@ export class OrderComponent implements OnInit {
   cancel(){
     this.done.emit(null);
   }
+
+  edit(): boolean {
+    return (this.order.status === undefined || this.order.status === null || this.order.status === "Created");
+  }
 }
