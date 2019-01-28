@@ -21,16 +21,6 @@ describe('Get ship status api', function() {
 
         producer.ShipTopicProducer({shipID:"JimminyCricket",status:"AtSea"});
 
-
-        //consumer.startConsumer();
-        //producer.startProducer({shipID:"Hema",status:"AtSea"});
-
-        // async () => {
-        //         while ( ! producer.producerReady) {
-        //             await delay(1000);
-        //             console.log(".")
-        //         }
-        // }
         console.log(" confirm ready")
 
         let consumer: ShipPositionConsumer = new ShipPositionConsumer();

@@ -42,14 +42,8 @@ export default class ShipPositionConsumer {
             );
 
             consumer.on('message', function (message) {
-              console.log(message);
-              console.log("Lets see what happens"+ message.value);
-              console.log("Mouli test see what happens"+typeof '{"shipID":"JimminyCricket","status":"AtSea"}');
               let aPosition: domain.ShipPosition = JSON.parse(message.value);
-              console.log("This ship position is "+aPosition);
-              //let aPosition: domain.ShipPosition = JSON.parse(message.value.toString());
               this.shipPosition = aPosition;
-              //return aPosition;
               return Promise.resolve(aPosition.shipID);
               });
 

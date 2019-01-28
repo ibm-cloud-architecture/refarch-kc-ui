@@ -8,7 +8,8 @@ var kafka = require('kafka-node'),
     consumer = new Consumer(
         client,
         [
-            { topic: 'bluewaterShip', partition: 0 }
+            { topic: 'bluewaterShip', partition: 0 },
+            { topic: 'bluewaterProblem', partition: 0 }
         ],
         [
           {

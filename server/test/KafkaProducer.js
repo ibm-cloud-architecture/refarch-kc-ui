@@ -6,7 +6,7 @@ var kafka = require('kafka-node'),
     km = new KeyedMessage('key', 'message'),
     payloads = [
         { topic: 'bluewaterShip', messages: 'hi', partition: 0 },
-        { topic: 'bluewaterShip', messages: 'fourth color is yellow', partition:0 }
+        { topic: 'bluewaterProblem', messages: 'hi', partition:0 }
     ];
 
 
