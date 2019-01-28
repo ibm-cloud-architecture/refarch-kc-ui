@@ -74,11 +74,11 @@
     </div>
   </div>
   <div class="row">
-      <div *ngIf="edit())" class="button-row">
+      <div *ngIf="edit()" class="button-row">
           <button mat-raised-button color="primary" (click)="submit()">Submit</button>
           <button mat-raised-button (click)="cancel()">Cancel</button>
       </div>
-      <div *ngIf="!edit())" class="button-row">
+      <div *ngIf="!edit()" class="button-row">
         <button mat-raised-button color="primary" (click)="cancel()">Back</button>
       </div>
   </div>
