@@ -3,7 +3,7 @@ import * as orderDomain from './orderDomain';
 import * as request from 'request-promise-native';
 import { Observable, of } from 'rxjs';
 
-export default class OrderClient {
+export default class ShipmentClient {
     config:AppConfig;
 
     constructor() {
@@ -18,7 +18,7 @@ export default class OrderClient {
         ];
         return of(orders);
     }
-
+ 
     public getVoyages(): Observable<orderDomain.Voyage[]> {
         let voyages: orderDomain.Voyage[] = [
             {voyageID:"voyage14", status: "Scheduled", startPort: "Oackland",
