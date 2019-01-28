@@ -1,0 +1,13 @@
+table {
+    width: 100%;
+}
+
+.voyage-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.voyage-radio-button {
+    margin: 5px;
+}
+  

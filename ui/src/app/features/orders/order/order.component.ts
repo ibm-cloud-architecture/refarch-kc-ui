@@ -21,13 +21,21 @@ export class OrderComponent implements OnInit {
   }
 
   submit(){
-    this.orderService.saveOrder(this.order).subscribe( (norder) => {
-      this.done.emit(norder);
-    });
-    
+    let callback = newOrder => this.done.emit(newOrder)
+
+    // if there is no orderID we are creating a new order
+    if(this.order.orderID == null) {
+      this.orderService.saveOrder(this.order).subscribe(callback);
+    } else {
+      this.orderService.updateOrder(this.order).subscribe(callback);
+    }
   }
 
   cancel(){
     this.done.emit(null);
+  }
+
+  edit(): boolean {
+    return (this.order.status === undefined || this.order.status === null || this.order.status === "Created");
   }
 }

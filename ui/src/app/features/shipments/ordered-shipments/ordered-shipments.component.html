@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="col-md-6" *ngIf="orderedShipments">
+    <h3>K.Container Shipment Inc - Current Orders</h3>
+    <table mat-table [dataSource]="orderedShipments" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="OrderID">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><b>Order ID</b> </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.orderID}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Customer">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><b>Customer</b> </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.customerID}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Voyage">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><b>Voyage</b> </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.voyageID}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><b>Status</b></mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+      </ng-container>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button *ngIf="element.completion !== 1" mat-icon-button color="primary" (click)="open(element)">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </table>
+  </div>
+  <div class="col-md-6" *ngIf="selectedOrder">
+    <app-voyages [order]="selectedOrder" (done)="handleVoyageSelected($event)"></app-voyages>
+  </div>
+</div>

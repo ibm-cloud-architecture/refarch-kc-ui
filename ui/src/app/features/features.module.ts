@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {  MatSelectModule,
           MatTableModule,
           MatIconModule,
+          MatRadioModule,
           MatToolbarModule,
           MatSortModule,
           MatSliderModule
@@ -21,6 +22,7 @@ import { ShipComponent } from './fleet/ship/ship.component';
 import { LeafletMapComponent } from './fleet/leaflet-map/leaflet-map.component';
 import { SimulcontrolComponent } from './simulcontrol/simulcontrol.component';
 import { OrdersModule } from './orders/orders.module';
+import { ShipmentsModule } from './shipments/shipments.module';
 
 @NgModule({
   imports: [
@@ -39,7 +41,8 @@ import { OrdersModule } from './orders/orders.module';
       useHash: true,
       enableTracing: false
       }),
-      OrdersModule
+    OrdersModule,
+    ShipmentsModule
   ],
   declarations: [HomeComponent, LoginComponent, FleetComponent, ShipsComponent, ShipComponent, SimulcontrolComponent, LeafletMapComponent],
   exports: [ RouterModule, MatSelectModule ]

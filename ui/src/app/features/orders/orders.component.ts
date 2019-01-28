@@ -26,7 +26,7 @@ export class OrdersComponent implements OnInit {
     console.log('Load orders for ' + manuf.value);
     this.orderService.getOrders(manuf.value).subscribe( 
       data => {this.orders = data}
-      );
+    );
   }
 
   open(order: Order) {
@@ -41,7 +41,7 @@ export class OrdersComponent implements OnInit {
   }
 
   handleOrderEdit(newOrder){
-    if (newOrder  !== undefined) {
+    if (newOrder !== undefined) {
       this.orders.push(newOrder);
     }
     this.selectedOrder = null;

@@ -16,3 +16,21 @@ export class Order {
     expectedDeliveryDate: string;
     status?: string;
 }
+
+export class OrderedShipment {
+    orderID: string;
+    customerID: string;
+    status: string;
+    voyageID?: string;
+}
+
+export class Voyage {
+    voyageID: string;
+    status: string;
+    startPort:string;
+    startDate: string;
+    endPort: string;
+    endDate: string;
+    manifest?: string;
+    shipID?: string;
+}
