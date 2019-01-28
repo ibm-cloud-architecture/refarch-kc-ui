@@ -2,7 +2,6 @@ import { expect, assert }  from 'chai';
 import * as domain from '../routes/fleetDomain';
 import ProblemProducer from './ProblemProducer';
 import ProblemTopicConsumer from '../routes/ProblemTopicConsumer';
-import * as KafkaProducer from './KafkaProducer.js';
 
 async function delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
@@ -16,19 +15,17 @@ describe('Get Problem status api', function() {
       });
 
     it('should return one problem event', function(){
-
+        console.log("Entered one problem event");
         let producer: ProblemProducer = new ProblemProducer();
+        console.log("Initiated Problem producer");
 
-        producer.ProblemTopicProducer({issue:"combustion",containerId:"c1",shipId:"JimminyCricket",status:"AtSea"});
+        producer.ProblemTopicProducer({issue:"combustion",containerId:"c134",shipId:"JimminyCricket",status:"AtSea"});
 
-        console.log(" confirm ready")
 
-        let consumer: ProblemTopicConsumer = new ProblemTopicConsumer();
 
-        consumer.ProblemTopicConsumer().then(()=>{
-          let probEvent:domain.ProblemReport = consumer.getProbEvent("JimminyCricket");
-          assert.isOk(probEvent);
-        });
+        let consumer = new ProblemTopicConsumer();
+        console.log("Initialized the consumer");
+        consumer.ProbTopicConsumer();
 
         //producer.stopProducer();
         //consumer.stopConsumer();

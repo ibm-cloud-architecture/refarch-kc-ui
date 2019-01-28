@@ -18,15 +18,27 @@ import FleetClient from './FleetClient';
 import * as fleetDomain from './fleetDomain';
 import OrderClient from './OrderClient';
 import * as orderDomain from './orderDomain';
+import ProblemTopicConsumer from './ProblemTopicConsumer';
 
 const orderClient = new OrderClient();
 const fleetClient = new FleetClient();
+const consumer = new ProblemTopicConsumer();
 
 /** Export the APIs for the front end */
 module.exports = function(app:any) {
     // health verb for application monitoring.
     app.get('/healthz',(req:any,res:any) => {
       res.send('UP and running');
+    });
+
+    app.get('/api/problem', (req:any,res:any) => {
+      console.log("In api problem topic consumer");
+      // consumer.ProbTopicConsumer().then((problems: fleetDomain.ProblemReport[]) => {
+      //   console.log("Got this " +JSON.stringify(problems));
+      //   res.status(200).send(problems);
+      // }).catch(error => console.log(error));
+      // consumer.ProbTopicConsumer().then(data => {console.log(data)).catch(error => console.log(error));
+      // res.status(200).send(data);
     });
 
     app.get('/api/fleets', (req:any,res:any) => {

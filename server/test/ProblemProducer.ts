@@ -28,11 +28,12 @@ export default class ProblemProducer {
           producer = new Producer(client),
           km = new KeyedMessage('key', 'message'),
           payloads = [
-              { topic: 'bluewaterProblem', messages: buffer, partition: 0 }
+              { topic: 'blueProblem', messages: buffer, partition: 0 }
           ];
 
           producer.on('ready', function () {
             producer.send(payloads, function (err, data) {
+              console.log("Prodcuer sending the messages");
               console.log(data);
             });
           });
