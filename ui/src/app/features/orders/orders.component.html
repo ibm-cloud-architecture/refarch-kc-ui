@@ -20,7 +20,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="OrderID">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Order ID </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.orderID}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.orderID.slice(0,6)}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="From">
           <mat-header-cell *matHeaderCellDef mat-sort-header>From </mat-header-cell>
@@ -29,6 +29,10 @@
         <ng-container matColumnDef="To">
           <mat-header-cell *matHeaderCellDef mat-sort-header>To </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.destinationAddress.city}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="ExpectedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Expected Date </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.expectedDeliveryDate}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Status">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Status </mat-header-cell>
