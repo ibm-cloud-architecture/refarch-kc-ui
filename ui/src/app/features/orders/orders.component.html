@@ -20,7 +20,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="OrderID">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Order ID </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.orderID.slice(0,6)}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.orderID.slice(5,13)}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="From">
           <mat-header-cell *matHeaderCellDef mat-sort-header>From </mat-header-cell>
