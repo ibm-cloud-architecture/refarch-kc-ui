@@ -14,20 +14,33 @@
  * limitations under the License.
  */
 const express = require('express');
+const fs = require("fs");
 import FleetClient from './FleetClient';
 import * as fleetDomain from './fleetDomain';
 import OrderClient from './OrderClient';
 import * as orderDomain from './orderDomain';
 import ProblemTopicConsumer from './ProblemTopicConsumer';
 import ShipmentClient from './ShipmentClient';
+import * as domain from './fleetDomain';
+import Kafka from './kafka';
 
 const orderClient = new OrderClient();
 const fleetClient = new FleetClient();
 const shipmentClient = new ShipmentClient();
 const consumer = new ProblemTopicConsumer();
 
+async function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
 /** Export the APIs for the front end */
 module.exports = function(app:any) {
+
+  app.on('listening', function () {
+  // server ready to accept connections here
+  });
+
+
     // health verb for application monitoring.
     app.get('/healthz',(req:any,res:any) => {
       res.send('UP and running');
@@ -35,12 +48,25 @@ module.exports = function(app:any) {
 
     app.get('/api/problem', (req:any,res:any) => {
       console.log("In api problem topic consumer");
-      // consumer.ProbTopicConsumer().then((problems: fleetDomain.ProblemReport[]) => {
-      //   console.log("Got this " +JSON.stringify(problems));
-      //   res.status(200).send(problems);
-      // }).catch(error => console.log(error));
-      // consumer.ProbTopicConsumer().then(data => {console.log(data)).catch(error => console.log(error));
-      // res.status(200).send(data);
+      const my = new Kafka();
+
+      async function wait() {
+        console.log("I am in wait");
+        await delay(10000);
+      }
+
+      var x = my.kafka();
+
+      wait().then(()=>{
+        console.log("data"+x);
+        // let probEvent: domain.ProblemReport = consumer.getProbEvent("JimminyCricket");
+        // console.log(probEvent);
+        // assert.isOk(probEvent);
+        res.status(200).send("Here it is"+x);
+      }).catch((error)=>{
+        console.log(error);
+      });
+
     });
 
     app.get('/api/fleets', (req:any,res:any) => {
