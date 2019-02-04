@@ -9,9 +9,9 @@ import { Address } from './Address';
 })
 export class OrdersComponent implements OnInit {
 
-  displayedColumns: string[] = ['OrderID', 'From', "To", 'Status', 'actions'];
+  displayedColumns: string[] = ['OrderID', 'From', "To", 'ExpectedDate', 'Status', 'actions'];
   orders: Order[];
-  manufacturers: string[] = ['GoodManuf','OtherManuf'];
+  manufacturers: string[] = ['GoodManuf'];
   selectedManufacturer: string;
   selectedOrder: Order;
 

@@ -145,7 +145,7 @@ module.exports = function(app:any) {
 
     app.get('/api/shipments',(req,res) => {
         console.log("In api GET all ordered shipments" );
-        shipmentClient.getOrderedShipments().subscribe( (orders: orderDomain.OrderedShipment[]) => {
+        shipmentClient.getOrderedShipments().then( (orders: orderDomain.OrderedShipment[]) => {
             console.log("Got this " + JSON.stringify(orders));
             res.status(200).send(orders);
         });

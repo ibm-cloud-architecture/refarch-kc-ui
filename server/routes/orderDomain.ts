@@ -15,6 +15,7 @@ export class Order {
     quantity: string;
     expectedDeliveryDate: string;
     status?: string;
+    voyageID?: string;
 }
 
 export class OrderedShipment {

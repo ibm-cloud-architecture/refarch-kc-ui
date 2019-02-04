@@ -2,9 +2,13 @@
   <div class="row">
       <div class="col-md-12 order-part">
           <form class="order-form">
-            <mat-form-field class="order-full-width">
+            <mat-form-field>
               <label for="productID">Product ID</label>
-              <input matInput [(ngModel)]="order.productID" name="productID">
+              <mat-select  [(value)]="order.productID" name="product">
+                <mat-option *ngFor="let product of products" [value]="product">
+                  {{product}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field class="order-full-width">
               <label for="quantity">Quantity</label>
@@ -74,11 +78,11 @@
     </div>
   </div>
   <div class="row">
-      <div *ngIf="edit())" class="button-row">
+      <div *ngIf="edit()" class="button-row">
           <button mat-raised-button color="primary" (click)="submit()">Submit</button>
           <button mat-raised-button (click)="cancel()">Cancel</button>
       </div>
-      <div *ngIf="!edit())" class="button-row">
+      <div *ngIf="!edit()" class="button-row">
         <button mat-raised-button color="primary" (click)="cancel()">Back</button>
       </div>
   </div>

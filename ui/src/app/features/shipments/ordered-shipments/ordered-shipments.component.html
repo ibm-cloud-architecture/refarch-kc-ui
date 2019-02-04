@@ -4,7 +4,7 @@
     <table mat-table [dataSource]="orderedShipments" matSort class="mat-elevation-z8">
       <ng-container matColumnDef="OrderID">
         <mat-header-cell *matHeaderCellDef mat-sort-header><b>Order ID</b> </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.orderID}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.orderID.slice(5,13)}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="Customer">
         <mat-header-cell *matHeaderCellDef mat-sort-header><b>Customer</b> </mat-header-cell>

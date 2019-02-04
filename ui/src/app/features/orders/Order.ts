@@ -9,5 +9,5 @@ export class Order {
     pickupDate: string;
     expectedDeliveryDate: string;
     status?: string;
-    customerID:string;
+    customerID: string;
 }
