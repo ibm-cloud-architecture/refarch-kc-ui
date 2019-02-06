@@ -9,11 +9,18 @@ image:
   tag: latest
   pullPolicy: Always
   pullSecret: bluemix-browncompute-secret-regional
+  resources:
+    requests:
+      cpu: 200m
+      memory: 300Mi
+livenessProbe:
+  initialDelaySeconds: 3000
+  periodSeconds: 1000
 service:
   name: node
   type: NodePort
   servicePort: 3010
-  nodePort: 3010
+  nodePort: 31010
 ingress:
   enabled: false
   annotations: {}
@@ -26,7 +33,8 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
+generatedBindings:
+  enabled: false
 eventstreams:
   brokers: kafka03-prod02.messagehub.services.us-south.bluemix.net:9093,kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,kafka05-prod02.messagehub.services.us-south.bluemix.net:9093
   env: IBMCLOUD
