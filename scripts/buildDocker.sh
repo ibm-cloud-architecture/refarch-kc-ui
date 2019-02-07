@@ -15,4 +15,4 @@ cd ..
 # image for public docker hub
 docker build -t ibmcase/kc-ui .
 # image for private registry in IBM Cloud
-docker tag ibmcase/kc-ui registry.ng.bluemix.net/ibmcaseeda/kc-ui 
+docker tag ibmcase/kc-ui registry.ng.bluemix.net/ibmcaseeda/kc-ui
