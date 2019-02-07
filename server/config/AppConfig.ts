@@ -11,15 +11,31 @@ export default class AppConfig {
     }
 
     public getFleetMSURL(): string {
-        return process.env.FLEET_MS_URL || config.fleetMSURL;
+        if (process.env.KAFKA_ENV !== "IBMCLOUD") {
+            return process.env.FLEET_MS_URL || config.fleetMSURL;
+        } else {
+            return "http://" + process.env.FLEETMS_SERVICE_SERVICE_HOST
+                + ":" + process.env.FLEETMS_SERVICE_SERVICE_PORT + "/fleetms";
+        }
+        
     }
 
     public getOrderMSURL(): string {
-        return process.env.ORDER_MS_URL || config.orderMSURL;
+        if (process.env.KAFKA_ENV !== "IBMCLOUD") {
+            return process.env.ORDER_MS_URL || config.orderMSURL;
+        } else {
+            return "http://" + process.env.ORDERCOMMANDMS_SERVICE_SERVICE_HOST
+                + ":" + process.env.ORDERCOMMANDMS_SERVICE_SERVICE_PORT_HTTP+ "/orders";
+        } 
     }
 
     public getOrderQueryMSURL(): string {
-        return process.env.ORDER_QUERY_MS_URL || config.orderQueryMSURL;
+        if (process.env.KAFKA_ENV !== "IBMCLOUD") {
+            return process.env.ORDER_QUERY_MS_URL || config.orderQueryMSURL;
+        } else {
+            return "http://" + process.env.ORDERQUERYMS_SERVICE_SERVICE_HOST
+                + ":" + process.env.ORDERQUERYMS_SERVICE_SERVICE_PORT_HTTP+ "/orders";
+        }
     }
     
 
