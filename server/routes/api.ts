@@ -40,33 +40,32 @@ module.exports = function(app:any) {
   // server ready to accept connections here
   });
 
+  // health verb for application monitoring.
+  app.get('/healthz',(req:any,res:any) => {
+  res.send('UP and running');
+  });
 
-    // health verb for application monitoring.
-    app.get('/healthz',(req:any,res:any) => {
-      res.send('UP and running');
-    });
+  app.get('/api/problem', (req:any,res:any) => {
+    console.log("In api problem topic consumer");
 
-    app.get('/api/problem', (req:any,res:any) => {
-      console.log("In api problem topic consumer");
-      const my = new Kafka();
+    const kafkaConsumer = new Kafka();
 
-      async function wait() {
-        console.log("I am in wait");
-        await delay(10000);
-      }
+    async function wait() {
+      console.log("I am in wait");
+      await delay(10000);
+    }
 
-      var x = my.kafka();
+    var problemData = kafkaConsumer.kafka();
 
       wait().then(()=>{
-        console.log("data"+x);
+        console.log("data"+problemData);
         // let probEvent: domain.ProblemReport = consumer.getProbEvent("JimminyCricket");
         // console.log(probEvent);
         // assert.isOk(probEvent);
-        res.status(200).send("Here it is"+x);
+        res.status(200).send("Here it is"+problemData);
       }).catch((error)=>{
         console.log(error);
       });
-
     });
 
     app.get('/api/fleets', (req:any,res:any) => {

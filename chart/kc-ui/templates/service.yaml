@@ -8,7 +8,9 @@ spec:
   type: {{ .Values.service.type }}
   ports:
   - name: http
+    protocol: TCP
     port: {{ .Values.service.servicePort }}
     nodePort: {{ .Values.service.nodePort }}
   selector:
-    app: "{{  .Chart.Name }}-selector"
+    app: {{ template "kc-ui.name" . }}
+    release: {{ .Release.Name }}

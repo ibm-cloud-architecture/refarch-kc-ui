@@ -42,16 +42,27 @@ spec:
             value : "{{ .Values.service.servicePort }}"
           - name: APPLICATION_NAME
             value: "{{ .Release.Name }}"
+          - name: FLEETMS_SERVICE_SERVICE_HOST
+            value: "fleetms-service"
+          - name: FLEETMS_SERVICE_SERVICE_PORT
+            value: "9080"
+          - name: ORDERCOMMANDMS_SERVICE_SERVICE_HOST
+            value: "ordercommandms-service"
+          - name: ORDERCOMMANDMS_SERVICE_SERVICE_PORT_HTTP
+            value: "9080"
+          - name: ORDERQUERYMS_SERVICE_SERVICE_HOST
+            value: "orderqueryms-service"
+          - name: ORDERQUERYMS_SERVICE_SERVICE_PORT_HTTP
+            value: "9080"
           - name: KAFKA_ENV
             value: "{{ .Values.eventstreams.env }}"
           - name: KAFKA_BROKERS
             value: "{{ .Values.eventstreams.brokers }}"
           - name: KAFKA_APIKEY
-            valueFrom: 
+            valueFrom:
               secretKeyRef:
                 name: eventstreams-apikey
                 key: binding
 {{- if .Values.generatedBindings.enabled }}
 {{.Files.Get "bindings.yaml" | indent 10 }}
 {{- end }}
-    
