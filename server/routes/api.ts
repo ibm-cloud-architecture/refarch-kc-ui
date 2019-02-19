@@ -58,11 +58,11 @@ module.exports = function(app:any) {
     var problemData = kafkaConsumer.kafka();
 
       wait().then(()=>{
-        console.log("data"+problemData);
+        console.log("data is old"+problemData);
         // let probEvent: domain.ProblemReport = consumer.getProbEvent("JimminyCricket");
         // console.log(probEvent);
         // assert.isOk(probEvent);
-        res.status(200).send("Here it is"+problemData);
+        res.status(200).send(problemData);
       }).catch((error)=>{
         console.log(error);
       });

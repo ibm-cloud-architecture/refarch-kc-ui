@@ -1,3 +1,3 @@
-export default class Cube {
+export default class Kafka {
   kafka(): any;
 }
