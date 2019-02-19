@@ -7,6 +7,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { FleetService } from '../fleet.service';
 import { Router } from '@angular/router';
 import { Problem } from './problem';
+import { shipPosition} from './shipPosition';
 import { switchMap, takeUntil, map, catchError } from  'rxjs/operators';
 import { timer, Observable, Subject, of, throwError, Subscription } from 'rxjs';
 
@@ -29,12 +30,15 @@ export class ShipComponent implements OnInit {
   canvasW:number = 230;
 
   problemUrl: string = "http://localhost:3110/api/problem";
+  shipPositionUrl: string = "http://localhost:3110/api/shipposition";
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
   problems: Problem[] = [];
   containers: Container[] = [];
   message: string;
   probString: string[] =[];
+  shipPositionString: string[] = [];
   subscription: Subscription;
+  shipPositionSubscription: Subscription;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
   public context: CanvasRenderingContext2D;
@@ -74,6 +78,42 @@ export class ShipComponent implements OnInit {
 
     //Add Marker to map
     var marker = L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
+
+    async function wait() {
+      console.log("I am in ship position simulation");
+      await delay(15000);
+    }
+
+    this.shipPositionSubscription = timer(0, 50000).pipe(
+      switchMap(() => this.listenToShipPositionEvent())
+    ).subscribe(data => {
+      console.log("I am in subscribe of ship position data");
+      this.shipPositionString = data;
+      console.log("listen to ship position event"+this.shipPositionString);
+      wait().then(()=>{
+        console.log("data is old"+this.shipPositionString);
+            for(var k = 0; k < this.shipPositionString.length; k++){
+              var x = this.shipPositionString[k];
+              var shipPos : shipPosition = JSON.parse(x);
+              console.log("Ship Position shipid is "+shipPos.shipID+" with latitude "+shipPos.latitude+" with longitude "+shipPos.longitude);
+              if (this.ship.name == shipPos.shipID){
+                console.log("Status before change "+this.ship.latitude+" "+this.ship.longitude);
+                console.log("Doing "+this.ship.latitude+" = "+ shipPos.latitude+" and "+this.ship.longitude+" = "+ shipPos.longitude);
+                this.ship.latitude = shipPos.latitude;
+                this.ship.longitude = shipPos.longitude;
+                console.log("Status after change "+this.ship.latitude+" "+this.ship.longitude);
+              }
+            }
+        L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
+      }).catch((error)=>{
+        console.log(error);
+      });
+    }, error => {
+      this.message = "Error retrieving ship position";
+    });
+
+
+
   }
 
   ngOnDestroy() {
@@ -131,15 +171,6 @@ export class ShipComponent implements OnInit {
 
   }
 
-  getEachContainerProblem(problemData: Problem[], cid: string){
-    for (var i = 0; i < problemData.length; i++){
-      if (problemData[i].containerId == cid){
-        console.log("okay now I am in getEach"+problemData[i]);
-        return problemData[i];
-      }
-    }
-  }
-
   listenToContainerOrProblem(){
     // call BFF to get problems and container update
     console.log("In the listener problem");
@@ -152,6 +183,16 @@ export class ShipComponent implements OnInit {
     //}
     //return of(this.probString);
 
+  }
+
+  listenToShipPositionEvent(){
+    // call BFF to get ship position status
+    console.log("In the listener for ship position");
+    return this.http.get<string[]>(this.shipPositionUrl)
+    .pipe(map(data => {
+      this.shipPositionString = data;
+      return this.shipPositionString;
+    }))
   }
 
   back() {
