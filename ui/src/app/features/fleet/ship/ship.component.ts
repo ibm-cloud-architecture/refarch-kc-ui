@@ -68,12 +68,12 @@ export class ShipComponent implements OnInit {
   ngOnInit(){
     const map = L.map('map').setView([51.505, -0.09], 13);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-        //Add Marker to map
-        var marker = L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
+    //Add Marker to map
+    var marker = L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
   }
 
   ngOnDestroy() {
