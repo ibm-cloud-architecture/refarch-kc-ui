@@ -2,8 +2,6 @@
 
 class Kafka {
 
-
-
   kafka() {
 
      var list=new Array;
