@@ -10,6 +10,8 @@ import { Problem } from './problem';
 import { switchMap, takeUntil, map, catchError } from  'rxjs/operators';
 import { timer, Observable, Subject, of, throwError, Subscription } from 'rxjs';
 
+declare let L;
+
 async function delay(ms: number) {
   return new Promise( resolve => setTimeout(resolve, ms) );
 }
@@ -37,6 +39,10 @@ export class ShipComponent implements OnInit {
   @ViewChild('myCanvas') myCanvas: ElementRef;
   public context: CanvasRenderingContext2D;
 
+  basicIcon:L.Icon = L.icon({
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/images/marker-icon.png'
+  });
+
   constructor(private router: Router, private service: FleetService, private http: HttpClient) {
     this.ship = this.service.getSelectedShip();
     const rows = this.ship.maxRow;
@@ -60,7 +66,14 @@ export class ShipComponent implements OnInit {
   }
 
   ngOnInit(){
+    const map = L.map('map').setView([51.505, -0.09], 13);
 
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        //Add Marker to map
+        var marker = L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
   }
 
   ngOnDestroy() {
