@@ -59,14 +59,31 @@ module.exports = function(app:any) {
 
       wait().then(()=>{
         console.log("data is old"+problemData);
-        // let probEvent: domain.ProblemReport = consumer.getProbEvent("JimminyCricket");
-        // console.log(probEvent);
-        // assert.isOk(probEvent);
         res.status(200).send(problemData);
       }).catch((error)=>{
         console.log(error);
       });
     });
+
+    app.get('/api/shipposition', (req:any,res:any) => {
+      console.log("In api ship position topic consumer");
+
+      const kafkaConsumer = new Kafka();
+
+      async function wait() {
+        console.log("I am in wait");
+        await delay(10000);
+      }
+
+      var shipPositionData = kafkaConsumer.kafkaShipPosition();
+
+        wait().then(()=>{
+          console.log("data is old"+shipPositionData);
+          res.status(200).send(shipPositionData);
+        }).catch((error)=>{
+          console.log(error);
+        });
+      });
 
     app.get('/api/fleets', (req:any,res:any) => {
         console.log("In api GET fleets");

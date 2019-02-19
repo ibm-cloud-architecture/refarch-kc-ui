@@ -7,8 +7,7 @@ var kafka = require('kafka-node'),
     km = new KeyedMessage('key', 'message'),
     payloads = [
           // { topic: 'bluewaterShip', messages: 'hi', partition: 0 },
-        { topic: 'blueProblem', messages: '{"issue":"HEAT","containerId":"c_7","shipId":"JimminyCricket","status":"AtSea"}', partition:0 },
-        { topic: 'blueProblem', messages: '{"issue":"HEAT","containerId":"c_5","shipId":"JimminyCricket","status":"AtSea"}', partition:0 }
+        { topic: 'bluewaterShip', messages: '{"shipID":"JimminyCricket","latitude":"38.311379442887706","longitude":"-124.36835269529928","speed":15,"ambiantTemperature":22.0,"compass":310,"status":"AT_SEA","timestampMillis":1550633481723}', partition:0 },
     ];
 
 

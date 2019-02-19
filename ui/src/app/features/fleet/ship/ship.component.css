@@ -25,6 +25,11 @@
 }
 
 .canvas {
-        border: dashed .2em #fff;
-        height: 90vh;
-      }
+  border: dashed .2em #fff;
+  height: 90vh;
+}
+
+#map{
+    height: 500px;
+    width: 100%;
+}

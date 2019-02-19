@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable, Subject, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Ship } from './ship';
@@ -8,7 +7,11 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { FleetService } from '../fleet.service';
 import { Router } from '@angular/router';
 import { Problem } from './problem';
-import { map, catchError } from  'rxjs/operators';
+import { shipPosition} from './shipPosition';
+import { switchMap, takeUntil, map, catchError } from  'rxjs/operators';
+import { timer, Observable, Subject, of, throwError, Subscription } from 'rxjs';
+
+declare let L;
 
 async function delay(ms: number) {
   return new Promise( resolve => setTimeout(resolve, ms) );
@@ -27,14 +30,22 @@ export class ShipComponent implements OnInit {
   canvasW:number = 230;
 
   problemUrl: string = "http://localhost:3110/api/problem";
+  shipPositionUrl: string = "http://localhost:3110/api/shipposition";
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
   problems: Problem[] = [];
   containers: Container[] = [];
   message: string;
   probString: string[] =[];
+  shipPositionString: string[] = [];
+  subscription: Subscription;
+  shipPositionSubscription: Subscription;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
   public context: CanvasRenderingContext2D;
+
+  basicIcon:L.Icon = L.icon({
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/images/marker-icon.png'
+  });
 
   constructor(private router: Router, private service: FleetService, private http: HttpClient) {
     this.ship = this.service.getSelectedShip();
@@ -47,7 +58,7 @@ export class ShipComponent implements OnInit {
   ngAfterViewInit(): void {
     this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
     this.img.onload = ()=> {
-      this.context.drawImage(this.img, 0, this.canvasH-80,220,80);
+    this.context.drawImage(this.img, 0, this.canvasH-80,220,80);
   }
     this.draw();
   }
@@ -59,7 +70,54 @@ export class ShipComponent implements OnInit {
   }
 
   ngOnInit(){
+    const map = L.map('map').setView([51.505, -0.09], 13);
 
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    //Add Marker to map
+    var marker = L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
+
+    async function wait() {
+      console.log("I am in ship position simulation");
+      await delay(15000);
+    }
+
+    this.shipPositionSubscription = timer(0, 50000).pipe(
+      switchMap(() => this.listenToShipPositionEvent())
+    ).subscribe(data => {
+      console.log("I am in subscribe of ship position data");
+      this.shipPositionString = data;
+      console.log("listen to ship position event"+this.shipPositionString);
+      wait().then(()=>{
+        console.log("data is old"+this.shipPositionString);
+            for(var k = 0; k < this.shipPositionString.length; k++){
+              var x = this.shipPositionString[k];
+              var shipPos : shipPosition = JSON.parse(x);
+              console.log("Ship Position shipid is "+shipPos.shipID+" with latitude "+shipPos.latitude+" with longitude "+shipPos.longitude);
+              if (this.ship.name == shipPos.shipID){
+                console.log("Status before change "+this.ship.latitude+" "+this.ship.longitude);
+                console.log("Doing "+this.ship.latitude+" = "+ shipPos.latitude+" and "+this.ship.longitude+" = "+ shipPos.longitude);
+                this.ship.latitude = shipPos.latitude;
+                this.ship.longitude = shipPos.longitude;
+                console.log("Status after change "+this.ship.latitude+" "+this.ship.longitude);
+              }
+            }
+        L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
+      }).catch((error)=>{
+        console.log(error);
+      });
+    }, error => {
+      this.message = "Error retrieving ship position";
+    });
+
+
+
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   /*
@@ -71,68 +129,70 @@ export class ShipComponent implements OnInit {
 
     async function wait() {
       console.log("I am in wait simulation");
-      await delay(50000);
+      await delay(15000);
     }
 
-    this.listenToContainerOrProblem().subscribe(data => {
+    this.subscription = timer(0, 50000).pipe(
+      switchMap(() => this.listenToContainerOrProblem())
+    ).subscribe(data => {
       console.log("I am in subscribe of problemdata");
       this.probString = data;
       console.log("listen to container problem"+this.probString);
+      wait().then(()=>{
+        console.log("data is old"+this.probString);
+        var topRow = this.ship.containers.length-1;
+        for(var i=topRow; i >= 0; --i){
+          let row = this.ship.containers[i];
+          console.log("Row info "+row+ " "+i);
+          for(var j=0; j <= row.length -1; j++){
+            console.log("value of j at position i "+i+" is"+j);
+            console.log("The container status is "+this.ship.containers[i][j].status);
+            for(var k = 0; k< this.probString.length; k++){
+              var x = this.probString[k];
+              var prob : Problem = JSON.parse(x);
+              console.log("Problem container id is "+prob.containerId+" with status"+prob.issue);
+              console.log("Problem container id is "+prob.containerId+" with ship container id"+this.ship.containers[i][j].id);
+              if (prob.containerId == this.ship.containers[i][j].id){
+                console.log("Status before change "+this.ship.containers[i][j].status);
+                console.log("Doing "+this.ship.containers[i][j].status+" = "+ prob.issue);
+                this.ship.containers[i][j].status = prob.issue;
+                console.log("Status after change "+this.ship.containers[i][j].status);
+              }
+            }
+          }
+        }
+        this.draw();
+      }).catch((error)=>{
+        console.log(error);
+      });
     }, error => {
       this.message = "Error retrieving problems";
     });
 
-    wait().then(()=>{
-      console.log("data is old"+this.probString);
-      var topRow = this.ship.containers.length-1;
-      for(var i=topRow; i >= 0; --i){
-        let row = this.ship.containers[i];
-        console.log("Row info "+row+ " "+i);
-        for(var j=0; j <= row.length -1; j++){
-          console.log("value of j at position i "+i+" is"+j);
-          console.log("The container status is "+this.ship.containers[i][j].status);
-          for(var k = 0; k< this.probString.length; k++){
-            var x = this.probString[k];
-            var prob : Problem = JSON.parse(x);
-            console.log("Problem container id is "+prob.containerId+" with status"+prob.issue);
-            console.log("Problem container id is "+prob.containerId+" with ship container id"+this.ship.containers[i][j].id);
-            if (prob.containerId == this.ship.containers[i][j].id){
-              console.log("Status before change "+this.ship.containers[i][j].status);
-              console.log("Doing "+this.ship.containers[i][j].status+" = "+ prob.issue);
-              this.ship.containers[i][j].status = prob.issue;
-              console.log("Status after change "+this.ship.containers[i][j].status);
-            }
-          }
-        }
-      }
-      this.draw();
-    }).catch((error)=>{
-      console.log(error);
-    });
-
-  }
-
-  getEachContainerProblem(problemData: Problem[], cid: string){
-    for (var i = 0; i < problemData.length; i++){
-      if (problemData[i].containerId == cid){
-        console.log("okay now I am in getEach"+problemData[i]);
-        return problemData[i];
-      }
-    }
   }
 
   listenToContainerOrProblem(){
     // call BFF to get problems and container update
     console.log("In the listener problem");
-    if (this.probString.length == 0)  {
+    //if (this.probString.length == 0)  {
       return this.http.get<string[]>(this.problemUrl)
       .pipe(map(data => {
         this.probString = data;
         return this.probString;
       }))
-    }
-    return of(this.probString);
-    //return this.http.get(this.problemUrl).subscribe(response => console.log("I am getting returned"+response+" "+typeof response));
+    //}
+    //return of(this.probString);
+
+  }
+
+  listenToShipPositionEvent(){
+    // call BFF to get ship position status
+    console.log("In the listener for ship position");
+    return this.http.get<string[]>(this.shipPositionUrl)
+    .pipe(map(data => {
+      this.shipPositionString = data;
+      return this.shipPositionString;
+    }))
   }
 
   back() {
