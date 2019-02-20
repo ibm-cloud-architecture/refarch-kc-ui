@@ -47,6 +47,15 @@ export class ShipComponent implements OnInit {
     iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/images/marker-icon.png'
   });
 
+   greenIcon = new L.Icon({
+     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+     iconSize: [25, 41],
+     iconAnchor: [12, 41],
+     popupAnchor: [1, -34],
+     shadowSize: [41, 41]
+   });
+
   constructor(private router: Router, private service: FleetService, private http: HttpClient) {
     this.ship = this.service.getSelectedShip();
     const rows = this.ship.maxRow;
@@ -70,14 +79,15 @@ export class ShipComponent implements OnInit {
   }
 
   ngOnInit(){
-    const map = L.map('map').setView([51.505, -0.09], 13);
+    const map = L.map('map').setView([37.8044, -122.2711], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    //Add Marker to map
-    var marker = L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
+    var marker = new L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name});
+    map.addLayer(marker);
+    marker.bindPopup("<b>"+this.ship.name+"</b>").openPopup();
 
     async function wait() {
       console.log("I am in ship position simulation");
@@ -102,9 +112,15 @@ export class ShipComponent implements OnInit {
                 this.ship.latitude = shipPos.latitude;
                 this.ship.longitude = shipPos.longitude;
                 console.log("Status after change "+this.ship.latitude+" "+this.ship.longitude);
+                if (marker) { // check
+                  console.log("Marker is not null");
+                  map.removeLayer(marker); // remove
+                }
+                marker = new L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name});
+                map.addLayer(marker);
+                marker.bindPopup("<b>"+this.ship.name+"</b>").openPopup();
               }
             }
-        L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
       }).catch((error)=>{
         console.log(error);
       });
