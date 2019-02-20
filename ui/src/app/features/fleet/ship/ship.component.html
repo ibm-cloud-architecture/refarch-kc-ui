@@ -3,12 +3,11 @@
     <a (click)="back()"><span><i class="header-icon material-icons">arrow_back</i></span></a>
     <span class="header-spacer"></span>
 </mat-toolbar>
-<div class="container-fluid">
-  <div class="col-md-4">
+<div class="col-md-3">
     <table>
         <td>
           <tr><h3>Ship Details</h3></tr>
-          <tr><td><b>Name:</b></td> <td>{{ship.name}}</td></tr>
+          <tr><td><b>Name:</b></td> <td><b><font color="red">{{ship.name}}</font></b></td></tr>
           <tr><td><b>Longitude:</b></td> <td>{{ship.longitude}}</td></tr>
           <tr><td><b>Latitude:</b></td> <td>{{ship.latitude}}</td></tr>
           <tr><td><b>Max Rows Allowed:</b></td> <td>{{ship.maxRow}}</td></tr>
@@ -20,11 +19,21 @@
         </td>
       </table>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
       <app-simulcontrol [ship]="ship" (done)="doneSimul()"></app-simulcontrol>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
       <canvas #myCanvas width="{{canvasW}}" height={{canvasH}} class="center" style="background: #FFFFFF;"></canvas>
+  </div>
+  <div class="col-md-3">
+    <br>
+    <h5>Problems reported</h5>
+    <!-- <p>{{probString}}}</p> -->
+    <ul>
+      <li *ngFor="let element of problems">
+        For container {{element.containerId}}, the issue is {{element.issue}}
+      </li>
+    </ul>
   </div>
 
   <div id="map"></div>

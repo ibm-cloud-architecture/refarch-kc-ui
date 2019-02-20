@@ -79,7 +79,7 @@ export class ShipComponent implements OnInit {
   }
 
   ngOnInit(){
-    const map = L.map('map').setView([37.8044, -122.2711], 2);
+    const map = L.map('map').setView([37.8044, -122.2711], 3);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -172,6 +172,7 @@ export class ShipComponent implements OnInit {
                 console.log("Status before change "+this.ship.containers[i][j].status);
                 console.log("Doing "+this.ship.containers[i][j].status+" = "+ prob.issue);
                 this.ship.containers[i][j].status = prob.issue;
+                this.problems.push(prob);
                 console.log("Status after change "+this.ship.containers[i][j].status);
               }
             }
