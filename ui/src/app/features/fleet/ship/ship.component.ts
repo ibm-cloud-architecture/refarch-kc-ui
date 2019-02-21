@@ -105,16 +105,11 @@ export class ShipComponent implements OnInit {
             for(var k = 0; k < this.shipPositionString.length; k++){
               var x = this.shipPositionString[k];
               var shipPos : shipPosition = JSON.parse(x);
-              console.log("Ship Position shipid is "+shipPos.shipID+" with latitude "+shipPos.latitude+" with longitude "+shipPos.longitude);
               if (this.ship.name == shipPos.shipID){
-                console.log("Status before change "+this.ship.latitude+" "+this.ship.longitude);
-                console.log("Doing "+this.ship.latitude+" = "+ shipPos.latitude+" and "+this.ship.longitude+" = "+ shipPos.longitude);
                 this.ship.latitude = shipPos.latitude;
                 this.ship.longitude = shipPos.longitude;
-                console.log("Status after change "+this.ship.latitude+" "+this.ship.longitude);
-                if (marker) { // check
-                  console.log("Marker is not null");
-                  map.removeLayer(marker); // remove
+                if (marker) {
+                  map.removeLayer(marker);
                 }
                 marker = new L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name});
                 map.addLayer(marker);
@@ -159,21 +154,44 @@ export class ShipComponent implements OnInit {
         var topRow = this.ship.containers.length-1;
         for(var i=topRow; i >= 0; --i){
           let row = this.ship.containers[i];
-          console.log("Row info "+row+ " "+i);
           for(var j=0; j <= row.length -1; j++){
-            console.log("value of j at position i "+i+" is"+j);
-            console.log("The container status is "+this.ship.containers[i][j].status);
             for(var k = 0; k< this.probString.length; k++){
               var x = this.probString[k];
               var prob : Problem = JSON.parse(x);
-              console.log("Problem container id is "+prob.containerId+" with status"+prob.issue);
-              console.log("Problem container id is "+prob.containerId+" with ship container id"+this.ship.containers[i][j].id);
               if (prob.containerId == this.ship.containers[i][j].id){
-                console.log("Status before change "+this.ship.containers[i][j].status);
-                console.log("Doing "+this.ship.containers[i][j].status+" = "+ prob.issue);
                 this.ship.containers[i][j].status = prob.issue;
-                this.problems.push(prob);
-                console.log("Status after change "+this.ship.containers[i][j].status);
+                if(prob.issue === 'FIRE' || prob.issue === 'HEAT' || prob.issue === 'DOWN'){
+
+                  var found = this.problems.some(function (el) {
+                    return el.containerId === prob.containerId && el.issue === prob.issue && el.shipId === prob.shipId && el.status === prob.status;
+                  });
+
+                  var foundWithDiffStatus = this.problems.some(function (el) {
+                    return el.containerId === prob.containerId && el.issue != prob.issue && el.shipId === prob.shipId && el.status === prob.status;
+                  });
+
+                  if (found) {
+                    console.log("Same element already exists");
+                  }
+                  else if (foundWithDiffStatus) {
+                    const objPosition = this.problems.map(function(e) { return e.containerId; }).indexOf(prob.containerId);
+                    this.problems.splice(objPosition, 1);
+                    this.problems.push(prob);
+                  }
+                  else{
+                    this.problems.push(prob);
+                  }
+
+                }
+                else{
+                  var issuecleared = this.problems.some(function (el) {
+                    return el.containerId === prob.containerId && el.shipId === prob.shipId && el.status === prob.status;
+                  });
+                  if (issuecleared) {
+                    const objPosition = this.problems.map(function(e) { return e.containerId; }).indexOf(prob.containerId);
+                    this.problems.splice(objPosition, 1);
+                  }
+                }
               }
             }
           }
@@ -191,14 +209,11 @@ export class ShipComponent implements OnInit {
   listenToContainerOrProblem(){
     // call BFF to get problems and container update
     console.log("In the listener problem");
-    //if (this.probString.length == 0)  {
       return this.http.get<string[]>(this.problemUrl)
       .pipe(map(data => {
         this.probString = data;
         return this.probString;
       }))
-    //}
-    //return of(this.probString);
 
   }
 
