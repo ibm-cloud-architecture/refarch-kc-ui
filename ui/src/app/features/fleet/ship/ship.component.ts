@@ -47,6 +47,15 @@ export class ShipComponent implements OnInit {
     iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/images/marker-icon.png'
   });
 
+   greenIcon = new L.Icon({
+     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+     iconSize: [25, 41],
+     iconAnchor: [12, 41],
+     popupAnchor: [1, -34],
+     shadowSize: [41, 41]
+   });
+
   constructor(private router: Router, private service: FleetService, private http: HttpClient) {
     this.ship = this.service.getSelectedShip();
     const rows = this.ship.maxRow;
@@ -70,14 +79,15 @@ export class ShipComponent implements OnInit {
   }
 
   ngOnInit(){
-    const map = L.map('map').setView([51.505, -0.09], 13);
+    const map = L.map('map').setView([37.8044, -122.2711], 3);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    //Add Marker to map
-    var marker = L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
+    var marker = new L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name});
+    map.addLayer(marker);
+    marker.bindPopup("<b>"+this.ship.name+"</b>").openPopup();
 
     async function wait() {
       console.log("I am in ship position simulation");
@@ -95,16 +105,17 @@ export class ShipComponent implements OnInit {
             for(var k = 0; k < this.shipPositionString.length; k++){
               var x = this.shipPositionString[k];
               var shipPos : shipPosition = JSON.parse(x);
-              console.log("Ship Position shipid is "+shipPos.shipID+" with latitude "+shipPos.latitude+" with longitude "+shipPos.longitude);
               if (this.ship.name == shipPos.shipID){
-                console.log("Status before change "+this.ship.latitude+" "+this.ship.longitude);
-                console.log("Doing "+this.ship.latitude+" = "+ shipPos.latitude+" and "+this.ship.longitude+" = "+ shipPos.longitude);
                 this.ship.latitude = shipPos.latitude;
                 this.ship.longitude = shipPos.longitude;
-                console.log("Status after change "+this.ship.latitude+" "+this.ship.longitude);
+                if (marker) {
+                  map.removeLayer(marker);
+                }
+                marker = new L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name});
+                map.addLayer(marker);
+                marker.bindPopup("<b>"+this.ship.name+"</b>").openPopup();
               }
             }
-        L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name}).addTo(map).bindPopup("<b>"+this.ship.name+"</b>").openPopup();
       }).catch((error)=>{
         console.log(error);
       });
@@ -143,20 +154,44 @@ export class ShipComponent implements OnInit {
         var topRow = this.ship.containers.length-1;
         for(var i=topRow; i >= 0; --i){
           let row = this.ship.containers[i];
-          console.log("Row info "+row+ " "+i);
           for(var j=0; j <= row.length -1; j++){
-            console.log("value of j at position i "+i+" is"+j);
-            console.log("The container status is "+this.ship.containers[i][j].status);
             for(var k = 0; k< this.probString.length; k++){
               var x = this.probString[k];
               var prob : Problem = JSON.parse(x);
-              console.log("Problem container id is "+prob.containerId+" with status"+prob.issue);
-              console.log("Problem container id is "+prob.containerId+" with ship container id"+this.ship.containers[i][j].id);
               if (prob.containerId == this.ship.containers[i][j].id){
-                console.log("Status before change "+this.ship.containers[i][j].status);
-                console.log("Doing "+this.ship.containers[i][j].status+" = "+ prob.issue);
                 this.ship.containers[i][j].status = prob.issue;
-                console.log("Status after change "+this.ship.containers[i][j].status);
+                if(prob.issue === 'FIRE' || prob.issue === 'HEAT' || prob.issue === 'DOWN'){
+
+                  var found = this.problems.some(function (el) {
+                    return el.containerId === prob.containerId && el.issue === prob.issue && el.shipId === prob.shipId && el.status === prob.status;
+                  });
+
+                  var foundWithDiffStatus = this.problems.some(function (el) {
+                    return el.containerId === prob.containerId && el.issue != prob.issue && el.shipId === prob.shipId && el.status === prob.status;
+                  });
+
+                  if (found) {
+                    console.log("Same element already exists");
+                  }
+                  else if (foundWithDiffStatus) {
+                    const objPosition = this.problems.map(function(e) { return e.containerId; }).indexOf(prob.containerId);
+                    this.problems.splice(objPosition, 1);
+                    this.problems.push(prob);
+                  }
+                  else{
+                    this.problems.push(prob);
+                  }
+
+                }
+                else{
+                  var issuecleared = this.problems.some(function (el) {
+                    return el.containerId === prob.containerId && el.shipId === prob.shipId && el.status === prob.status;
+                  });
+                  if (issuecleared) {
+                    const objPosition = this.problems.map(function(e) { return e.containerId; }).indexOf(prob.containerId);
+                    this.problems.splice(objPosition, 1);
+                  }
+                }
               }
             }
           }
@@ -174,14 +209,11 @@ export class ShipComponent implements OnInit {
   listenToContainerOrProblem(){
     // call BFF to get problems and container update
     console.log("In the listener problem");
-    //if (this.probString.length == 0)  {
       return this.http.get<string[]>(this.problemUrl)
       .pipe(map(data => {
         this.probString = data;
         return this.probString;
       }))
-    //}
-    //return of(this.probString);
 
   }
 
