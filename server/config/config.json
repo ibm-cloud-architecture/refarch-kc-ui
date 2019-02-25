@@ -1,5 +1,5 @@
 {
-  "kafkaBrokers" : "kafka03-prod02.messagehub.services.us-south.bluemix.net:9093,kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,kafka05-prod02.messagehub.services.us-south.bluemix.net:9093",
+  "kafkaBrokers" : "kafka1:9092",
   "kafkaConnectTimeout" : 15000,
   "kafkaGroupId": "kc-dashboard-group",
   "port": 3010,
@@ -8,5 +8,6 @@
   "orderQueryMSURL" : "http://localhost:11080/orders",
   "voyagesMSURL": "http://localhost:3100",
   "problemTopicName" : "bluewaterProblem",
-  "shipTopicName" : "bluewaterShip"
+  "shipTopicName" : "bluewaterShip",
+  "version": "0.0.3"
  }

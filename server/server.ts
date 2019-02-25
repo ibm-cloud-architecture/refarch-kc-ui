@@ -52,9 +52,10 @@ app.get('*', (req, res) => {
 //start our server
 server.listen(config.getPort(), () => {
     let addr: string = JSON.stringify(server.address());
-    console.log(`Server started on port ${addr} :)`);
+    console.log(`Server started on port ${addr} version:` + config.getVersion());
     console.log('Kafka Brokers ' +  config.getKafkaBrokers());
     console.log('Fleet Simulator ' +  config.getFleetMSURL());
     console.log('Order MS Command ' +  config.getOrderMSURL());
+    console.log('Order MS Query ' +  config.getOrderQueryMSURL());
     console.log('Order MS Query ' +  config.getOrderQueryMSURL());
 });

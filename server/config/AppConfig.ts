@@ -59,5 +59,9 @@ export default class AppConfig {
     public getPort(): number {
         return process.env.port || config.port;
     }
+
+    public getVersion() : string {
+        return config.version;
+    }
  
 }
