@@ -38,6 +38,14 @@ export default class AppConfig {
         }
     }
     
+    public getVoyageMSURL(): string {
+        if (process.env.KAFKA_ENV !== "IBMCLOUD") {
+            return process.env.VOYAGE_MS_URL || config.voyagesMSURL;
+        } else {
+            return "http://" + process.env.VOYAGESMS_SERVICE_SERVICE_HOST
+                + ":" + process.env.VOYAGESMS_SERVICE_SERVICE_PORT_HTTP;
+        }
+    }
 
     public getKafkaConnectTimeout(): number {
        return config.kafkaConnectTimeout;

@@ -57,5 +57,6 @@ server.listen(config.getPort(), () => {
     console.log('Fleet Simulator ' +  config.getFleetMSURL());
     console.log('Order MS Command ' +  config.getOrderMSURL());
     console.log('Order MS Query ' +  config.getOrderQueryMSURL());
-    console.log('Order MS Query ' +  config.getOrderQueryMSURL());
+    console.log('Voyage MS ' +  config.getVoyageMSURL());
+   
 });
