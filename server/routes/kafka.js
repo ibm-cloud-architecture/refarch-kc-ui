@@ -6,6 +6,8 @@ class Kafka {
 
      var list=new Array;
 
+     var obj = require("../config/config.json");
+
      var options = {
        fromOffset: 'latest'
      };
@@ -18,7 +20,7 @@ class Kafka {
        consumer = new Consumer(
            client,
            [
-               { topic: 'blueProblem', partition: 0 }
+               { topic: obj.problemTopicName, partition: 0 }
            ],
            [
              {
@@ -52,6 +54,10 @@ class Kafka {
 
       var shiPositionList=new Array;
 
+      var obj = require("../config/config.json");
+
+      console.log("Ship topic name "+obj.shipTopicName);
+
       var options = {
         fromOffset: 'latest'
       };
@@ -64,7 +70,7 @@ class Kafka {
         consumer = new Consumer(
             client,
             [
-                { topic: 'bluewaterShip', partition: 0 }
+                { topic: obj.shipTopicName, partition: 0 }
             ],
             [
               {
