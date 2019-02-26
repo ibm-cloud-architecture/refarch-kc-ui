@@ -10,6 +10,7 @@ if [[ -z "$tools" ]]
 then
    cd ui && npm install && ng build && cd ../server && npm install && npm run build && cd ..
 else
+   echo "build with docker node tools image"
    docker run -v $(pwd):/home -ti ibmcase/nodetools bash -c "cd /home/ui  && npm install && ng build && cd ../server && npm install && npm run build"
 fi
 # TODO add CA certificate for icp or iks deployment

@@ -1,8 +1,8 @@
-FROM node:alpine
+FROM node:11
 MAINTAINER https://github.com/ibm-cloud-architecture - IBM - Jerome Boyer
 
-ADD . /kc_ui
-WORKDIR /kc-ui/server
+COPY . /kc_ui
+WORKDIR /kc_ui/server
 
 
 ENV PORT 3010
