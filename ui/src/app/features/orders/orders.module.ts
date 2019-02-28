@@ -6,7 +6,9 @@ import {  MatSelectModule,
           MatTableModule,
           MatButtonModule,
           MatIconModule,
+          MatDatepickerModule,
           MatInputModule,
+          MatNativeDateModule,
           MatSortModule
          } from '@angular/material';
 import { OrdersComponent } from './orders.component';
@@ -20,6 +22,8 @@ import { OrderComponent } from './order/order.component';
     ReactiveFormsModule,
     MatSelectModule,
     MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatTableModule,
     MatIconModule,
     MatSortModule,

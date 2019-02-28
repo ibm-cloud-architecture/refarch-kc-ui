@@ -6,7 +6,7 @@ class Kafka {
 
      var list=new Array;
 
-     var obj = require("../config/config.json");
+     var config = require("../config/config.json");
 
      var options = {
        fromOffset: 'latest'
@@ -16,11 +16,11 @@ class Kafka {
 
      var kafka = require('kafka-node'),
        Consumer = kafka.Consumer,
-       client = new kafka.KafkaClient({kafkaHost: 'kafka1:9092'}),
+       client = new kafka.KafkaClient({kafkaHost: config.kafkaBrokers}),
        consumer = new Consumer(
            client,
            [
-               { topic: obj.problemTopicName, partition: 0 }
+               { topic: config.problemTopicName, partition: 0 }
            ],
            [
              {
@@ -42,7 +42,7 @@ class Kafka {
            });
 
      consumer.on('error', function (err) {
-       console.log("This is the err"+err);
+       console.log("This is the err "+err);
        return err;
      });
 
@@ -54,9 +54,9 @@ class Kafka {
 
       var shiPositionList=new Array;
 
-      var obj = require("../config/config.json");
+      var config = require("../config/config.json");
 
-      console.log("Ship topic name "+obj.shipTopicName);
+      console.log("Ship topic name "+config.shipTopicName);
 
       var options = {
         fromOffset: 'latest'
@@ -66,11 +66,11 @@ class Kafka {
 
       var kafka = require('kafka-node'),
         Consumer = kafka.Consumer,
-        client = new kafka.KafkaClient({kafkaHost: 'kafka1:9092'}),
+        client = new kafka.KafkaClient({kafkaHost: config.kafkaBrokers}),
         consumer = new Consumer(
             client,
             [
-                { topic: obj.shipTopicName, partition: 0 }
+                { topic: config.shipTopicName, partition: 0 }
             ],
             [
               {

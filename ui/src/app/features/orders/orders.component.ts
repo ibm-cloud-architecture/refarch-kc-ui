@@ -11,7 +11,7 @@ export class OrdersComponent implements OnInit {
 
   displayedColumns: string[] = ['OrderID', 'From', "To", 'ExpectedDate', 'Status', 'actions'];
   orders: Order[];
-  manufacturers: string[] = ['GoodManuf'];
+  manufacturers: string[] = ['GoodManuf','OtherManuf'];
   selectedManufacturer: string;
   selectedOrder: Order;
 

@@ -16,11 +16,15 @@
             </mat-form-field>
             <mat-form-field class="order-full-width">
               <label for="pickupDate">Pickup Date</label>
-              <input matInput [(ngModel)]="order.pickupDate" name="pickupDate">
+              <input matInput [matDatepicker]="picker" [(ngModel)]="order.pickupDate" name="pickupDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="order-full-width">
               <label for="expectedDeliveryDate">Expected Delivery Date</label>
-              <input matInput [(ngModel)]="order.expectedDeliveryDate" name="expectedDeliveryDate">
+              <input matInput [matDatepicker]="picker2" [(ngModel)]="order.expectedDeliveryDate" name="expectedDeliveryDate">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
           </form>
       </div>
