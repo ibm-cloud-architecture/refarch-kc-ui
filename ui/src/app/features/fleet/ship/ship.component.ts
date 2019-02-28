@@ -29,8 +29,8 @@ export class ShipComponent implements OnInit {
   canvasH:number = 200;
   canvasW:number = 230;
 
-  problemUrl: string = "http://localhost:3110/api/problem";
-  shipPositionUrl: string = "http://localhost:3110/api/shipposition";
+  problemUrl: string = "http://localhost:3010/api/problem";
+  shipPositionUrl: string = "http://localhost:3010/api/shipposition";
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
   problems: Problem[] = [];
   containers: Container[] = [];
