@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 import { Ship } from './ship';
 import { Container } from './container';
 import { ViewChild, ElementRef } from '@angular/core';
@@ -37,7 +36,9 @@ export class ShipComponent implements OnInit {
   message: string;
   probString: string[] =[];
   shipPositionString: string[] = [];
-  subscription: Subscription;
+  map: any;
+  marker: any;
+  problemSubscription: Subscription;
   shipPositionSubscription: Subscription;
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
@@ -47,14 +48,14 @@ export class ShipComponent implements OnInit {
     iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/images/marker-icon.png'
   });
 
-   greenIcon = new L.Icon({
-     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-     iconSize: [25, 41],
-     iconAnchor: [12, 41],
-     popupAnchor: [1, -34],
-     shadowSize: [41, 41]
-   });
+  greenIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
   constructor(private router: Router, private service: FleetService, private http: HttpClient) {
     this.ship = this.service.getSelectedShip();
@@ -64,98 +65,85 @@ export class ShipComponent implements OnInit {
     this.img.src = 'assets/images/ship2.png';
   }
 
+  // Draw the ship in the canvas
   ngAfterViewInit(): void {
     this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
     this.img.onload = ()=> {
-    this.context.drawImage(this.img, 0, this.canvasH-80,220,80);
-  }
-    this.draw();
+      this.context.drawImage(this.img, 0, this.canvasH-80,220,80);
+    }
+    this.drawBoatImage();
   }
 
-  draw() {
+  // refresh the boat images to reflect potential changes to its load or containers state
+  drawBoatImage() {
     this.context.clearRect(0, 0, this.canvasW, this.canvasH);
     this.context.drawImage(this.img, 0, this.canvasH-80,220,80);
     this.drawMatrix();
   }
 
-  ngOnInit(){
-    const map = L.map('map').setView([37.8044, -122.2711], 3);
 
+  ngOnInit(){
+    this.map = L.map('map').setView([this.ship.latitude, this.ship.longitude], 4);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    var marker = new L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name});
-    map.addLayer(marker);
-    marker.bindPopup("<b>"+this.ship.name+"</b>").openPopup();
-
-    async function wait() {
-      console.log("I am in ship position simulation");
-      await delay(15000);
-    }
-
-    this.shipPositionSubscription = timer(0, 50000).pipe(
-      switchMap(() => this.listenToShipPositionEvent())
-    ).subscribe(data => {
-      console.log("I am in subscribe of ship position data");
-      this.shipPositionString = data;
-      console.log("listen to ship position event"+this.shipPositionString);
-      wait().then(()=>{
-        console.log("data is old"+this.shipPositionString);
-            for(var k = 0; k < this.shipPositionString.length; k++){
-              var x = this.shipPositionString[k];
-              var shipPos : shipPosition = JSON.parse(x);
-              if (this.ship.name == shipPos.shipID){
-                this.ship.latitude = shipPos.latitude;
-                this.ship.longitude = shipPos.longitude;
-                if (marker) {
-                  map.removeLayer(marker);
-                }
-                marker = new L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name});
-                map.addLayer(marker);
-                marker.bindPopup("<b>"+this.ship.name+"</b>").openPopup();
-              }
-            }
-      }).catch((error)=>{
-        console.log(error);
-      });
-    }, error => {
-      this.message = "Error retrieving ship position";
-    });
-
-
-
+    }).addTo(this.map);
+    this.drawBoat();
   }
 
+  // called on refresh or when navigating away. So stop listening
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.problemSubscription !== undefined ) {
+      this.problemSubscription.unsubscribe();
+    }
+    if (this.shipPositionSubscription !== undefined ) {
+      this.shipPositionSubscription.unsubscribe();
+    }
+  }
+
+  drawBoat() {
+    this.marker = new L.marker([this.ship.latitude, this.ship.longitude],{icon: this.basicIcon,title: this.ship.name});
+    this.map.addLayer(this.marker);
+    this.marker.bindPopup("<b>"+this.ship.name+"</b>").openPopup();
   }
 
   /*
-  Call back so when the simulation is started the ship component can start listening to problem or containers
+  Call back so when the simulation is started the ship component can start listening to problems on containers and
+  ship positions
   The ship instance now has loaded containers.
   */
-  doneSimul(){
+ simulationStarted(){
     this.ship = this.service.getSelectedShip();
 
-    async function wait() {
-      console.log("I am in wait simulation");
-      await delay(15000);
-    }
+    // create a subscription on ship position. wait 1 s and then every 30s, then poll the ship position and once getting results 
+    // move the boat
+    this.shipPositionSubscription = timer(1000, 30000).pipe(
+      switchMap(() => this.pollShipPositionEvent())
+    ).subscribe(data => this.processShipPosition(data));
 
-    this.subscription = timer(0, 50000).pipe(
-      switchMap(() => this.listenToContainerOrProblem())
-    ).subscribe(data => {
-      console.log("I am in subscribe of problemdata");
+    this.problemSubscription = timer(1000, 50000).pipe(
+      switchMap(() => this.pollContainerProblem())
+    ).subscribe(data => this.processProblemOnContainer(data));
+  }
+
+  pollContainerProblem(){
+    // call BFF to get problems and container update
+    console.log("In the poll problem");
+    return this.http.get<string[]>(this.problemUrl)
+    .pipe(map(data => {
       this.probString = data;
+      return this.probString;
+    }))
+  }
+
+  processProblemOnContainer(problem) {
+      console.log("I am in subscribe of problemdata");
+      this.probString = problem;
       console.log("listen to container problem"+this.probString);
-      wait().then(()=>{
-        console.log("data is old"+this.probString);
         var topRow = this.ship.containers.length-1;
         for(var i=topRow; i >= 0; --i){
           let row = this.ship.containers[i];
-          for(var j=0; j <= row.length -1; j++){
-            for(var k = 0; k< this.probString.length; k++){
+          for(var j=0; j <= row.length -1; j++) {
+            for(var k = 0; k< this.probString.length; k++) {
               var x = this.probString[k];
               var prob : Problem = JSON.parse(x);
               if (prob.containerId == this.ship.containers[i][j].id){
@@ -196,36 +184,36 @@ export class ShipComponent implements OnInit {
             }
           }
         }
-        this.draw();
-      }).catch((error)=>{
-        console.log(error);
-      });
-    }, error => {
-      this.message = "Error retrieving problems";
-    });
-
+        this.drawBoatImage();  
   }
 
-  listenToContainerOrProblem(){
-    // call BFF to get problems and container update
-    console.log("In the listener problem");
-      return this.http.get<string[]>(this.problemUrl)
-      .pipe(map(data => {
-        this.probString = data;
-        return this.probString;
-      }))
-
-  }
-
-  listenToShipPositionEvent(){
+  pollShipPositionEvent(){
     // call BFF to get ship position status
-    console.log("In the listener for ship position");
+    console.log("In the poll for ship position");
     return this.http.get<string[]>(this.shipPositionUrl)
     .pipe(map(data => {
       this.shipPositionString = data;
       return this.shipPositionString;
     }))
   }
+
+  processShipPosition(position) {
+    this.shipPositionString = position;
+    console.log("@@@ listen to ship position event "+position);
+  
+    for(var k = 0; k < this.shipPositionString.length; k++){
+      var shipPos : shipPosition = JSON.parse(this.shipPositionString[k]);
+      if (this.ship.name == shipPos.shipID){
+        this.ship.latitude = shipPos.latitude;
+        this.ship.longitude = shipPos.longitude;
+        if (this.marker) {
+          this.map.removeLayer(this.marker);
+        }
+        this.drawBoat()
+      }
+    }
+  }
+
 
   back() {
     this.router.navigate(['fleets']);

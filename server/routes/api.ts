@@ -22,7 +22,7 @@ import * as orderDomain from './orderDomain';
 import ProblemTopicConsumer from './ProblemTopicConsumer';
 import ShipmentClient from './ShipmentClient';
 import * as domain from './fleetDomain';
-import Kafka from './kafka';
+import KafkaConsumer from './kafka';
 
 const orderClient = new OrderClient();
 const fleetClient = new FleetClient();
@@ -48,14 +48,14 @@ module.exports = function(app:any) {
   app.get('/api/problem', (req:any,res:any) => {
     console.log("In api problem topic consumer");
 
-    const kafkaConsumer = new Kafka();
+    const kafkaConsumer = new KafkaConsumer();
 
     async function wait() {
       console.log("I am in wait");
       await delay(10000);
     }
 
-    var problemData = kafkaConsumer.kafka();
+    var problemData = kafkaConsumer.problemsConsumer();
 
       wait().then(()=>{
         console.log("data is old"+problemData);
@@ -68,7 +68,7 @@ module.exports = function(app:any) {
     app.get('/api/shipposition', (req:any,res:any) => {
       console.log("In api ship position topic consumer");
 
-      const kafkaConsumer = new Kafka();
+      const kafkaConsumer = new KafkaConsumer();
 
       async function wait() {
         console.log("I am in wait");
@@ -86,19 +86,19 @@ module.exports = function(app:any) {
       });
 
     app.get('/api/fleets', (req:any,res:any) => {
-        console.log("In api GET fleets");
+        console.log("In GET /api/fleets");
         let fleets = [{id: "f1", name: "KC-NorthAtlantic"}, {id: "f2", name: "KC-NorthPacific"},{id: "f2", name: "KC-SouthPacific"}];
         fleetClient.getFleetNames().then((fleets: fleetDomain.Fleet[])=> {
-            console.log("Got this " + JSON.stringify(fleets));
+            console.log("Got fleet names: " + JSON.stringify(fleets,null,2));
             res.status(200).send(fleets);
         });
 
     });
 
     app.get('/api/fleets/:fleetname', (req,res) => {
-        console.log("In api GET fleet ships for " + req.params.fleetname);
+        console.log("In api GET ships for fleet: " + req.params.fleetname);
         fleetClient.getFleetByName(req.params.fleetname).then( (aFleet: fleetDomain.Fleet) => {
-            console.log("Got this " + JSON.stringify(aFleet));
+            console.log("Got those ships: " + JSON.stringify(aFleet,null,2));
             res.status(200).send(aFleet);
         });
     });
@@ -106,7 +106,7 @@ module.exports = function(app:any) {
 
 
     app.post('/api/fleets/simulate', (req,res) => {
-        console.log("In api POST fleets simulate " + JSON.stringify(req.body));
+        console.log("In api POST fleet simulate " + JSON.stringify(req.body,null,2));
         if (req.body !== undefined) {
             fleetClient.fleetSimulation(req.body).then((data: fleetDomain.SimulResponse) => {
                 res.status(200).send(data);
@@ -118,7 +118,7 @@ module.exports = function(app:any) {
 
 
     app.post('/api/ships/simulate', (req,res) => {
-        console.log("In api POST ship simulate " + JSON.stringify(req.body));
+        console.log("In api POST ship simulate " + JSON.stringify(req.body,null,2));
         if (req.body !== undefined) {
             fleetClient.shipSimulation(req.body).then((data: fleetDomain.Ship) => {
                 console.log("In api POST ship simulate resp:" + JSON.stringify(data));

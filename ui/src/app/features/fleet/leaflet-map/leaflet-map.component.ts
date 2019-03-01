@@ -43,7 +43,6 @@ export class LeafletMapComponent implements OnInit, OnChanges {
   }
 
   addMarker(lat,long,iconType,id,myMap){
-    console.log('Add Marker run');
     var boat=L.marker([lat,long],{icon: iconType,title: id}).addTo(myMap);
     boat.bindPopup("<b>"+id+"</b>").openPopup();
   }

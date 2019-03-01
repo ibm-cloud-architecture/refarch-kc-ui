@@ -22,7 +22,7 @@
     "lint": "tslint \"src/**/*.ts\"",
     "prebuild": "npm install",
     "test": "mocha --require ts-node/register  test/**/*.ts",
-    "build": "npm run  copy-deps && tsc",
+    "build": "npm run  clean && npm run copy-deps && tsc",
     "build.w": "npm run copy-deps &&  tsc -w"
   },
   "private": true,

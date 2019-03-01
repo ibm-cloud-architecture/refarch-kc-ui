@@ -1,4 +1,4 @@
-export default class Kafka {
-  kafka(): any;
+export default class KafkaConsumer {
+  problemsConsumer(): any;
   kafkaShipPosition(): any;
 }

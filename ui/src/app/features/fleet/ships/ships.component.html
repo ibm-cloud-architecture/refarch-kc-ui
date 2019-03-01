@@ -36,7 +36,7 @@
               </mat-header-cell>
 
               <mat-cell *matCellDef="let ship">
-                <button class="buttonpad" mat-icon-button color="primary" (click)="onSelect(ship)" [routerLink]="['/ship', ship.name]"><mat-icon>edit</mat-icon></button>
+                <button class="buttonpad" *ngIf="ship.name == 'JimminyCricket'" mat-icon-button color="primary" (click)="onSelect(ship)" [routerLink]="['/ship', ship.name]"><mat-icon>edit</mat-icon></button>
               </mat-cell>
             </ng-container>
 

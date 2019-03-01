@@ -20,7 +20,7 @@
       </table>
   </div>
   <div class="col-md-3">
-      <app-simulcontrol [ship]="ship" (done)="doneSimul()"></app-simulcontrol>
+      <app-simulcontrol [ship]="ship" (done)="simulationStarted()"></app-simulcontrol>
   </div>
   <div class="col-md-3">
       <canvas #myCanvas width="{{canvasW}}" height={{canvasH}} class="center" style="background: #FFFFFF;"></canvas>

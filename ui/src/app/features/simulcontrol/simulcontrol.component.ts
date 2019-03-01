@@ -43,4 +43,15 @@ export class SimulcontrolComponent implements OnInit {
     });
     
   }
+
+  resetSimulation(){
+    let sc: ShipControl = new ShipControl();
+    sc.command = "STOP";
+    sc.numberOfMinutes = this.numberOfMinutes;
+    sc.shipName = this.ship.name;
+    this.service.processShip(sc).subscribe( data => {
+      console.log(data);
+      this.done.emit(true);
+    });
+  }
 }
