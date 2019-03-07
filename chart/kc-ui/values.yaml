@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.ng.bluemix.net/ibmcaseeda/kc-ui
+  repository: us.icr.io/ibmcaseeda/kc-ui
   tag: latest
   pullPolicy: Always
   pullSecret: bluemix-browncompute-secret-regional

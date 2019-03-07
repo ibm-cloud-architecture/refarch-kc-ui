@@ -4,10 +4,16 @@ export CPPFLAGS=-I/usr/local/opt/openssl/include
 if [[ $PWD = */scripts ]]; then
  cd ..
 fi
-
+if [[ $# -eq 0 ]];then
+  kcenv="local"
+else
+  kcenv=$1
+fi
+. ./setenv.sh
 tools=$(docker images | grep nodetools)
 if [[ -z "$tools" ]]
 then
+   echo "Build with you npm and angular ng"
    cd ui && npm install && ng build && cd ../server && npm install && npm run build && cd ..
 else
    echo "build with docker node tools image"
@@ -15,9 +21,9 @@ else
 fi
 # TODO add CA certificate for icp or iks deployment
 
-docker build -t ibmcase/kc-ui .
-if [[ $kcenv -ne "local" ]]
+# docker build -t ibmcase/kc-ui .
+if [[ $kcenv != "local" ]]
 then
     # image for private registry in IBM Cloud
-    docker tag ibmcase/kc-ui registry.ng.bluemix.net/ibmcaseeda/kc-ui
+    docker tag ibmcase/$kname us.icr.io/ibmcaseeda/$kname
 fi
