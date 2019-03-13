@@ -8,7 +8,7 @@ import { Order } from './Order';
   providedIn: 'root'
 })
 export class OrdersService {
-  ordersUrl: string = "http://localhost:3010/api/orders";
+  ordersUrl: string = "/api/orders";
 
   constructor(private http: HttpClient) { }
 

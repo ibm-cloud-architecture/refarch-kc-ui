@@ -9,8 +9,8 @@ import { Voyage } from './voyages/Voyage';
   providedIn: 'root'
 })
 export class ShipmentsService {
-  private shipmentBFFURL: string = "http://localhost:3010/api/shipments";
-  private voyageBFFURL: string = "http://localhost:3010/api/voyages";
+  private shipmentBFFURL: string = "/api/shipments";
+  private voyageBFFURL: string = "/api/voyages";
 
   constructor(private http: HttpClient) { }
 

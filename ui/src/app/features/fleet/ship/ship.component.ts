@@ -28,8 +28,8 @@ export class ShipComponent implements OnInit {
   canvasH:number = 200;
   canvasW:number = 230;
 
-  problemUrl: string = "http://localhost:3010/api/problem";
-  shipPositionUrl: string = "http://localhost:3010/api/shipposition";
+  problemUrl: string = "/api/problem";
+  shipPositionUrl: string = "/api/shipposition";
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
   problems: Problem[] = [];
   containers: Container[] = [];
@@ -114,7 +114,7 @@ export class ShipComponent implements OnInit {
  simulationStarted(){
     this.ship = this.service.getSelectedShip();
 
-    // create a subscription on ship position. wait 1 s and then every 30s, then poll the ship position and once getting results 
+    // create a subscription on ship position. wait 1 s and then every 30s, then poll the ship position and once getting results
     // move the boat
     this.shipPositionSubscription = timer(1000, 30000).pipe(
       switchMap(() => this.pollShipPositionEvent())
@@ -184,7 +184,7 @@ export class ShipComponent implements OnInit {
             }
           }
         }
-        this.drawBoatImage();  
+        this.drawBoatImage();
   }
 
   pollShipPositionEvent(){
@@ -200,7 +200,7 @@ export class ShipComponent implements OnInit {
   processShipPosition(position) {
     this.shipPositionString = position;
     console.log("@@@ listen to ship position event "+position);
-  
+
     for(var k = 0; k < this.shipPositionString.length; k++){
       var shipPos : shipPosition = JSON.parse(this.shipPositionString[k]);
       if (this.ship.name == shipPos.shipID){
