@@ -1,5 +1,5 @@
 #!/bin/bash
-. ./setenv.sh
+. ./scripts/setenv.sh
 
 echo "Deploy helm chart for $chart project to $ns"
 
@@ -12,8 +12,8 @@ echo "############################"
 oq=$(helm list | grep $kname | awk '{print $1}')
 if [[ -z "$oq" ]]
 then
-  echo "$chart release not deployed..."
-  cd ../chart
+  echo "$kname here release not deployed..."
+  cd ./chart
   helm install $chart/ --name $kname --namespace $ns
   sleep 4
 else

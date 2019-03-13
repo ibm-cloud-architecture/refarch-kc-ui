@@ -16,8 +16,8 @@ export class FleetService {
   fleets: Fleet[] = [];
   ships: Ship[] = [];
   selectedShip: Ship;
-  fleetsUrl: string = "http://localhost:3010/api/fleets";
-  shipsUrl: string = "http://localhost:3010/api/ships";
+  fleetsUrl: string = "/api/fleets";
+  shipsUrl: string = "/api/ships";
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }

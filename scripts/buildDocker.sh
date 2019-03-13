@@ -9,7 +9,8 @@ if [[ $# -eq 0 ]];then
 else
   kcenv=$1
 fi
-. ./setenv.sh
+
+. ./scripts/setenv.sh
 tools=$(docker images | grep nodetools)
 if [[ -z "$tools" ]]
 then
@@ -21,7 +22,7 @@ else
 fi
 # TODO add CA certificate for icp or iks deployment
 
-# docker build -t ibmcase/kc-ui .
+docker build -t ibmcase/$kname .
 if [[ $kcenv != "local" ]]
 then
     # image for private registry in IBM Cloud
