@@ -54,6 +54,10 @@ spec:
             value: "orderqueryms-service"
           - name: ORDERQUERYMS_SERVICE_SERVICE_PORT_HTTP
             value: "9080"
+          - name: VOYAGEMS_SERVICE_SERVICE_HOST
+            value: "voyagesms-service"
+          - name: VOYAGESMS_SERVICE_SERVICE_PORT_HTTP
+            value: "3000"
           - name: KAFKA_ENV
             value: "{{ .Values.eventstreams.env }}"
           - name: KAFKA_BROKERS

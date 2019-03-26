@@ -14,7 +14,6 @@ import { RouterModule } from '@angular/router';
 import { routes } from './routes';
 import { SharedModule } from '../shared/shared.module';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 import { FleetComponent } from './fleet/fleet.component';
 
 import { ShipsComponent } from './fleet/ships/ships.component';
@@ -23,6 +22,7 @@ import { LeafletMapComponent } from './fleet/leaflet-map/leaflet-map.component';
 import { SimulcontrolComponent } from './simulcontrol/simulcontrol.component';
 import { OrdersModule } from './orders/orders.module';
 import { ShipmentsModule } from './shipments/shipments.module';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   imports: [
@@ -42,9 +42,10 @@ import { ShipmentsModule } from './shipments/shipments.module';
       enableTracing: false
       }),
     OrdersModule,
+    LoginModule,
     ShipmentsModule
   ],
-  declarations: [HomeComponent, LoginComponent, FleetComponent, ShipsComponent, ShipComponent, SimulcontrolComponent, LeafletMapComponent],
-  exports: [ RouterModule, MatSelectModule ]
+  declarations: [HomeComponent, FleetComponent, ShipsComponent, ShipComponent, SimulcontrolComponent, LeafletMapComponent],
+  exports: [ RouterModule ]
 })
 export class FeaturesModule { }

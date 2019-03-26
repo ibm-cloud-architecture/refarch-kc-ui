@@ -206,6 +206,7 @@ export class ShipComponent implements OnInit {
       if (this.ship.name == shipPos.shipID){
         this.ship.latitude = shipPos.latitude;
         this.ship.longitude = shipPos.longitude;
+        this.ship.status = shipPos.status;
         if (this.marker) {
           this.map.removeLayer(this.marker);
         }

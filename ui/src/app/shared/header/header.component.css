@@ -3,3 +3,11 @@
   height: 15vh;
   color: white;
 }
+
+.header-spacer {
+  flex: 1 1 auto;
+}
+
+.header-icon {
+  padding: 0 14px;
+}

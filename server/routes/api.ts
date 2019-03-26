@@ -51,14 +51,13 @@ module.exports = function(app:any) {
     const kafkaConsumer = new KafkaConsumer();
 
     async function wait() {
-      console.log("I am in wait");
       await delay(10000);
     }
 
     var problemData = kafkaConsumer.problemsConsumer();
 
       wait().then(()=>{
-        console.log("data is old"+problemData);
+        console.log("data is old "+problemData);
         res.status(200).send(problemData);
       }).catch((error)=>{
         console.log(error);

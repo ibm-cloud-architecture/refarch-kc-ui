@@ -23,7 +23,7 @@ export class SimulcontrolComponent implements OnInit {
     {name: "Heat wave", value: "HEAT_WAVE" }];
   
   selectedCommand: string;
-  numberOfMinutes: number = 1;
+  numberOfMinutes: number = .4;
   message: string = "";
     
   constructor(private service: FleetService,

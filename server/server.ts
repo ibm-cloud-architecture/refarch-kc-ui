@@ -21,7 +21,7 @@ broadcast Event coming from kafka to the connected dashboards.
 
 import * as express from 'express';
 import * as http from 'http';
-
+import * as passport from  'passport';
 import * as path from 'path';
 import AppConfig from './config/AppConfig'; 
 const bodyParser = require('body-parser');
@@ -35,12 +35,16 @@ app.use(cors())
 // Parsers for POST JSON PAYLOAD
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 const config = new AppConfig();
 //initialize a simple http server
 const server = http.createServer(app);
 
 require('./routes/api')(app);
+require('./routes/passport')(passport)
+require('./routes/userlogin')(app, passport);
 
 // Point static path to /static
 app.use(express.static(path.join(__dirname, './static')));

@@ -9,7 +9,7 @@ class KafkaConsumer {
     var problems = new Array;
     var kafka = require('kafka-node'),
       Consumer = kafka.Consumer,
-      client = new kafka.KafkaClient({kafkaHost: config.kafkaBrokers}),
+      client = new kafka.KafkaClient({kafkaHost: process.env.KAFKA_BROKERS || config.kafkaBrokers}),
       consumer = new Consumer(
            client,
            [{ topic: config.problemTopicName, partition: 0 }
@@ -20,7 +20,7 @@ class KafkaConsumer {
         );
 
     consumer.on('message', function (message) {
-      console.log("In problem consumer:" + message.value);
+      // console.log("In problem consumer:" + message.value);
       problems.push(message.value);
     });
 
@@ -34,11 +34,10 @@ class KafkaConsumer {
    kafkaShipPosition() {
  
     var shipPositionList = new Array;
-    console.log("Ship topic name "+config.shipTopicName);
 
     var kafka = require('kafka-node'),
         Consumer = kafka.Consumer,
-        client = new kafka.KafkaClient({kafkaHost: config.kafkaBrokers}),
+        client = new kafka.KafkaClient({kafkaHost: process.env.KAFKA_BROKERS ||  config.kafkaBrokers}),
         consumer = new Consumer(
             client,
             [
@@ -63,7 +62,7 @@ class KafkaConsumer {
             });
 
       consumer.on('error', function (err) {
-        console.log("This is the err"+err);
+        console.log("This is the err "+err);
         return err;
       });
 

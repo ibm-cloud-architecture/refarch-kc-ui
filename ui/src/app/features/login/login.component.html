@@ -1,3 +1,25 @@
-<p>
-  login works!
-</p>
+<div class="row" style="outline: 4px">
+
+  <div class="col-md-8" style="outline: 4px">
+    <img src="assets/images/banner.png" style="width: 100%"/>
+  </div>
+  <div class="col-md-4" style="outline: 4px">
+    <h3>Login</h3>
+    <form name="login-form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+          <mat-form-field class="login-full-width">
+            <input matInput placeholder="email" [(ngModel)]="user.email" name="email" #email="ngModel">
+          </mat-form-field>
+          <mat-form-field class="search-full-width">
+            <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="user.password">
+          </mat-form-field>
+          <div class="form-group">
+              <button class="bx--btn bx--btn--primary" [disabled]="loggingIn"><span *ngIf="!loggingIn">Login</span><span *ngIf="loggingIn">Logging in...</span></button>
+              <!-- <a [routerLink]="['/signUp']" class="btn btn-link">Register</a> -->
+          </div>
+
+      </form>
+      <p style="color: red;">
+        {{errorMessage}}
+      </p>
+    </div>
+</div>
