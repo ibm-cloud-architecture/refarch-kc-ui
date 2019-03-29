@@ -57,6 +57,7 @@ app.get('*', (req, res) => {
 server.listen(config.getPort(), () => {
     let addr: string = JSON.stringify(server.address());
     console.log(`Server started on port ${addr} version:` + config.getVersion());
+    console.log('Kafka Environment ' +  process.env.KAFKA_ENV);
     console.log('Kafka Brokers ' +  config.getKafkaBrokers());
     console.log('Fleet Simulator ' +  config.getFleetMSURL());
     console.log('Order MS Command ' +  config.getOrderMSURL());

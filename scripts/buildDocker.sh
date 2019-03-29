@@ -11,6 +11,10 @@ else
 fi
 
 . ./scripts/setenv.sh
+echo "##########################################"
+echo " Build User Interface on $kcenv"
+echo "##########################################"
+
 tools=$(docker images | grep nodetools)
 if [[ -z "$tools" ]]
 then
@@ -23,7 +27,7 @@ fi
 # TODO add CA certificate for icp or iks deployment
 
 docker build -t ibmcase/$kname .
-if [[ $kcenv != "local" ]]
+if [[ "$kcenv" != "local" ]]
 then
     # image for private registry in IBM Cloud
     docker tag ibmcase/$kname us.icr.io/ibmcaseeda/$kname

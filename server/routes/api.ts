@@ -70,14 +70,12 @@ module.exports = function(app:any) {
       const kafkaConsumer = new KafkaConsumer();
 
       async function wait() {
-        console.log("I am in wait");
         await delay(10000);
       }
 
       var shipPositionData = kafkaConsumer.kafkaShipPosition();
 
         wait().then(()=>{
-          console.log("data is old"+shipPositionData);
           res.status(200).send(shipPositionData);
         }).catch((error)=>{
           console.log(error);

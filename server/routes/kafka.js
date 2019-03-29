@@ -53,8 +53,6 @@ class KafkaConsumer {
             ]
           );
 
-          console.log("kafka properties set");
-
           consumer.on('message', function (message) {
               console.log("In ship position js consumer file");
               console.log(message.value);
