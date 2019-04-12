@@ -1,8 +1,18 @@
 FROM node:11
 MAINTAINER https://github.com/ibm-cloud-architecture - IBM - Jerome Boyer
 
-COPY . /kc_ui
-WORKDIR /kc_ui/server
+WORKDIR "/app"
+ADD . /app
+
+RUN apt-get update && cd ui \
+   && npm install \
+   && npm install -g  @angular/cli \
+   && ng build \
+   && cd ../server \
+   && npm install && npm run build
+
+COPY . /app
+WORKDIR /app/server
 
 
 ENV PORT 3010
