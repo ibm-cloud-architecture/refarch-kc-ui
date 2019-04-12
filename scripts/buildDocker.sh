@@ -5,29 +5,18 @@ if [[ $PWD = */scripts ]]; then
  cd ..
 fi
 if [[ $# -eq 0 ]];then
-  kcenv="local"
+  kcenv="LOCAL"
 else
   kcenv=$1
 fi
 
-. ./scripts/setenv.sh
+. ./scripts/setenv.sh $kcenv
 echo "##########################################"
 echo " Build User Interface on $kcenv"
 echo "##########################################"
 
-tools=$(docker images | grep nodetools)
-if [[ -z "$tools" ]]
-then
-   echo "Build with you npm and angular ng"
-   cd ui && npm install && ng build && cd ../server && npm install && npm run build && cd ..
-else
-   echo "build with docker node tools image"
-   docker run -v $(pwd):/home -ti ibmcase/nodetools bash -c "cd /home/ui  && npm install && ng build && cd ../server && npm install && npm run build"
-fi
-# TODO add CA certificate for icp or iks deployment
-
 docker build -t ibmcase/$kname .
-if [[ "$kcenv" != "local" ]]
+if [[ "$kcenv" != "LOCAL" ]]
 then
     # image for private registry in IBM Cloud
     docker tag ibmcase/$kname us.icr.io/ibmcaseeda/$kname
