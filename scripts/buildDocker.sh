@@ -16,7 +16,7 @@ echo " Build User Interface on $kcenv"
 echo "##########################################"
 
 docker build -t ibmcase/$kname .
-if [[ "$kcenv" != "LOCAL" ]]
+if [[ "$kcenv" == "IBMCLOUD" ]]
 then
     # image for private registry in IBM Cloud
     docker tag ibmcase/$kname us.icr.io/ibmcaseeda/$kname

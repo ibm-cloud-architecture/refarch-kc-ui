@@ -2,7 +2,14 @@
 
 This repository includes the user interface in Angular as Single Page Application and the BFF in nodejs to present the container shipment demonstration. It uses the different simulator microservices and functions to support the end to end demonstration. This project is part of the Container shipment reference implementation as presented in [this project](https://github.com/ibm-cloud-architecture/refarch-kc).
 
-You can read the content using the [book view](http://ibm-cloud-architecture.github.io/refarch-kc-ui).
+## User stories to support
+
+- [ ] As a fleet manager I want to login to the webapp to access the fleet management feature
+- [x] As a fleet manager I want to select one of the fleet to get the list of ships with their attributes in a table format, and plot the ship on a map at their respective position (latitude, longitude)
+- [ ] As a demoer I want to start ship movement so the ships move on the map
+- [ ] As a fleet manager I want to select one ship from the table of ships and present a detail view of it with its containers loaded in the boat
+- [ ] As a demoer I want to start the fire to container or heat wave or container down simulation from the detailed ship view
+- [ ] As a demoer I want to see the message coming back from the streaming analytics about next best action from my simulation
 
 ## Build and Run
 
@@ -34,31 +41,35 @@ Successfully tagged ibmcase/kc-ui:latest
 * Use your web browser at http://localhost:3000/#/home 
 
 
+## UI Development
 
-### Building this booklet locally
+This is a traditional Angular 7 app with the app.module.ts using `shared` and `features` modules. `Shared` is for UI generic widgets, while `features` are for supporting the UI specific components linked to the business logic. 
+There is no login page yet, but the home page displays a set of tiles to support the demonstration of the full shipment process as illustrated in the figure below:
 
-The content of this repository is written with markdown files, packaged with [MkDocs](https://www.mkdocs.org/) and can be built into a book-readable format by MkDocs build processes.
+![](./kc-ui-home.png)
 
-1. Install MkDocs locally following the [official documentation instructions](https://www.mkdocs.org/#installation).
-2. `git clone https://github.com/ibm-cloud-architecture/refarch-kc-ui.git` _(or your forked repository if you plan to edit)_
-3. `cd refarch-kc-ui`
-4. `mkdocs serve`
-5. Go to `http://127.0.0.1:8000/` in your browser.
+For the BFF code the server code is under the `server` folder and uses the standard patterns for expressjs middleware. The [readme file](./server/README.md) goes into the details on this implementation.
 
-### Pushing the book to GitHub Pages
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1. The user interface features are under the features folder. We are using a TDD approach as described in [this note.](https://github.com/ibm-cloud-architecture/refarch-caseportal-app/blob/master/docs/tdd.md) The tests run with `ng test`. We also encourage to read the [angular.io testing guide](https://angular.io/guide/testing)
 
-1. Ensure that all your local changes to the `master` branch have been committed and pushed to the remote repository.
-   1. `git push origin master`
-2. Ensure that you have the latest commits to the `gh-pages` branch, so you can get others' updates.
-	```bash
-	git checkout gh-pages
-	git pull origin gh-pages
-	
-	git checkout master
-	```
-3. Run `mkdocs gh-deploy` from the root refarch-kc directory.
+### UI Development server
 
---- 
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+### UI Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+### UI Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Deployment
+
+### Deploy on IBM Cloud IKS
+
+### Deploy on IBM Cloud Private 
+
 
 ## Contribute
 

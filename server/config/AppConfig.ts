@@ -6,8 +6,13 @@ const config = require('./config.json');
 
 export default class AppConfig {
     constructor() {}
+    
     public getKafkaBrokers(): string {
         return process.env.KAFKA_BROKERS || config.kafkaBrokers;
+    }
+
+    public getKafkaApiKey(): string {
+        return process.env.KAFKA_APIKEY ||  config.kafkaApiKey;
     }
 
     public getFleetMSURL(): string {
@@ -64,12 +69,17 @@ export default class AppConfig {
         return process.env.SHIP_TOPIC || config.shipTopicName;
     }
 
+
     public getPort(): number {
         return process.env.port || config.port;
     }
 
     public getVersion() : string {
         return config.version;
+    }
+
+    public getCertsPath(): string {
+        return config.certsPath;
     }
  
 }

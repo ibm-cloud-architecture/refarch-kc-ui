@@ -1,0 +1,9 @@
+site_name: Container Shipment EDA User Interface
+repo_url: https://github.com/ibm-cloud-architecture/refarch-kc-ui
+nav:
+  - Introduction: index.md
+
+
+theme: 
+  name: material
+extra_css: ["extra.css"]

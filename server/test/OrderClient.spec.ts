@@ -1,6 +1,6 @@
 import { expect, assert }  from 'chai';
 import OrderClient from '../routes/OrderClient';
-import { isMainThread } from 'worker_threads';
+
 
 describe('Order client', function() {
     it('should return an order', async function(){

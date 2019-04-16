@@ -9,5 +9,6 @@
   "voyagesMSURL": "http://localhost:3100",
   "problemTopicName" : "bluewaterProblem",
   "shipTopicName" : "bluewaterShip",
-  "version": "0.0.5"
+  "version": "0.0.6",
+  "certsPath": "/etc/ssl/certs"
  }

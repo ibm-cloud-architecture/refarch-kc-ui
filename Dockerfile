@@ -11,7 +11,7 @@ RUN apt-get update && cd ui \
    && cd ../server \
    && npm install && npm run build
 
-COPY . /app
+# COPY . /app
 WORKDIR /app/server
 
 

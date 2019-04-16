@@ -2,17 +2,25 @@
 /*
 Kafka consumer for two different topics
 */
-const config = require("../config/config.json");
+import AppConfig from   '../config/AppConfig';
+var kafka = require('kafka-node');
+var config = new AppConfig();
+
 class KafkaConsumer {
 
   problemsConsumer() {
     var problems = new Array;
-    var kafka = require('kafka-node'),
-      Consumer = kafka.Consumer,
-      client = new kafka.KafkaClient({kafkaHost: process.env.KAFKA_BROKERS || config.kafkaBrokers}),
+    
+    var Consumer = kafka.Consumer,
+      client = new kafka.KafkaClient(
+        {kafkaHost: config.getKafkaBrokers(),
+        sasl: { mechanism: 'PLAIN',
+              username: 'token',
+              password: config.getKafkaApiKey()}
+        }),
       consumer = new Consumer(
            client,
-           [{ topic: config.problemTopicName, partition: 0 }
+           [{ topic: config.getProblemTopicName(), partition: 0 }
            ],
            {autoCommit: true,
             fromOffset: 'latest'
@@ -35,13 +43,17 @@ class KafkaConsumer {
  
     var shipPositionList = new Array;
 
-    var kafka = require('kafka-node'),
-        Consumer = kafka.Consumer,
-        client = new kafka.KafkaClient({kafkaHost: process.env.KAFKA_BROKERS ||  config.kafkaBrokers}),
+    var Consumer = kafka.Consumer,
+        client = new kafka.KafkaClient(
+          {kafkaHost: config.getKafkaBrokers(),
+            sasl: { mechanism: 'PLAIN',
+                  username: 'token',
+                  password: config.getKafkaApiKey()}
+          }),
         consumer = new Consumer(
             client,
             [
-                { topic: config.shipTopicName, partition: 0 }
+                { topic: config.getShipTopicName(), partition: 0 }
             ],
             [
               {
