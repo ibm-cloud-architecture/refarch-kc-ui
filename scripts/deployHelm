@@ -2,6 +2,11 @@
 if [[ $(pwd) = */scripts ]]; then
  cd ..
 fi
+if [[ $# -eq 0 ]];then
+  kcenv="LOCAL"
+else
+  kcenv=$1
+fi
 . ./scripts/setenv.sh
 
 echo "Deploy helm chart for $chart project to $ns"
@@ -17,7 +22,12 @@ if [[ -z "$oq" ]]
 then
   echo "$kname here release not deployed..."
   cd ./chart
-  helm install $chart/ --name $kname --namespace $ns
+  if [[ "$kcenv" == "MINIKUBE" ]]
+  then
+    helm install $chart/ --name $kname --set image.repository=ibmcase/kc-ui --set image.pullSecret= --set image.pullPolicy=Always --set eventstreams.brokers=kafkabitmani:9092 --set eventstreams.env=MINIKUBE --namespace $ns
+  else
+    helm install $chart/ --name $kname --namespace $ns 
+  fi
   sleep 4
 else
     echo "$kname release deployed, here is the pod logs"
