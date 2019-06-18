@@ -1,6 +1,10 @@
 #!/bin/bash
 export LDFLAGS=-L/usr/local/opt/openssl/lib
 export CPPFLAGS=-I/usr/local/opt/openssl/include
+export msname="kc-ui"
+export chart=$(ls ./chart/| grep $msname)
+export kname=$chart
+export ns="greencompute"
 if [[ $PWD = */scripts ]]; then
  cd ..
 fi
@@ -10,7 +14,7 @@ else
   kcenv=$1
 fi
 
-. ./scripts/setenv.sh $kcenv
+source ../refarch-kc/scripts/setenv.sh $kcenv
 echo "##########################################"
 echo " Build User Interface on $kcenv"
 echo "##########################################"

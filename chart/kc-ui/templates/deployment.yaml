@@ -42,7 +42,7 @@ spec:
             value: "{{ .Values.eventstreams.env }}"
           - name: KAFKA_BROKERS
             value: "{{ .Values.eventstreams.brokers }}"
-          {{if or (eq .Values.eventstreams.env "IBMCLOUD") (eq .Values.eventstreams.env "ICP")}}
+          {{if or (eq .Values.eventstreams.env "IBMCLOUD") (eq .Values.eventstreams.env "MINIKUBE") (eq .Values.eventstreams.env "ICP")}}
           - name: PORT
             value : "{{ .Values.service.servicePort }}"
           - name: APPLICATION_NAME

@@ -13,7 +13,7 @@ echo "##########################################"
 tools=$(docker images | grep nodetools)
 if [[ -z "$tools" ]]
 then
-   echo "Build with you npm and angular ng"
+   echo "Build with your npm and angular ng"
    cd ui && npm install && ng build && cd ../server && npm install && npm run build && cd ..
 else
    echo "build with docker node tools image"
