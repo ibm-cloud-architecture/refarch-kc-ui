@@ -16,6 +16,7 @@
     "@angular/common": "8.0.2",
     "@angular/core": "8.0.2",
     "@angular/forms": "8.0.2",
+    "@angular/cdk": "8.0.1",
     "@angular/material": "7.3.5",
     "@angular/material-moment-adapter": "7.3.5",
     "@angular/platform-browser": "8.0.2",
