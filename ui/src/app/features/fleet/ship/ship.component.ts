@@ -41,7 +41,7 @@ export class ShipComponent implements OnInit {
   problemSubscription: Subscription;
   shipPositionSubscription: Subscription;
 
-  @ViewChild('myCanvas') myCanvas: ElementRef;
+  @ViewChild('myCanvas', { static: true }) myCanvas: ElementRef;
   public context: CanvasRenderingContext2D;
 
   basicIcon:L.Icon = L.icon({
