@@ -1,19 +1,45 @@
 # User Interface and BFF for the K Container shipment solution
 
-This repository includes the user interface in Angular as Single Page Application and the BFF in nodejs to present the container shipment demonstration. It uses the different simulator microservices and functions to support the end to end demonstration. This project is part of the Container shipment reference implementation as presented in [this project](https://github.com/ibm-cloud-architecture/refarch-kc).
+!!! abstract 
+    This repository includes the user interface to support the demonstration of the end to end Reefer containe shipment process. It is done with Angular 8 with a Back end for front end server done in Nodejs. This is the only component of the solution that is not using publishing events. You will learn how to do test driven development with Angular, and the BFF pattern in action. 
+    
+This project is part of the Container shipment reference implementation as presented in [this project](https://ibm-cloud-architecture.github.io/refarch-kc).
 
 ## User stories to support
 
-- [ ] As a fleet manager I want to login to the webapp to access the fleet management feature
+This project is in light development so the following user stories are in plan (or done):
+
+- [x] As a fleet manager I want to login to the webapp to access the fleet management feature. Use eddie@email.com.
 - [x] As a fleet manager I want to select one of the fleet to get the list of ships with their attributes in a table format, and plot the ship on a map at their respective position (latitude, longitude)
-- [ ] As a demoer I want to start ship movement so the ships move on the map
-- [ ] As a fleet manager I want to select one ship from the table of ships and present a detail view of it with its containers loaded in the boat
-- [ ] As a demoer I want to start the fire to container or heat wave or container down simulation from the detailed ship view
+- [x] As a demoer I want to start ship movement so the ships move on the map
+- [x] As a fleet manager I want to select one ship from the table of ships and present a detail view of it with its containers loaded in the boat
+- [x] As a demoer I want to start the fire to container or heat wave or container down simulation from the detailed ship view
 - [ ] As a demoer I want to see the message coming back from the streaming analytics about next best action from my simulation
 
+## Pre-requisites
+
+The UI is using Angular so you need to get angular CLI installed, nodejs and npm.  
+
+Keep npm up to date with:
+```
+npm install -g npm
+```
+
+To install or update Angular CLI:
+
+```
+npm install -g @angular/cli
+```
+
+!!! note
+        The project was started with Angular 6 and then migrated to Angular 8 with the command:
+        ```
+        ng update @angular/cli @angular/core
+        ng update @angular/material
+        ```
 ## Build and Run
 
-The `scripts` folder has two scripts to build the UI, and a docker image for the server and single page app, and run it locally. You should clone all the KC solution repositories and use each component one by one, or use our IBM public cloud deployment. To be able to run the UI locally, you need to have at least the following component up and running:
+The `scripts` folder has a script to build the UI and the server component, package them in a docker image. You should clone all the KC solution repositories and use each component one by one, or use our IBM public cloud deployment (IKS). To be able to run the UI locally, you need to have at least the following component up and running:
 
 * Kafka and zookeeper: Use the docker compose file in the root project: 
  ```

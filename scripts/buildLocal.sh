@@ -5,7 +5,7 @@ if [[ $PWD = */scripts ]]; then
  cd ..
 fi
 
-. ./scripts/setenv.sh
+source ../refarch-kc/scripts/setenv.sh $kcenv
 echo "##########################################"
 echo " Build User Interface on $kcenv"
 echo "##########################################"
