@@ -1,11 +1,12 @@
 # Default values for kc-ui.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+# repository: us.icr.io/ibmcaseeda/kc-ui
 
 replicaCount: 1
 
 image:
-  repository: us.icr.io/ibmcaseeda/kc-ui
+  repository: ibmcase/kc-ui
   tag: latest
   pullPolicy: Always
   pullSecret: browncompute-registry-secret

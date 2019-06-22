@@ -4,14 +4,13 @@ import { OrderedShipmentsComponent } from './ordered-shipments/ordered-shipments
 import { VoyagesComponent } from './voyages/voyages.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {  MatSelectModule,
-          MatTableModule,
-          MatButtonModule,
-          MatRadioModule,
-          MatIconModule,
-          MatInputModule,
-          MatSortModule
-         } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [OrderedShipmentsComponent, VoyagesComponent],
   imports: [

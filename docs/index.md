@@ -16,55 +16,6 @@ This project is in light development so the following user stories are in plan (
 - [x] As a demoer I want to start the fire to container or heat wave or container down simulation from the detailed ship view
 - [ ] As a demoer I want to see the message coming back from the streaming analytics about next best action from my simulation
 
-## Pre-requisites
-
-The UI is using Angular so you need to get angular CLI installed, nodejs and npm.  
-
-Keep npm up to date with:
-```
-npm install -g npm
-```
-
-To install or update Angular CLI:
-
-```
-npm install -g @angular/cli
-```
-
-!!! note
-        The project was started with Angular 6 and then migrated to Angular 8 with the command:
-        ```
-        ng update @angular/cli @angular/core
-        ng update @angular/material
-        ```
-## Build and Run
-
-The `scripts` folder has a script to build the UI and the server component, package them in a docker image. You should clone all the KC solution repositories and use each component one by one, or use our IBM public cloud deployment (IKS). To be able to run the UI locally, you need to have at least the following component up and running:
-
-* Kafka and zookeeper: Use the docker compose file in the root project: 
- ```
- cd ../refarch-kc/docker
- docker-compose -f backbone-compose.yml up
- ```
-* Start the Fleet simulator.  For the fleet simulator [see instructions here](https://github.com/ibm-cloud-architecture/refarch-kc-ms/tree/master/fleet-ms#run) to run the simulator locally.
-
-* Make sure you have the angular cli installed via `npm install -g @angular/cli` and run an initial `npm install` inside the ui folder to pull all dependencies.
-
-* Build UI and server and a docker image with the command: `./scripts/build.sh`. The trace looks like:
-> .... chunk {main} main.js, main.js.map (main) 78.9 kB [initial] [rendered]
-chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 223 kB [initial] [rendered]
-chunk {runtime} runtime.js, runtime.js.map (runtime) 6.08 kB [entry] [rendered]
-chunk {styles} styles.js, styles.js.map (styles) 387 kB [initial] [rendered]
-chunk {vendor} vendor.js, vendor.js.map (vendor) 6.81 MB [initial] [rendered]
-...   
-> kcbff@0.0.1 copy-deps /Users/jeromeboyer/Code/GreenCompute/refarch-kc-ui/server
-> cpx "../ui/dist/ui/*.*" ./dist/server/static && cpx "./config/config.json" ./dist/server/config   
-Successfully built 0226a1748fd9  
-Successfully tagged ibmcase/kc-ui:latest
-
-* Start locally with `./script/run.sh` or with a docker `./script/runDocker.sh`. 
-
-* Use your web browser at http://localhost:3000/#/home 
 
 
 ## UI Development
@@ -78,30 +29,13 @@ For the BFF code the server code is under the `server` folder and uses the stand
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1. The user interface features are under the features folder. We are using a TDD approach as described in [this note.](https://github.com/ibm-cloud-architecture/refarch-caseportal-app/blob/master/docs/tdd.md) The tests run with `ng test`. We also encourage to read the [angular.io testing guide](https://angular.io/guide/testing)
 
-### UI Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-### UI Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-### UI Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Deployment
-
-### Deploy on IBM Cloud IKS
-
-### Deploy on IBM Cloud Private 
-
 
 ## Contribute
 
-As this implementation solution is part of the Event Driven architeture reference architecture, the [contribution policies](./CONTRIBUTING.md) apply the same way here.
+As this implementation solution is part of the Event Driven architeture reference architecture, the [contribution policies](https://github.com/ibm-cloud-architecture/refarch-kc-ui/blob/master/CONTRIBUTING.md) apply the same way here.
 
 **Contributors:**
+
 * [Jerome Boyer](https://www.linkedin.com/in/jeromeboyer/)
 * [Hemankita Perabathini](https://www.linkedin.com/in/hemankita-perabathini/)
 

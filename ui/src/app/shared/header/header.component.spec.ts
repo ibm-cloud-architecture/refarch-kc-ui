@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { HeaderComponent } from './header.component';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { routes } from '../../features/routes';
 
 describe('HeaderComponent', () => {
