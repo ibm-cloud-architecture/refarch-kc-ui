@@ -4,8 +4,10 @@ if [[ $(pwd) = */scripts ]]; then
 fi
 if [[ $# -eq 0 ]];then
   kcenv="LOCAL"
+  kctag="latest"
 else
   kcenv=$1
+  kctag=$2
 fi
 . ./scripts/setenv.sh
 
@@ -20,11 +22,11 @@ echo "############################"
 oq=$(helm list | grep $kname | awk '{print $1}')
 if [[ -z "$oq" ]]
 then
-  echo "$kname here release not deployed..."
+  echo "$kname release not deployed..."
   cd ./chart
   if [[ "$kcenv" == "MINIKUBE" ]]
   then
-    helm install $chart/ --name $kname --set image.repository=ibmcase/kc-ui --set image.pullSecret= --set image.pullPolicy=Always --set eventstreams.brokers=kafkabitmani:9092 --set eventstreams.env=MINIKUBE --namespace $ns
+    helm install $chart/ --name $kname --set image.repository=ibmcase/kc-ui --set image.tag=$kctag --set image.pullSecret= --set image.pullPolicy=Never --set eventstreams.brokers=kafkabitmani:9092 --set eventstreams.env=MINIKUBE --namespace $ns
   else
     helm install $chart/ --name $kname --namespace $ns 
   fi

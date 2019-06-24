@@ -89,13 +89,19 @@ All those commands are executed when developing the server or ui parts. But when
 
 ### Dockerize all
 
-Build UI and server in one command: (this is what a CI/CD will do). 
+Build UI and server in one command: (this is what a CI/CD pipeline will use). 
 
 ```
 ./scripts/buildDocker.sh
 ```
 
-This will build a docker image, named: `ibmcase/kc-ui:latest` for local execution. 
+This will build a docker image, named: `ibmcase/kc-ui:latest` for local execution using docker-compose.
+
+If you run on minikube locally use:
+
+```
+./scripts/buildDocker.sh MINIKUBE
+```
 
 ## Run locally
 
@@ -118,8 +124,12 @@ We recommend to read [this chapter](https://ibm-cloud-architecture.github.io/ref
 
 * Start the UI and BFF locally with `./script/run.sh` or with a docker `./script/runDocker.sh`. 
 
-* Use your web browser at http://localhost:3000/#/home 
+* Use your web browser at http://localhost:31010
 
 ### Using Minikube
 
 See the instruction in [this article](https://ibm-cloud-architecture.github.io/refarch-kc/deployments/minikube/) for deploying all the components.
+
+Use the `scripts\deployHelm MINIKUBE latest` command to use Helm to deploy the user interface release.
+
+* Use your web browser at http://localhost:31010

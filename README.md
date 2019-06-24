@@ -40,6 +40,7 @@ Successfully tagged ibmcase/kc-ui:latest
 The content of this repository is written with markdown files, packaged with [MkDocs](https://www.mkdocs.org/) and can be built into a book-readable format by MkDocs build processes.
 
 1. Install MkDocs locally following the [official documentation instructions](https://www.mkdocs.org/#installation).
+1. Install Material plugin for mkdocs:  `pip install mkdocs-material` 
 2. `git clone https://github.com/ibm-cloud-architecture/refarch-kc-ui.git` _(or your forked repository if you plan to edit)_
 3. `cd refarch-kc-ui`
 4. `mkdocs serve`
