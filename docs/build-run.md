@@ -160,7 +160,7 @@ Regardless of specific deployment targets (OCP, IKS, k8s), the following prerequ
 
 **Perform the following for the `kc-ui` microservices:**
 1. Build and push Docker images
-  1. Create a Jenkins project, pointing to the remote GitHub repository for the KContainer UI Microservice, creating the necessary parameters:
+  1. Create a Jenkins project, pointing to the remote GitHub repository for the KContainer UI Microservice, creating the necessary parameters.  Refer to the individual microservice's `Jenkinsfile.NoKubernetesPlugin` for appropriate parameter values.
     - Create a String parameter named `REGISTRY` to determine a remote registry that is accessible from your cluster
     - Create a String parameter named `REGISTRY_NAMESPACE` to describe the registry namespace to push image into
     - Create a String parameter named `IMAGE_NAME` which should be self-expalantory
