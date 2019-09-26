@@ -43,4 +43,8 @@ eventstreams:
   #  - kafka03-prod02.messagehub.services.us-south.bluemix.net:9093
   #  - kafka01-prod02.messagehub.services.us-south.bluemix.net:9093
   env: IBMCLOUD
+  securityEnabled: false
+  caPemFilePath: "/etc/ssl/certs/kcontainer"
+  caPemFileName: "es-cert.pem"
+  caPemSecretName: es-ca-pemfile
 serviceAccountName: default

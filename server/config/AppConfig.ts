@@ -6,7 +6,7 @@ const config = require('./config.json');
 
 export default class AppConfig {
     constructor() {}
-    
+
     public getKafkaBrokers(): string {
         return process.env.KAFKA_BROKERS || config.kafkaBrokers;
     }
@@ -16,40 +16,39 @@ export default class AppConfig {
     }
 
     public getFleetMSURL(): string {
-        if (process.env.KAFKA_ENV !== "IBMCLOUD") {
-            return process.env.FLEET_MS_URL || config.fleetMSURL;
-        } else {
-            return "http://" + process.env.FLEETMS_SERVICE_SERVICE_HOST
-                + ":" + process.env.FLEETMS_SERVICE_SERVICE_PORT + "/fleetms";
+        var url = config.fleetMSURL;
+        if(process.env.FLEETMS_SERVICE_HOST && process.env.FLEETMS_SERVICE_PORT){
+          url = "http://" + process.env.FLEETMS_SERVICE_HOST
+              + ":" + process.env.FLEETMS_SERVICE_PORT + "/fleetms";
         }
-        
+        return url;
     }
 
     public getOrderMSURL(): string {
-        if (process.env.KAFKA_ENV !== "IBMCLOUD") {
-            return process.env.ORDER_MS_URL || config.orderMSURL;
-        } else {
-            return "http://" + process.env.ORDERCOMMANDMS_SERVICE_SERVICE_HOST
-                + ":" + process.env.ORDERCOMMANDMS_SERVICE_SERVICE_PORT_HTTP+ "/orders";
-        } 
+      var url = config.ordersMSURL;
+      if(process.env.ORDERCOMMANDMS_SERVICE_HOST && process.env.ORDERCOMMANDMS_SERVICE_PORT){
+        url = "http://" + process.env.ORDERCOMMANDMS_SERVICE_HOST
+            + ":" + process.env.ORDERCOMMANDMS_SERVICE_PORT+ "/orders";
+      }
+      return url;
     }
 
     public getOrderQueryMSURL(): string {
-        if (process.env.KAFKA_ENV !== "IBMCLOUD") {
-            return process.env.ORDER_QUERY_MS_URL || config.orderQueryMSURL;
-        } else {
-            return "http://" + process.env.ORDERQUERYMS_SERVICE_SERVICE_HOST
-                + ":" + process.env.ORDERQUERYMS_SERVICE_SERVICE_PORT_HTTP+ "/orders";
+        var url = config.orderQueryMSURL;
+        if(process.env.ORDERQUERYMS_SERVICE_HOST && process.env.ORDERQUERYMS_SERVICE_PORT){
+          url = "http://" + process.env.ORDERQUERYMS_SERVICE_HOST
+              + ":" + process.env.ORDERQUERYMS_SERVICE_PORT+ "/orders";
         }
+        return url;
     }
-    
+
     public getVoyageMSURL(): string {
-        if (process.env.KAFKA_ENV !== "IBMCLOUD") {
-            return process.env.VOYAGE_MS_URL || config.voyagesMSURL;
-        } else {
-            return "http://" + process.env.VOYAGESMS_SERVICE_SERVICE_HOST
-                + ":" + process.env.VOYAGESMS_SERVICE_SERVICE_PORT_HTTP;
+        var url = config.voyagesMSURL;
+        if(process.env.VOYAGESMS_SERVICE_HOST && process.env.VOYAGESMS_SERVICE_PORT){
+          url = "http://" + process.env.VOYAGESMS_SERVICE_HOST
+              + ":" + process.env.VOYAGESMS_SERVICE_PORT;
         }
+        return url;
     }
 
     public getKafkaConnectTimeout(): number {
@@ -63,12 +62,10 @@ export default class AppConfig {
     public getProblemTopicName(): string {
         return process.env.PROBLEM_TOPIC || config.problemTopicName;
     }
-    
 
     public getShipTopicName(): string {
         return process.env.SHIP_TOPIC || config.shipTopicName;
     }
-
 
     public getPort(): number {
         return process.env.port || config.port;
@@ -79,7 +76,11 @@ export default class AppConfig {
     }
 
     public getCertsPath(): string {
-        return config.certsPath;
+        return process.env.KAFKA_CERT_PATH || config.certsPath;
     }
- 
+
+    public eventStreamsSecurityEnabled(): boolean {
+        return ('KAFKA_CERT_PATH' in process.env);
+    }
+
 }
