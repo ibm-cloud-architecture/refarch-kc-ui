@@ -20,8 +20,10 @@ spec:
         release: {{ .Release.Name }}
     spec:
       serviceAccountName: {{ .Values.serviceAccountName }}
+      {{- if .Values.image.pullSecret }}
       imagePullSecrets:
-        - name: {{ .Values.image.pullSecret }}
+      - name: {{ .Values.image.pullSecret }}
+      {{- end }}
       containers:
       - name: "{{  .Chart.Name  }}"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -46,44 +48,49 @@ spec:
               configMapKeyRef:
                 name: "{{ .Values.eventstreams.brokersConfigMap }}"
                 key: brokers
-          {{if or (eq .Values.eventstreams.env "IBMCLOUD") (eq .Values.eventstreams.env "MINIKUBE") (eq .Values.eventstreams.env "ICP")}}
           - name: PORT
             value : "{{ .Values.service.servicePort }}"
           - name: APPLICATION_NAME
             value: "{{ .Release.Name }}"
-          - name: FLEETMS_SERVICE_SERVICE_HOST
+          - name: FLEETMS_SERVICE_HOST
             value: "fleetms-service"
-          - name: FLEETMS_SERVICE_SERVICE_PORT
+          - name: FLEETMS_SERVICE_PORT
             value: "9080"
-          - name: ORDERCOMMANDMS_SERVICE_SERVICE_HOST
+          - name: ORDERCOMMANDMS_SERVICE_HOST
             value: "ordercommandms-service"
-          - name: ORDERCOMMANDMS_SERVICE_SERVICE_PORT_HTTP
+          - name: ORDERCOMMANDMS_SERVICE_PORT
             value: "9080"
-          - name: ORDERQUERYMS_SERVICE_SERVICE_HOST
+          - name: ORDERQUERYMS_SERVICE_HOST
             value: "orderqueryms-service"
-          - name: ORDERQUERYMS_SERVICE_SERVICE_PORT_HTTP
+          - name: ORDERQUERYMS_SERVICE_PORT
             value: "9080"
-          - name: VOYAGEMS_SERVICE_SERVICE_HOST
+          - name: VOYAGESMS_SERVICE_HOST
             value: "voyagesms-service"
-          - name: VOYAGESMS_SERVICE_SERVICE_PORT_HTTP
+          - name: VOYAGESMS_SERVICE_PORT
             value: "3000"
-          {{else}}
-          - name: FLEET_MS_URL
-            value: "http://fleetms-service:9080/fleetms"
-          - name: ORDER_MS_URL
-            value: "http://ordercommandms-service:10080/orders"
-          - name: ORDER_QUERY_MS_URL
-            value: "http://orderqueryms-service:11080/orders"
-          - name: VOYAGE_MS_URL
-            value: "http://voyagesms-service:3100"
-          {{end}}
-          {{if or (eq .Values.eventstreams.env "IBMCLOUD") (eq .Values.eventstreams.env "ICP")}}
+          {{- if or (eq .Values.eventstreams.env "IBMCLOUD") (eq .Values.eventstreams.env "ICP")}}
           - name: KAFKA_APIKEY
             valueFrom:
               secretKeyRef:
                 name: "{{ .Values.eventstreams.apikeyConfigMap }}"
                 key: binding
-          {{end}}
+          {{- end}}
+          {{- if .Values.eventstreams.securityEnabled }}
+          - name: KAFKA_CERT_PATH
+            value : "{{ .Values.eventstreams.caPemFilePath }}/{{ .Values.eventstreams.caPemFileName }}"
+          {{- end }}
 {{- if .Values.generatedBindings.enabled }}
 {{.Files.Get "bindings.yaml" | indent 10 }}
 {{- end }}
+        {{- if .Values.eventstreams.securityEnabled }}
+        volumeMounts:
+          - mountPath: "{{ .Values.eventstreams.caPemFilePath }}"
+            name: eventstreams-pem-certificate
+            readOnly: true
+        {{- end }}
+      {{- if .Values.eventstreams.securityEnabled }}
+      volumes:
+        - name: eventstreams-pem-certificate
+          secret:
+            secretName: "{{ .Values.eventstreams.caPemSecretName }}"
+      {{- end }}
