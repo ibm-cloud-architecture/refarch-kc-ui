@@ -9,7 +9,7 @@ image:
   repository: ibmcase/kc-ui
   tag: latest
   pullPolicy: Always
-  pullSecret: browncompute-registry-secret
+  pullSecret: null
   resources:
     requests:
       cpu: 200m

@@ -175,13 +175,13 @@ Regardless of specific deployment targets (OCP, IKS, k8s), the following prerequ
   - Parameters:
     - `--set image.repository=<private-registry>/<image-namespace>/<image-repository>`
     - `--set image.tag=latest`
-    - `--set image.pullSecret=<private-registry-pullsecret>` (optional or set to blank)
+    - `--set image.pullSecret=<private-registry-pullsecret>` (only required if pulling from an external private registry)
     - `--set image.pullPolicy=Always`
     - `--set eventstreams.env=ICP`
     - `--set eventstreams.brokersConfigMap=<kafka brokers ConfigMap name>`
     - `--set serviceAccountName=<service-account-name>`
     - `--namespace <target-namespace>`
     - `--output-dir <local-template-directory>`
-  - Example: `helm template --set image.repository=rhos-quay.internal-network.local/browncompute/kc-ui --set image.tag=latest --set image.pullSecret= --set image.pullPolicy=Always --set eventstreams.env=ICP --set eventstreams.brokersConfigMap=kafka-brokers --set serviceAccountName=kcontainer-runtime --output-dir templ --namespace eda-refarch chart/kc-ui/`
+  - Example: `helm template --set image.repository=rhos-quay.internal-network.local/browncompute/kc-ui --set image.pullPolicy=Always --set eventstreams.env=ICP --set eventstreams.brokersConfigMap=kafka-brokers --set serviceAccountName=kcontainer-runtime --output-dir templ --namespace eda-refarch chart/kc-ui/`
 4. Deploy application using `oc apply`:
   - `oc apply -f templ/kc-ui/templates`
