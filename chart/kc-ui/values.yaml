@@ -34,12 +34,24 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-eventstreams:
+kafka:
   brokersConfigMap: kafka-brokers
+  bluewaterProblemTopicName: bluewaterProblem
+  bluewaterShipTopicName: bluewaterShip
+eventstreams:
+  enabled: true
   apikeyConfigMap: eventstreams-apikey
-  env: IBMCLOUD
-  securityEnabled: false
+  caPemFileRequired: false
   caPemFilePath: "/etc/ssl/certs/kcontainer"
   caPemFileName: "es-cert.pem"
   caPemSecretName: es-ca-pemfile
 serviceAccountName: default
+application:
+  fleetServiceHost: fleetms-service
+  fleetServicePort: 9080
+  orderCommandServiceHost: ordercommandms-service
+  orderCommandServicePort: 9080
+  orderQueryServiceHost: orderqueryms-service
+  orderQueryServicePort: 9080
+  voyageServiceHost: voyagesms-service
+  voyageServicePort: 3000
