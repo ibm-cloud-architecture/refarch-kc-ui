@@ -34,14 +34,9 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-generatedBindings:
-  enabled: false
 eventstreams:
   brokersConfigMap: kafka-brokers
   apikeyConfigMap: eventstreams-apikey
-  #brokers:
-  #  - kafka03-prod02.messagehub.services.us-south.bluemix.net:9093
-  #  - kafka01-prod02.messagehub.services.us-south.bluemix.net:9093
   env: IBMCLOUD
   securityEnabled: false
   caPemFilePath: "/etc/ssl/certs/kcontainer"

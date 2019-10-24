@@ -41,8 +41,6 @@ spec:
             cpu: "{{ .Values.image.resources.requests.cpu }}"
             memory: "{{ .Values.image.resources.requests.memory }}"
         env:
-          - name: KAFKA_ENV
-            value: "{{ .Values.eventstreams.env }}"
           - name: KAFKA_BROKERS
             valueFrom:
               configMapKeyRef:
@@ -79,9 +77,6 @@ spec:
           - name: KAFKA_CERT_PATH
             value : "{{ .Values.eventstreams.caPemFilePath }}/{{ .Values.eventstreams.caPemFileName }}"
           {{- end }}
-{{- if .Values.generatedBindings.enabled }}
-{{.Files.Get "bindings.yaml" | indent 10 }}
-{{- end }}
         {{- if .Values.eventstreams.securityEnabled }}
         volumeMounts:
           - mountPath: "{{ .Values.eventstreams.caPemFilePath }}"

@@ -9,7 +9,6 @@ WORKDIR /app/server
 
 ENV PORT 3010
 ENV KAFKA_BROKERS kafka1:9092
-ENV KAFKA_ENV LOCAL
 ENV FLEET_MS_URL http://localhost:31000/fleetms
 ENV ORDER_MS_URL http://localhost:10080/orders
 ENV ORDER_QUERY_MS_URL  http://localhost:11080/orders
