@@ -41,54 +41,55 @@ spec:
             cpu: "{{ .Values.image.resources.requests.cpu }}"
             memory: "{{ .Values.image.resources.requests.memory }}"
         env:
-          - name: KAFKA_ENV
-            value: "{{ .Values.eventstreams.env }}"
+          - name: APPLICATION_NAME
+            value: "{{ .Release.Name }}"
+          - name: PORT
+            value : "{{ .Values.service.servicePort }}"
+          - name: FLEETMS_SERVICE_HOST
+            value: "{{ .Values.application.fleetServiceHost }}"
+          - name: FLEETMS_SERVICE_PORT
+            value: "{{ .Values.application.fleetServicePort }}"
+          - name: ORDERCOMMANDMS_SERVICE_HOST
+            value: "{{ .Values.application.orderCommandServiceHost }}"
+          - name: ORDERCOMMANDMS_SERVICE_PORT
+            value: "{{ .Values.application.orderCommandServicePort }}"
+          - name: ORDERQUERYMS_SERVICE_HOST
+            value: "{{ .Values.application.orderQueryServiceHost }}"
+          - name: ORDERQUERYMS_SERVICE_PORT
+            value: "{{ .Values.application.orderQueryServicePort }}"
+          - name: VOYAGESMS_SERVICE_HOST
+            value: "{{ .Values.application.voyageServiceHost }}"
+          - name: VOYAGESMS_SERVICE_PORT
+            value: "{{ .Values.application.voyageServicePort }}"
           - name: KAFKA_BROKERS
             valueFrom:
               configMapKeyRef:
                 name: "{{ .Values.eventstreams.brokersConfigMap }}"
                 key: brokers
-          - name: PORT
-            value : "{{ .Values.service.servicePort }}"
-          - name: APPLICATION_NAME
-            value: "{{ .Release.Name }}"
-          - name: FLEETMS_SERVICE_HOST
-            value: "fleetms-service"
-          - name: FLEETMS_SERVICE_PORT
-            value: "9080"
-          - name: ORDERCOMMANDMS_SERVICE_HOST
-            value: "ordercommandms-service"
-          - name: ORDERCOMMANDMS_SERVICE_PORT
-            value: "9080"
-          - name: ORDERQUERYMS_SERVICE_HOST
-            value: "orderqueryms-service"
-          - name: ORDERQUERYMS_SERVICE_PORT
-            value: "9080"
-          - name: VOYAGESMS_SERVICE_HOST
-            value: "voyagesms-service"
-          - name: VOYAGESMS_SERVICE_PORT
-            value: "3000"
-          {{- if or (eq .Values.eventstreams.env "IBMCLOUD") (eq .Values.eventstreams.env "ICP")}}
+          - name: PROBLEM_TOPIC
+            value: "{{ .Values.kafka.bluewaterProblemTopicName }}"
+          - name: SHIP_TOPIC
+            value: "{{ .Values.kafka.bluewaterShipTopicName }}"
+          {{- if .Values.eventstreams.enabled }}
           - name: KAFKA_APIKEY
             valueFrom:
               secretKeyRef:
                 name: "{{ .Values.eventstreams.apikeyConfigMap }}"
                 key: binding
-          {{- end}}
-          {{- if .Values.eventstreams.securityEnabled }}
+          {{- if .Values.eventstreams.caPemFileRequired }}
+          - name: CERTS_ENABLED
+            value : "true"
           - name: KAFKA_CERT_PATH
             value : "{{ .Values.eventstreams.caPemFilePath }}/{{ .Values.eventstreams.caPemFileName }}"
           {{- end }}
-{{- if .Values.generatedBindings.enabled }}
-{{.Files.Get "bindings.yaml" | indent 10 }}
-{{- end }}
-        {{- if .Values.eventstreams.securityEnabled }}
+          {{- end}}
+        {{- if .Values.eventstreams.caPemFileRequired }}
         volumeMounts:
           - mountPath: "{{ .Values.eventstreams.caPemFilePath }}"
             name: eventstreams-pem-certificate
             readOnly: true
         {{- end }}
-      {{- if .Values.eventstreams.securityEnabled }}
+      {{- if .Values.eventstreams.caPemFileRequired }}
       volumes:
         - name: eventstreams-pem-certificate
           secret:

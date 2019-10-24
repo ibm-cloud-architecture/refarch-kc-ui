@@ -23,7 +23,7 @@ import * as express from 'express';
 import * as http from 'http';
 import * as passport from  'passport';
 import * as path from 'path';
-import AppConfig from './config/AppConfig'; 
+import AppConfig from './config/AppConfig';
 const bodyParser = require('body-parser');
 
 
@@ -57,11 +57,10 @@ app.get('*', (req, res) => {
 server.listen(config.getPort(), () => {
     let addr: string = JSON.stringify(server.address());
     console.log(`Server started on port ${addr} version:` + config.getVersion());
-    console.log('Kafka Environment ' +  process.env.KAFKA_ENV);
     console.log('Kafka Brokers ' +  config.getKafkaBrokers());
     console.log('Fleet Simulator ' +  config.getFleetMSURL());
     console.log('Order MS Command ' +  config.getOrderMSURL());
     console.log('Order MS Query ' +  config.getOrderQueryMSURL());
     console.log('Voyage MS ' +  config.getVoyageMSURL());
-   
+
 });
