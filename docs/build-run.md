@@ -122,7 +122,13 @@ We recommend to read [this chapter](https://ibm-cloud-architecture.github.io/ref
 
 * Start the Fleet simulator.  For the fleet simulator [see instructions here](https://github.com/ibm-cloud-architecture/refarch-kc-ms/tree/master/fleet-ms#run) to run the simulator locally.
 
-* Start the UI and BFF locally with `./script/run.sh` or with a docker `./script/runDocker.sh`.
+* Run the following command: 
+```
+`./scripts/buildLocal.sh`
+
+```
+
+* Start the UI and BFF locally with `./scripts/run.sh` or with a docker `./scripts/runDocker.sh`.
 
 * Use your web browser at http://localhost:31010
 
