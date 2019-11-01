@@ -6,12 +6,10 @@ on:
     paths-ignore:
       - 'chart/**'
       - 'docs/**'
-env:
-  WORKDIR: .
-  DOCKERFILE: Dockerfile
-  IMAGE_NAME: ibmcase/kcontainer-ui
+
 jobs:
   build-docker-image:
+    if: startsWith(github.repository, 'ibm-cloud-architecture/')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
