@@ -11,24 +11,28 @@ env:
   DOCKERFILE: Dockerfile
   IMAGE_NAME: ibmcase/kcontainer-ui
 jobs:
-  build:
+  build-docker-image:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Bump Versions
-      uses: remorses/bump-version@js
+    - name: Bump version and push tag
+      id: bump-version-action
+      uses: anothrNick/github-tag-action@master
       env:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        version_file: ./VERSION
-    - name: Build the Docker image
+        DEFAULT_BUMP: patch
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build the ui docker image
+      id: build-ui-image
       run: |
         docker login -u ${DOCKER_U} -p ${DOCKER_P}
-        export TAG_VERSION=$(cat VERSION)
         cd ${WORKDIR}
-        docker build . --file ${DOCKERFILE} --tag ${IMAGE_NAME}:${TAG_VERSION}
-        docker tag ${IMAGE_NAME}:${TAG_VERSION} ${IMAGE_NAME}:latest
+        docker build . --file ${DOCKERFILE} --tag ${IMAGE_NAME}:${IMAGE_TAG}
+        docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:latest
         docker push ${IMAGE_NAME}
       env:
         DOCKER_U: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_P: ${{ secrets.DOCKER_PASSWORD }}
+        WORKDIR: .
+        DOCKERFILE: Dockerfile
+        IMAGE_NAME: ibmcase/kcontainer-ui
+        IMAGE_TAG: ${{ steps.bump-version-action.outputs.new_tag }}
