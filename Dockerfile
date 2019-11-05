@@ -1,8 +1,8 @@
 FROM node:12
 MAINTAINER https://github.com/ibm-cloud-architecture - IBM - Jerome Boyer
 
-WORKDIR "/app"
-ADD . /app
+WORKDIR /app
+COPY . /app
 
 RUN apt-get update && cd ui \
    && npm install \
@@ -11,9 +11,7 @@ RUN apt-get update && cd ui \
    && cd ../server \
    && npm install && npm run build
 
-# COPY . /app
 WORKDIR /app/server
-
 
 ENV PORT 3010
 ENV KAFKA_BROKERS kafka1:9092
@@ -23,4 +21,4 @@ ENV ORDER_QUERY_MS_URL  http://localhost:11080/orders
 ENV VOYAGE_MS_URL http://localhost:3100/voyagems
 EXPOSE 3010
 
-CMD node dist/server/server.js
+CMD ["node", "dist/server/server.js"]
