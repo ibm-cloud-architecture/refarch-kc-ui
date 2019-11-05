@@ -1,7 +1,7 @@
 #!/bin/bash
 export LDFLAGS=-L/usr/local/opt/openssl/lib
 export CPPFLAGS=-I/usr/local/opt/openssl/include
-export msname="kc-ui"
+export msname="kcontainer-ui"
 export chart=$(ls ./chart/| grep $msname)
 export kname=$chart
 export ns="greencompute"
@@ -19,9 +19,4 @@ echo "##########################################"
 echo " Build User Interface on $kcenv"
 echo "##########################################"
 
-docker build -t ibmcase/$kname .
-if [[ "$kcenv" == "IBMCLOUD" ]]
-then
-    # image for private registry in IBM Cloud
-    docker tag ibmcase/$kname us.icr.io/ibmcaseeda/$kname
-fi
+docker build -t ibmcase/$msname .

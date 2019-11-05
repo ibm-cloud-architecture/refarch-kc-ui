@@ -95,7 +95,7 @@ Build UI and server in one command: (this is what a CI/CD pipeline will use).
 ./scripts/buildDocker.sh
 ```
 
-This will build a docker image, named: `ibmcase/kc-ui:latest` for local execution using docker-compose.
+This will build a docker image, named: `ibmcase/kcontainer-ui:latest` for local execution using docker-compose.
 
 If you run on minikube locally use:
 
@@ -122,7 +122,7 @@ We recommend to read [this chapter](https://ibm-cloud-architecture.github.io/ref
 
 * Start the Fleet simulator.  For the fleet simulator [see instructions here](https://github.com/ibm-cloud-architecture/refarch-kc-ms/tree/master/fleet-ms#run) to run the simulator locally.
 
-* Run the following command: 
+* Run the following command:
 ```
 `./scripts/buildLocal.sh`
 
@@ -174,9 +174,9 @@ Regardless of specific deployment targets (OCP, IKS, k8s), the following prerequ
     - Create a String parameter named `DOCKERFILE` to determine the desired Dockerfile to use to build the Docker image.  This is determined with respect to the `CONTEXT_DIR` parameter.
     - Create a Credentials parameter named `REGISTRY_CREDENTIALS` and assign the necessary credentials to allow Jenkins to push the image to the remote repository
   2. Manually build the Docker image and push it to a registry that is accessible from your cluster (Docker Hub, IBM Cloud Container Registry, manually deployed Quay instance):
-    - `docker build -t <private-registry>/<image-namespace>/kc-ui:latest .`
+    - `docker build -t <private-registry>/<image-namespace>/kcontainer-ui:latest .`
     - `docker login <private-registry>`
-    - `docker push <private-registry>/<image-namespace>/kc-ui:latest`
+    - `docker push <private-registry>/<image-namespace>/kcontainer-ui:latest`
 3. Generate application YAMLs via `helm template`:
   - Parameters:
     - `--set image.repository=<private-registry>/<image-namespace>/<image-repository>`

@@ -6,7 +6,7 @@
 replicaCount: 1
 
 image:
-  repository: ibmcase/kc-ui
+  repository: ibmcase/kcontainer-ui
   tag: latest
   pullPolicy: Always
   pullSecret: null
