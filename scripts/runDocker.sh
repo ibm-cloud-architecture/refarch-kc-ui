@@ -6,4 +6,4 @@ export ORDER_MS_URL="http://localhost:31200/orders"
 export ORDER_QUERY_MS="http://localhost:31100/orders"
 export VOYAGE_MS_URL="http://localhost:31000/voyages"
 
-docker run -e FLEET_MS_URL --name kc-ui -p 3110:3010 ibmcase/kc-ui
+docker run -e FLEET_MS_URL --name kc-ui -p 3110:3010 ibmcase/kcontainer-ui
