@@ -138,7 +138,7 @@ module.exports = function (app: any) {
     app.post('/api/orders', (req, res) => {
         console.log("In api POST new orders " + JSON.stringify(req.body));
         if (req.body !== undefined) {
-            orderClient.saveOrder(req.body).then((data: orderDomain.Order) => {
+            orderClient.saveOrder(req.body).then((data: string) => {
                 res.status(200).send(data);
             });
         } else {
