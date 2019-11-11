@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { FleetService } from '../fleet.service';
+import { FleetService } from './fleet.service';
 
 describe('FleetService', () => {
   let httpMock: HttpTestingController;
