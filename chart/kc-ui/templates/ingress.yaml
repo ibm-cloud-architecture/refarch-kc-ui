@@ -1,6 +1,7 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "kc-ui.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
+{{- $chartName := .Chart.Name -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -32,7 +33,7 @@ spec:
         paths:
           - path: {{ $ingressPath }}
             backend:
-              serviceName: {{ $fullName }}
+              serviceName: "{{ $chartName }}-service"
               servicePort: http
   {{- end }}
 {{- end }}

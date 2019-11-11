@@ -1,1 +1,1 @@
-docker push us.icr.io/ibmcaseeda/kc-ui
+docker push us.icr.io/ibmcaseeda/kcontainer-ui

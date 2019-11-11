@@ -64,7 +64,7 @@ spec:
           - name: KAFKA_BROKERS
             valueFrom:
               configMapKeyRef:
-                name: "{{ .Values.eventstreams.brokersConfigMap }}"
+                name: "{{ .Values.kafka.brokersConfigMap }}"
                 key: brokers
           - name: PROBLEM_TOPIC
             value: "{{ .Values.kafka.bluewaterProblemTopicName }}"

@@ -8,7 +8,7 @@ You can read the content using the [book view](http://ibm-cloud-architecture.git
 
 The `scripts` folder has two scripts to build the UI, and a docker image for the server and single page app, and run it locally. You should clone all the KC solution repositories and use each component one by one, or use our IBM public cloud deployment. To be able to run the UI locally, you need to have at least the following component up and running:
 
-* Kafka and zookeeper: Use the docker compose file in the root project: 
+* Kafka and zookeeper: Use the docker compose file in the root project:
  ```
  cd ../refarch-kc/docker
  docker-compose -f backbone-compose.yml up
@@ -23,15 +23,15 @@ chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 223 kB [initial] [r
 chunk {runtime} runtime.js, runtime.js.map (runtime) 6.08 kB [entry] [rendered]
 chunk {styles} styles.js, styles.js.map (styles) 387 kB [initial] [rendered]
 chunk {vendor} vendor.js, vendor.js.map (vendor) 6.81 MB [initial] [rendered]
-...   
+...
 > kcbff@0.0.1 copy-deps /Users/jeromeboyer/Code/GreenCompute/refarch-kc-ui/server
-> cpx "../ui/dist/ui/*.*" ./dist/server/static && cpx "./config/config.json" ./dist/server/config   
-Successfully built 0226a1748fd9  
-Successfully tagged ibmcase/kc-ui:latest
+> cpx "../ui/dist/ui/*.*" ./dist/server/static && cpx "./config/config.json" ./dist/server/config
+Successfully built 0226a1748fd9
+Successfully tagged ibmcase/kcontainer-ui:latest
 
-* Start locally with `./script/run.sh` or with a docker `./script/runDocker.sh`. 
+* Start locally with `./script/run.sh` or with a docker `./script/runDocker.sh`.
 
-* Use your web browser at http://localhost:3000/#/home 
+* Use your web browser at http://localhost:3000/#/home
 
 
 
@@ -40,7 +40,7 @@ Successfully tagged ibmcase/kc-ui:latest
 The content of this repository is written with markdown files, packaged with [MkDocs](https://www.mkdocs.org/) and can be built into a book-readable format by MkDocs build processes.
 
 1. Install MkDocs locally following the [official documentation instructions](https://www.mkdocs.org/#installation).
-1. Install Material plugin for mkdocs:  `pip install mkdocs-material` 
+1. Install Material plugin for mkdocs:  `pip install mkdocs-material`
 2. `git clone https://github.com/ibm-cloud-architecture/refarch-kc-ui.git` _(or your forked repository if you plan to edit)_
 3. `cd refarch-kc-ui`
 4. `mkdocs serve`
@@ -54,12 +54,12 @@ The content of this repository is written with markdown files, packaged with [Mk
 	```bash
 	git checkout gh-pages
 	git pull origin gh-pages
-	
+
 	git checkout master
 	```
 3. Run `mkdocs gh-deploy` from the root refarch-kc directory.
 
---- 
+---
 
 ## Contribute
 

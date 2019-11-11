@@ -4,3 +4,4 @@ server/node_modules/
 server/dist/
 node_modules/
 site/
+.DS_Store
