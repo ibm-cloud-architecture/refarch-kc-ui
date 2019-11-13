@@ -22,4 +22,10 @@ describe('OrdersComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('Should create an order', () => {
+    const orders = OrdersComponent;
+    fixture.detectChanges();
+    expect(orders).toContain('');
+  })
 });
