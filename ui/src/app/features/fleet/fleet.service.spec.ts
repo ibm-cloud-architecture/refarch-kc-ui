@@ -8,7 +8,8 @@ describe('FleetService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [FleetService]
+      providers: [FleetService],
+      
     });
   });
   afterEach(inject([HttpTestingController], (httpMock: HttpTestingController) => {
