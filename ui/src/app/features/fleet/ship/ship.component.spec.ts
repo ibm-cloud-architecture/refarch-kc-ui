@@ -1,10 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SimulcontrolComponent } from '../../simulcontrol/simulcontrol.component';
 import { ShipComponent } from './ship.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Routes } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FleetService } from '../fleet.service';
 
-
-describe('ShipComponent', () => {
+fdescribe('ShipComponent', () => {
   let component: ShipComponent;
   let fixture: ComponentFixture<ShipComponent>;
   let template: HTMLElement;
@@ -12,9 +18,19 @@ describe('ShipComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShipComponent ],
+      declarations: [ ShipComponent, SimulcontrolComponent ],
       imports: [
-        RouterTestingModule.withRoutes(routes)
+        RouterTestingModule.withRoutes(routes),
+        MatToolbarModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatIconModule,
+        FormsModule,
+        ReactiveFormsModule
+      ],
+      providers: [
+        FleetService,
+      { provide: ,  useValue: }
       ],
     })
     .compileComponents();
@@ -31,7 +47,7 @@ describe('ShipComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should  create a ship', () => {
+  it('should  create a ship', () => {
     fixture.detectChanges();
     expect(template).toBeDefined();
   });
