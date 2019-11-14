@@ -30,7 +30,7 @@ fdescribe('OrderComponent', () => {
         HttpClientTestingModule,
         HttpTestingController,
       ],
-      providers: 
+      providers: []
     })
     .compileComponents();
     httpClient = TestBed.get(HttpClient);
