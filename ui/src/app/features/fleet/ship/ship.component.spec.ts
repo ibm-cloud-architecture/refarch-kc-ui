@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SimulcontrolComponent } from '../../simulcontrol/simulcontrol.component';
 import { ShipComponent } from './ship.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Routes } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
-import { SimulcontrolComponent } from '../../simulcontrol/simulcontrol.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,7 +15,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('ShipComponent', () => {
   let component: ShipComponent;
   let fixture: ComponentFixture<ShipComponent>;
-  let template: HTMLElement;
   let fleetStub;
 
   const routes: Routes = []; 
