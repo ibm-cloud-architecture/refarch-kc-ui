@@ -22,7 +22,7 @@ class TestHostComponent {
   }
 }
 
-fdescribe('OrderComponent', () => {
+describe('OrderComponent', () => {
   let orderComponent: OrderComponent;
 
   let hostFixture : ComponentFixture<TestHostComponent>;
