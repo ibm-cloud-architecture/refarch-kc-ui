@@ -15,7 +15,8 @@ export class OrderComponent implements OnInit {
   @Output()
   done = new EventEmitter<Order>();
   
-  products: string[] = ["Fresh product 1", "Medical vaccin", "Carrot", "Fresh product 2"]
+  products: string[] = ["Fresh product 1", "Medical vaccin", "Carrot", "Fresh product 2"];
+  
   constructor(private orderService: OrdersService) { }
 
   ngOnInit() {

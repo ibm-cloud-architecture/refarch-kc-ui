@@ -40,7 +40,7 @@ export class OrdersComponent implements OnInit {
     this.selectedOrder.customerID=this.selectedManufacturer;
   }
 
-  handleOrderEdit(newOrder){
+  handleOrderEdit(newOrder: Order){
     if (newOrder !== undefined) {
       this.orders.push(newOrder);
     }

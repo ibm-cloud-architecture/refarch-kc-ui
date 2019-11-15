@@ -1,38 +1,40 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { OrderComponent } from './order.component';
-import { OrdersService } from '../orders.service';
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatDatepickerModule } from '@angular/material/datepicker';
-// import { MatSelectModule } from '@angular/material/select';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { By } from '@angular/platform-browser';
 import { OrdersModule } from '../orders.module';
+import { Order } from '../Order';
 
 
+/*
+The order has @input() for the order so we need to inject an order instance to be able to
+test the form. To do se we need to create a host, which is a orderscomponent.
+*/
+@Component({
+  template: '<app-order [order]="mockOrder" (done)="handleOrderEdit($event)"></app-order>'
+})
+class TestHostComponent {
+  mockOrder = { 'productID': 'P02', 'quantity': '10'}
+  selectedOrder: Order;
+  handleOrderEdit(order: Order) {
+    this.selectedOrder = order;
+  }
+}
 
-fdescribe('OrderComponent', () => {
-  let component: OrderComponent;
-  let fixture: ComponentFixture<OrderComponent>;
-  let orderStub;
+describe('OrderComponent', () => {
+  let orderComponent: OrderComponent;
+
+  let hostFixture : ComponentFixture<TestHostComponent>;
 
   beforeEach(async(() => {
-    let order = { 'productID': ' ', 'quantity': ' ', 'pickUpDate': ' ', 'expectedDeliveryDate': ' ',
-    'pickUpAddress': ' ', 'destinationAddress': ' '}
-    orderStub = jasmine.createSpyObj("orderStub", ['createOrder']);
-    //orderStub.createOrder(order);
     TestBed.configureTestingModule({
-      declarations: [ ],
+      declarations: [ TestHostComponent ],
       imports: [
         FormsModule,
-        ReactiveFormsModule,
-        // MatFormFieldModule,
-        // MatDatepickerModule,
-        // MatSelectModule,
-        OrdersModule,
-        HttpClientTestingModule
+        OrdersModule
       ],
-      providers: [ { provide: OrdersService, useValue: orderStub } ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
 
@@ -40,16 +42,20 @@ fdescribe('OrderComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Creating the TestHostComponent has the side-effect of creating a OrderComponent 
+    // because the latter appears within the template of the former.
+    hostFixture = TestBed.createComponent(TestHostComponent);
+    orderComponent = hostFixture.debugElement.query(By.css('app-order')).nativeElement;
+    hostFixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(orderComponent).toBeDefined();
   });
 
-  xit('should create an order', () => {
-    expect(component.order)
+  it('should have an order passed as input', () => {
+    expect(orderComponent.order.productID).toBe("P02");
   })
+
+
 });

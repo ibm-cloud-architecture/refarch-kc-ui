@@ -22,7 +22,7 @@ describe('OrdersService', () => {
     expect(service).toBeTruthy();
   });
 
-  fit('should return the orderID as the response', () => {
+  it('should return the orderID as the response', () => {
 
     const req = httpTestingController.expectOne('/api/orders');
     expect (req.request.method).toEqual('POST');
