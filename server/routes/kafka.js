@@ -14,12 +14,15 @@ class KafkaConsumer {
 
     var kafkaClientConfig = {
       kafkaHost: config.getKafkaBrokers(),
-      sasl: {
+    };
+
+    if (config.isEventStreams()){
+      kafkaClientConfig.sasl = {
         mechanism: 'PLAIN',
         username: 'token',
         password: config.getKafkaApiKey()
       }
-    };
+    }
 
     if (config.eventStreamsSecurityEnabled()){
       kafkaClientConfig.ssl = true;
@@ -57,12 +60,15 @@ class KafkaConsumer {
 
     var kafkaClientConfig = {
       kafkaHost: config.getKafkaBrokers(),
-      sasl: {
+    };
+
+    if (config.isEventStreams()){
+      kafkaClientConfig.sasl = {
         mechanism: 'PLAIN',
         username: 'token',
         password: config.getKafkaApiKey()
       }
-    };
+    }
 
     if (config.eventStreamsSecurityEnabled()){
       kafkaClientConfig.ssl = true;
