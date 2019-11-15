@@ -39,7 +39,7 @@ import * as request from 'request-promise-native';
         });
     }
 
-    public saveOrder(order: string): Promise<string> {
+    public saveOrder(order: orderDomain.Order): Promise<orderDomain.Order> {
         return request.post(
             this.config.getOrderMSURL(),
             {json: true,
@@ -49,11 +49,11 @@ import * as request from 'request-promise-native';
              body: order 
             })
             .then(body => {
-                return <string>body;
+                return <orderDomain.Order>body;
             })
             .catch(err => {
                 console.error(err);
-                order = "Error " + err;
+                order.status = "Error " + err;
                 return new Promise((resolve, _) => {
                     resolve(order);
                 });
