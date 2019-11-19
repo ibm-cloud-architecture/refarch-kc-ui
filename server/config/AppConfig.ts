@@ -25,7 +25,7 @@ export default class AppConfig {
     }
 
     public getOrderMSURL(): string {
-      var url = config.ordersMSURL;
+      var url = config.orderMSURL;
       if(process.env.ORDERCOMMANDMS_SERVICE_HOST && process.env.ORDERCOMMANDMS_SERVICE_PORT){
         url = "http://" + process.env.ORDERCOMMANDMS_SERVICE_HOST
             + ":" + process.env.ORDERCOMMANDMS_SERVICE_PORT+ "/orders";
