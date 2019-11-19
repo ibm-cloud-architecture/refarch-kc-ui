@@ -13,13 +13,16 @@ class KafkaConsumer {
     var problems = new Array;
 
     var kafkaClientConfig = {
-      kafkaHost: config.getKafkaBrokers(),
-      sasl: {
+      kafkaHost: config.getKafkaBrokers()
+    };
+
+    if (config.isEventStreams()){
+      kafkaClientConfig.sasl = {
         mechanism: 'PLAIN',
         username: 'token',
         password: config.getKafkaApiKey()
       }
-    };
+    }
 
     if (config.eventStreamsSecurityEnabled()){
       kafkaClientConfig.ssl = true;
@@ -56,13 +59,16 @@ class KafkaConsumer {
     var shipPositionList = new Array;
 
     var kafkaClientConfig = {
-      kafkaHost: config.getKafkaBrokers(),
-      sasl: {
+      kafkaHost: config.getKafkaBrokers()
+    };
+
+    if (config.isEventStreams()){
+      kafkaClientConfig.sasl = {
         mechanism: 'PLAIN',
         username: 'token',
         password: config.getKafkaApiKey()
       }
-    };
+    }
 
     if (config.eventStreamsSecurityEnabled()){
       kafkaClientConfig.ssl = true;
