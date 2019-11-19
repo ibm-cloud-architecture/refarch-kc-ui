@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from '../Order';
 import { OrdersService } from '../orders.service';
+import { error } from 'util';
 
 @Component({
   selector: 'app-order',
@@ -8,6 +9,8 @@ import { OrdersService } from '../orders.service';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+
+  public errorMsg;
 
   @Input()
   order: Order;
@@ -27,9 +30,11 @@ export class OrderComponent implements OnInit {
 
     // if there is no orderID we are creating a new order
     if(this.order.orderID == null) {
-      this.orderService.saveOrder(this.order).subscribe(callback);
+      this.orderService.saveOrder(this.order).subscribe(callback,
+                                  error => this.errorMsg = error);
     } else {
-      this.orderService.updateOrder(this.order).subscribe(callback);
+      this.orderService.updateOrder(this.order).subscribe(callback,
+                                    error => this.errorMsg = error);
     }
   }
 
