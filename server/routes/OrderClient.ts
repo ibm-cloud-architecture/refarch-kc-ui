@@ -80,4 +80,21 @@ import * as request from 'request-promise-native';
                 });
             });  
     }
+
+    public checkCreateNewOrder(order: orderDomain.Order): boolean {
+        return ( order.customerID !== "" && order.customerID !== undefined &&
+                 order.pickupAddress.city !== "" && order.pickupAddress.city !== undefined &&
+                 order.pickupAddress.country !== "" && order.pickupAddress.country !== undefined &&
+                 order.pickupAddress.state !== "" && order.pickupAddress.state !== undefined &&
+                 order.pickupAddress.street !== "" && order.pickupAddress.street !== undefined &&
+                 order.pickupAddress.zipcode !== "" && order.pickupAddress.zipcode !== undefined &&
+                 order.destinationAddress.city !== "" && order.destinationAddress.city !== undefined &&
+                 order.destinationAddress.country !== "" && order.destinationAddress.country !== undefined &&
+                 order.destinationAddress.state !== "" && order.destinationAddress.state !== undefined &&
+                 order.destinationAddress.street !== "" && order.destinationAddress.street !== undefined &&
+                 order.destinationAddress.zipcode !== "" && order.destinationAddress.zipcode !== undefined &&
+                 order.productID !== "" && order.productID !== undefined &&
+                 order.quantity !== "" && order.quantity !== "0" && order.quantity !== undefined &&
+                 order.expectedDeliveryDate !== "" && order.expectedDeliveryDate !== "" );
+    }
  }

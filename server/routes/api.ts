@@ -138,9 +138,15 @@ module.exports = function (app: any) {
     app.post('/api/orders', (req, res) => {
         console.log("In api POST new orders " + JSON.stringify(req.body));
         if (req.body !== undefined) {
-            orderClient.saveOrder(req.body).then((data: orderDomain.Order) => {
+            if (orderClient.checkCreateNewOrder(req.body) !== true){
+                console.log("[ERROR] - Incorrect new order object received. Make sure all attributes for a new order are present and aren't empty.");
+                res.status(404).send({ error: 'Incorrect New Order Object' });
+            }
+            else {
+                orderClient.saveOrder(req.body).then((data: orderDomain.Order) => {
                 res.status(200).send(data);
-            });
+                });
+            }
         } else {
             res.status(400).send({ error: 'No POST body' });
         }
