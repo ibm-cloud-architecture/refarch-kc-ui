@@ -12,7 +12,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { OrdersComponent } from './orders.component';
 import { OrderComponent } from './order/order.component';
-import { HttpErrorInterceptor } from './errorInterceptor';
+import { HttpConfigInterceptor } from './errorInterceptor';
+import { ToastrModule } from 'ngx-toastr';
+import { MatDialogModule } from '@angular/material';
+import { ErrorDialogService } from 'src/app/error-dialog/errordialog.service';
+//import { ErrorDialogComponent } from 'src/app/error-dialog/errordialog.component';
 
 @NgModule({
   declarations: [OrdersComponent, OrderComponent],
@@ -28,14 +32,17 @@ import { HttpErrorInterceptor } from './errorInterceptor';
     MatIconModule,
     MatSortModule,
     MatInputModule,
-    CommonModule
+    CommonModule,
+    ToastrModule,
+    MatDialogModule
   ],
   providers: [ 
+    ErrorDialogService,
     {
     provide: HTTP_INTERCEPTORS,
-    useClass: HttpErrorInterceptor,
+    useClass: HttpConfigInterceptor, 
     multi: true
-  }
+  },
 ]
 })
 export class OrdersModule { }

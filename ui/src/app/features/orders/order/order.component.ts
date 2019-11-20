@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from '../Order';
 import { OrdersService } from '../orders.service';
-import { finalize } from 'rxjs/internal/operators/finalize';
 
 @Component({
   selector: 'app-order',

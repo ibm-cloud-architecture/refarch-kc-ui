@@ -84,9 +84,6 @@
   <div class="row">
       <div *ngIf="edit()" class="button-row">
           <button mat-raised-button color="primary" (click)="submit()">Submit</button>
-          <matt-error *ngIf="form.get(order).errors?.serverError">
-             {{ form.get('order').errors?.serverError }}
-          </matt-error>
           <button mat-raised-button (click)="cancel()">Cancel</button>
       </div>
       <div *ngIf="!edit()" class="button-row">
