@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -12,6 +12,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { OrdersComponent } from './orders.component';
 import { OrderComponent } from './order/order.component';
+import { HttpErrorInterceptor } from './errorInterceptor';
 
 @NgModule({
   declarations: [OrdersComponent, OrderComponent],
@@ -28,6 +29,13 @@ import { OrderComponent } from './order/order.component';
     MatSortModule,
     MatInputModule,
     CommonModule
-  ]
+  ],
+  providers: [ 
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpErrorInterceptor,
+    multi: true
+  }
+]
 })
 export class OrdersModule { }

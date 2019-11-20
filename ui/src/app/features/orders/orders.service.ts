@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,  throwError } from 'rxjs';
 import { map } from  'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Order } from './Order';
-//import { throwError } from 'rxjs'
-import { catchError } from 'rxjs/operators'
+import { retry, catchError } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +29,14 @@ export class OrdersService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
     return this.http.post<Order>(this.ordersUrl, order, httpOptions)
-                                .pipe(catchError(this.errorHandler));
-  }
-
-  errorHandler(error: HttpErrorResponse){
-    return Observable.throw(error.message || "server Error");
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        if(error.status === 400){
+          alert(error.message + "An error occur, please try again");
+        }
+        return throwError(error);
+      })
+    )
   }
 
   updateOrder(order:Order): Observable<Order> {

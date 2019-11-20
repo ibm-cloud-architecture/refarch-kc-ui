@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from '../Order';
 import { OrdersService } from '../orders.service';
-import { error } from 'util';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 @Component({
   selector: 'app-order',
@@ -30,14 +30,11 @@ export class OrderComponent implements OnInit {
 
     // if there is no orderID we are creating a new order
     if(this.order.orderID == null) {
-      this.orderService.saveOrder(this.order).subscribe(callback,
-                                  error => this.errorMsg = error);
+      this.orderService.saveOrder(this.order).subscribe(callback ); 
     } else {
-      this.orderService.updateOrder(this.order).subscribe(callback,
-                                    error => this.errorMsg = error);
+      this.orderService.updateOrder(this.order).subscribe(callback);
     }
   }
-
   cancel(){
     this.done.emit(null);
   }
