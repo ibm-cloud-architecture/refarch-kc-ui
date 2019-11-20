@@ -16,15 +16,6 @@ export class ErrorDialogService {
             data: data
         });
 
-        /* 
-            constructor(public dialog: MatDialog) { }
-            openDialog(data): void {
-            const dialogRef = this.dialog.open(ErrorDialogComponent, {
-            width: '300px',
-            data: data
-        });
-        */ 
-
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
             this.isDialogOpen = false;

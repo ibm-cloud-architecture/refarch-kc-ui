@@ -16,7 +16,6 @@ import { HttpConfigInterceptor } from './errorInterceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { MatDialogModule } from '@angular/material';
 import { ErrorDialogService } from 'src/app/error-dialog/errordialog.service';
-//import { ErrorDialogComponent } from 'src/app/error-dialog/errordialog.component';
 
 @NgModule({
   declarations: [OrdersComponent, OrderComponent],
