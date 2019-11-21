@@ -7,10 +7,11 @@ import { AppComponent } from './app.component';
 import { ErrorDialogComponent } from './error-dialog/errordialog.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorDialogComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +20,7 @@ import { ErrorDialogComponent } from './error-dialog/errordialog.component';
     SharedModule
   ],
   providers: [],
-  entryComponents: [ErrorDialogComponent],
+  entryComponents: [ ErrorDialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

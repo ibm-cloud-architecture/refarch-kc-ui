@@ -5,7 +5,7 @@ import { cold, getTestScheduler } from 'jasmine-marbles';
 import { ShipmentsService } from '../shipments.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('VoyagesComponent', () => {
+describe('VoyagesComponent', () => {
   let component: VoyagesComponent;
   let fixture: ComponentFixture<VoyagesComponent>;
 
@@ -32,20 +32,12 @@ const voyageServSub = {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('should not have any voyages', () => {
+  it('should not have any voyages', () => {
     expect(component.voyages).toBeUndefined();
   })
-
-  // it('should get the selected voyage on click', () => {
-  //   expect(component.voyages).toBeUndefined();
-  //   component.loadVoyages('manuf');
-  //   getTestScheduler().flush();
-  //   component.open(component.voyages[0]);
-  //   expect(component.selectedVoyage.voyageID).toBe("001");
-  // });
 
 });
