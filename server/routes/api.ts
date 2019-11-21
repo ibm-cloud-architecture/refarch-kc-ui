@@ -135,7 +135,7 @@ module.exports = function (app: any) {
         });
     });
 
-    app.post('/api/orders', (req, res) => {
+     app.post('/api/orders', (req, res) => {
         console.log("In api POST new orders " + JSON.stringify(req.body));
         if (req.body !== undefined) {
             if (orderClient.checkCreateNewOrder(req.body) !== true){
@@ -150,7 +150,7 @@ module.exports = function (app: any) {
         } else {
             res.status(400).send({ error: 'No POST body' });
         }
-    });
+    }); 
 
     app.put('/api/orders/:orderID', (req, res) => {
         console.log("In api PUT existing order " + JSON.stringify(req.body));

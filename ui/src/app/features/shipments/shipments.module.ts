@@ -11,6 +11,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
   declarations: [OrderedShipmentsComponent, VoyagesComponent],
   imports: [
@@ -23,7 +24,7 @@ import { MatTableModule } from '@angular/material/table';
           MatIconModule,
           MatRadioModule,
           MatInputModule,
-          MatSortModule
+          MatSortModule,
   ]
 })
 export class ShipmentsModule { }

@@ -8,7 +8,7 @@
         "noResolve": false,
         "moduleResolution": "node",
         "typeRoots": [
-            "node_modules/@types"
+            "node_modules/@types",
         ],
         "lib": [
             "es2017"

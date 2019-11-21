@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,  throwError } from 'rxjs';
 import { map } from  'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Order } from './Order';
+import { retry, catchError } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class OrdersService {
     let httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<Order>(this.ordersUrl, order, httpOptions);
+    return this.http.post<Order>(this.ordersUrl, order, httpOptions)
   }
 
   updateOrder(order:Order): Observable<Order> {

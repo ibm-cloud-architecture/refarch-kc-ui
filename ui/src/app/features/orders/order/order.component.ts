@@ -9,6 +9,8 @@ import { OrdersService } from '../orders.service';
 })
 export class OrderComponent implements OnInit {
 
+  public errorMsg;
+
   @Input()
   order: Order;
 
@@ -27,12 +29,11 @@ export class OrderComponent implements OnInit {
 
     // if there is no orderID we are creating a new order
     if(this.order.orderID == null) {
-      this.orderService.saveOrder(this.order).subscribe(callback);
+      this.orderService.saveOrder(this.order).subscribe(callback ); 
     } else {
       this.orderService.updateOrder(this.order).subscribe(callback);
     }
   }
-
   cancel(){
     this.done.emit(null);
   }

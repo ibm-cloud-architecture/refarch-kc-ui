@@ -6,7 +6,7 @@ import { OrdersService } from './orders.service';
 import { Observable } from 'rxjs';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 
-fdescribe('OrdersComponent', () => {
+describe('OrdersComponent', () => {
   let component: OrdersComponent;
   let fixture: ComponentFixture<OrdersComponent>;
 

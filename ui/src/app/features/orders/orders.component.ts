@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from './Order';
 import { OrdersService } from './orders.service';
 import { Address } from './Address';
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
+
 export class OrdersComponent implements OnInit {
 
   displayedColumns: string[] = ['OrderID', 'From', "To", 'ExpectedDate', 'Status', 'actions'];
@@ -37,7 +39,7 @@ export class OrdersComponent implements OnInit {
     this.selectedOrder = new Order();
     this.selectedOrder.destinationAddress = new Address();
     this.selectedOrder.pickupAddress = new Address();
-    this.selectedOrder.customerID=this.selectedManufacturer;
+    this.selectedOrder.customerID = this.selectedManufacturer;
   }
 
   handleOrderEdit(newOrder: Order){
