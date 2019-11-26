@@ -4,31 +4,39 @@ import { VoyagesComponent } from './voyages.component';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 import { ShipmentsService } from '../shipments.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Voyage } from './Voyage';
+import { By } from '@angular/platform-browser';
 
-describe('VoyagesComponent', () => {
-  let component: VoyagesComponent;
-  let fixture: ComponentFixture<VoyagesComponent>;
 
-const voyageServSub = {
-  getVoyages(manuf){
-    const voyages$ = cold('--x|', {x: [{'voyageID' : '001'}]})
-    return  voyages$;
+@Component({
+  template: '<app-voyages [voyage]= "mockVoyage" (done)="handleVoyageEdit($event)"></app-voyages>'
+})
+class TestHostComponent {
+  mockVoyage = { 'voyageID': 'P01', 'status': 'ordered'}
+  selectedVoyages: Voyage;
+  handleVoyageEdit(voyage: Voyage){
+    this.selectedVoyages = voyage;
   }
 }
 
+describe('VoyagesComponent', () => {
+  let component: VoyagesComponent;
+  let fixture: ComponentFixture<TestHostComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ],
+      declarations: [ TestHostComponent],
       imports: [ ShipmentsModule,
       BrowserAnimationsModule ],
-      providers: [ { provide: ShipmentsService, useValue: voyageServSub } ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VoyagesComponent);
-    component = fixture.componentInstance;
+    fixture = TestBed.createComponent(TestHostComponent);
+    component = fixture.debugElement.query(By.css('app-voyages')).nativeElement;
     fixture.detectChanges();
   });
 
@@ -38,6 +46,6 @@ const voyageServSub = {
 
   it('should not have any voyages', () => {
     expect(component.voyages).toBeUndefined();
-  })
+  });
 
 });
