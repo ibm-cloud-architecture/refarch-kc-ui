@@ -24,6 +24,13 @@ describe('VoyagesComponent', () => {
   let component: VoyagesComponent;
   let fixture: ComponentFixture<TestHostComponent>;
 
+const voyageServSub = {
+  getVoyages(manuf){
+    const voyages$ = cold('--x|', {x: [{'voyageID' : '001'}]})
+    return  voyages$;
+  }
+}
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ TestHostComponent],
@@ -47,5 +54,6 @@ describe('VoyagesComponent', () => {
   it('should not have any voyages', () => {
     expect(component.voyages).toBeUndefined();
   });
+
 
 });
