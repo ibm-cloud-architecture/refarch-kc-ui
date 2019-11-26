@@ -3,7 +3,7 @@ import { OrdersService } from './orders.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 
-fdescribe('OrdersService', () => {
+describe('OrdersService', () => {
 
   beforeEach(() => TestBed.configureTestingModule({
     imports: [ HttpClientTestingModule,
