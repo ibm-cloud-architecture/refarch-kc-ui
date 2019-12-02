@@ -4,6 +4,7 @@
 # repository: us.icr.io/ibmcaseeda/kc-ui
 
 replicaCount: 1
+revisionHistoryLimit: 1
 
 image:
   repository: ibmcase/kcontainer-ui
