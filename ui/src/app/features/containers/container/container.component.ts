@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Container } from '@angular/compiler/src/i18n/i18n_ast';
+import { ContainersService } from '../containers.service';
+
 
 @Component({
   selector: 'app-container',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContainerComponent implements OnInit {
 
-  constructor() { }
+  containers: Container[];
+  message: string;
+
+  constructor(private containerService: ContainersService) { }
 
   ngOnInit() {
+
   }
 
 }

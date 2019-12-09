@@ -1,4 +1,4 @@
-export class Container {
+export interface Container {
     id: string;
     type: string;
     temperature: number;

@@ -1,3 +1,46 @@
-<p>
-  containers works!
-</p>
+
+  <div class="row" >
+    <div class="col-md-8" *ngIf="containers">
+      <h3>List of all Containers</h3>
+      <table mat-table [dataSource]="orders" matSort class="mat-elevation-z8">
+        <!-- Name Column -->
+        <ng-container matColumnDef="ContainerID">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Container ID</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Type">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Type </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Temperature">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Temperature </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.temperature}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Humidity">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Humidity </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.humidity}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="CO2">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>CO2 </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.co2}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Amp">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Amp </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.amp}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Status </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Row">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Row</mat-header-cell> 
+          <mat-cell *matCellDef="let element"> {{element.row}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Column">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Column </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.column}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="ShipID">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>ShipID </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.shipId}} </mat-cell>
+        </ng-container>

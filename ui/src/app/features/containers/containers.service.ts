@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Container } from './Container'
 import { map } from 'rxjs/operators';
@@ -9,13 +9,19 @@ import { map } from 'rxjs/operators';
 })
 export class ContainersService {
 
+  containers: Container[] = [];
+  headers: HttpHeaders = new HttpHeaders({ 'Content-Type':
+  'application/json' });
+
   containersUrl: string = "api/containers";
+
   constructor(private http: HttpClient) { }
 
-  getContainers(): Observable<Container[]>{
+  public getContainersList(): Observable<Container[]>{
     return this.http.get<Container[]>(this.containersUrl + "/")
-    .pipe(map((data: Container[]) => {
-      return data;
+    .pipe(map(data => {
+      this.containers = data;
+      return this.containers;
     }))
   }
 }
