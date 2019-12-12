@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Container } from './Container';
 import { ContainersService } from './containers.service';
+import { Router } from '@angular/router';
+import {MatTableDataSource} from '@angular/material/table';
+import { CONTAINERS } from './mock-container';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-containers',
@@ -9,19 +13,27 @@ import { ContainersService } from './containers.service';
 })
 export class ContainersComponent implements OnInit {
 
-  containers: Container[];
-  message: string;
+  displayedColumns: string[] = ['id', 'type', 'temperature', 'humidity', 'co2', 'amp', 'status', 'row', 'column', 'shipId'];
+  dataSource = new MatTableDataSource<Container>(CONTAINERS);
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private containerService: ContainersService) { }
+  containers: Container[];
+
+  constructor(private router: Router, private containerService: ContainersService) { }
 
   ngOnInit() {
-
+    this.getContainersTest();
+    this.dataSource.sort = this.sort;
   }
 
   showContainers() {
      this.containerService.getContainersList().subscribe(
       data => {this.containers = data}
       );
-  }
+  } 
 
+  getContainersTest(): void {
+    this.containerService.getContainersTest().subscribe
+    (containers => this.containers = containers);
+  }
 }

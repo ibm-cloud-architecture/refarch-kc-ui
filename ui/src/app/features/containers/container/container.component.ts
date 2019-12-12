@@ -10,9 +10,6 @@ import { ContainersService } from '../containers.service';
 })
 export class ContainerComponent implements OnInit {
 
-  containers: Container[];
-  message: string;
-
   constructor(private containerService: ContainersService) { }
 
   ngOnInit() {
