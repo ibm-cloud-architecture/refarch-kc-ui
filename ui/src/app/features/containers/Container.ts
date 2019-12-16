@@ -8,5 +8,5 @@ export interface Container {
     status?: string;
     row: number;
     column: number;
-    shipId: string
+    shipId: string;
 }
