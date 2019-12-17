@@ -16,7 +16,7 @@ jobs:
     - name: Validate DOCKER_USERNAME is defined
       id: validate-docker-username
       run: |
-        [ -z "${VALUE}" ] && echo "The secret ${FIELD} needs to be set on this repository." && exit 1;
+        [ -z "${VALUE}" ] && { echo "The secret ${FIELD} needs to be set on this repository."; exit 1; }
       env:
         FIELD: DOCKER_USERNAME
         VALUE: ${{ secrets.DOCKER_USERNAME }}
