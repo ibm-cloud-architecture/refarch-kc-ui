@@ -4,6 +4,7 @@
 # repository: us.icr.io/ibmcaseeda/kc-ui
 
 replicaCount: 1
+revisionHistoryLimit: 1
 
 image:
   repository: ibmcase/kcontainer-ui
@@ -34,6 +35,11 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+# Individual Routes are preferred over Ingresses on OCP
+route:
+  enabled: false
+  path: /
+  urlPrefix: kcontainer-ui
 kafka:
   brokersConfigMap: kafka-brokers
   bluewaterProblemTopicName: bluewaterProblem
