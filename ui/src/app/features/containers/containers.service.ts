@@ -27,7 +27,9 @@ export class ContainersService {
     }))
   } 
 
+  //test function to test the UI
+  /*
   public getContainersTest(): Observable<Container[]>{
     return of (CONTAINERS);
-  }
+  } */
 }

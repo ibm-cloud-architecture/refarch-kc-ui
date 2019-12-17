@@ -4,7 +4,6 @@ import { ContainersService } from './containers.service';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { CONTAINERS } from './mock-container';
-import { MatSort } from '@angular/material';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 
 
@@ -23,17 +22,16 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
 export class ContainersComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'temperature' , 'status',  'shipId'];
-  dataSource = new MatTableDataSource<Container>(CONTAINERS);
+  dataSource = new MatTableDataSource<Container>();
   expandedElement: Container[] | null;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   containers: Container[];
 
   constructor(private router: Router, private containerService: ContainersService) { }
 
   ngOnInit() {
-    this.getContainersTest();
-    this.dataSource.sort = this.sort;
+    //this.getContainersTest();
+    this.showContainers();
   }
 
   showContainers() {
@@ -42,8 +40,10 @@ export class ContainersComponent implements OnInit {
       );
   } 
 
+//this function test the UI with fake data
+/*
   getContainersTest(): void {
     this.containerService.getContainersTest().subscribe
     (containers => this.containers = containers);
-  }
+  } */
 }
