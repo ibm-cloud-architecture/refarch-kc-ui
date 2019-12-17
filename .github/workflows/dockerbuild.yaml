@@ -8,19 +8,40 @@ on:
       - 'docs/**'
 
 jobs:
-  build-docker-image:
-    #if: startsWith(github.repository, 'ibm-cloud-architecture/')
+  validate-docker-secrets:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
     - name: Validate DOCKER_USERNAME is defined
       id: validate-docker-username
       run: |
-        [ -z "${VALUE}" ] && { echo "The secret ${FIELD} needs to be set on this repository."; exit 1; }
-        echo "The secret ${FIELD} is set on this repository."
+        INVALID=0
+        validate_secret(){
+          FIELD=$1
+          VALUE=$2
+
+          [ -z "${VALUE}" ] && { echo "The secret ${FIELD} needs to be set on this repository."; ((INVALID++))}
+          echo "The secret ${FIELD} is set on this repository."
+        }
+
+        validate_secret DOCKER_USERNAME ${DOCKER_USERNAME}
+        validate_secret DOCKER_PASSWORD ${DOCKER_PASSWORD}
+        validate_secret DOCKER_REPOSITORY ${DOCKER_REPOSITORY}
+        validate_secret DOCKER_IMAGE ${DOCKER_IMAGE}
+
+        if [ "${INVALID}" ne "0" ]; then
+          exit 1
+        fi
       env:
-        FIELD: DOCKER_USERNAME
-        VALUE: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
+        DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
+  build-docker-image:
+    needs:
+      validate-docker-secrets
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
     - name: Bump version and push tag
       id: bump-version-action
       uses: anothrNick/github-tag-action@master
