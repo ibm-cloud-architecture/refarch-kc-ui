@@ -11,15 +11,16 @@ jobs:
   validate-docker-secrets:
     runs-on: ubuntu-latest
     steps:
-    - name: Validate DOCKER_USERNAME is defined
-      id: validate-docker-username
+    - name: Validate docker registry secrets are defined
+      id: validate-docker-secrets
       run: |
         INVALID=0
+
         validate_secret(){
           FIELD=$1
           VALUE=$2
 
-          [ -z "${VALUE}" ] && { echo "The secret ${FIELD} needs to be set on this repository."; ((INVALID++))}
+          [ -z "${VALUE}" ] && { echo "The secret ${FIELD} needs to be set on this repository."; ((INVALID++)); }
           echo "The secret ${FIELD} is set on this repository."
         }
 
