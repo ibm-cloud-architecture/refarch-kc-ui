@@ -1,0 +1,34 @@
+<h3>List of Containers</h3>
+<table mat-table
+  [dataSource]="dataSource" multiTemplateDataRows
+  class="mat-elevation-z8">
+<ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+<th mat-header-cell *matHeaderCellDef> {{column}} </th>
+<td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+</ng-container>
+
+<!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+<ng-container matColumnDef="expandedDetail">
+<td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+ <div class="element-detail"
+      [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+   <div class="element-description">
+    <div>Type: {{element.type}}</div>
+    <div>Humidity: {{element.humidity}}</div>
+    <div>CO2: {{element.co2}}</div>
+    <div>Amp: {{element.amp}}</div>
+    <div>Row: {{element.row}}</div>
+    <div>Column: {{element.column}}</div>
+   </div>
+ </div>
+</td>
+</ng-container>
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr mat-row *matRowDef="let element; columns: displayedColumns;"
+ class="element-row"
+ [class.example-expanded-row]="expandedElement === element"
+ (click)="expandedElement = expandedElement === element ? null : element">
+</tr>
+<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+</table>

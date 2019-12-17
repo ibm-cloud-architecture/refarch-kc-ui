@@ -19,6 +19,8 @@ import FleetClient from './FleetClient';
 import * as fleetDomain from './fleetDomain';
 import OrderClient from './OrderClient';
 import * as orderDomain from './orderDomain';
+import * as containerDomain from './containerDomain';
+import ContainerClient from './ContainerClient'
 
 import ShipmentClient from './ShipmentClient';
 import KafkaConsumer from './kafka';
@@ -26,6 +28,7 @@ import KafkaConsumer from './kafka';
 const orderClient = new OrderClient();
 const fleetClient = new FleetClient();
 const shipmentClient = new ShipmentClient();
+const containerClient = new ContainerClient();
 
 
 async function delay(ms: number) {
@@ -196,4 +199,16 @@ module.exports = function (app: any) {
             res.status(200).send(voyage);
         });
     });
+
+    //Get the list of containers
+    app.get('/api/containers', (req: any, res: any) => {
+        console.log("In api Get all containers");
+        containerClient.getContainers().then((containers: containerDomain.Container[]) => {
+            console.log("Got containers: " + JSON.stringify(containers));
+            res.status(200).send(containers);
+        });
+    
+    });
+    
+    
 } // end exports
