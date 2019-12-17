@@ -33,7 +33,7 @@ jobs:
         validate_secret DOCKER_REPOSITORY ${DOCKER_REPOSITORY}
         validate_secret DOCKER_IMAGE ${DOCKER_IMAGE}
 
-        if [ "${FAIL}" ne "false" ]; then
+        if [ "${FAIL}" = "true" ]; then
           exit 1
         fi
       env:
