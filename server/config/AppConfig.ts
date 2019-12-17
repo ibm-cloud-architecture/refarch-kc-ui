@@ -89,6 +89,11 @@ export default class AppConfig {
         return process.env.KAFKA_CERT_PATH || config.certsPath;
     }
 
+    public isEventStreams(): boolean {
+        var kafka_api_key = process.env.KAFKA_APIKEY.trim();
+        return ('KAFKA_APIKEY' in process.env && kafka_api_key !=="");
+    }
+    
     public eventStreamsSecurityEnabled(): boolean {
         return ('KAFKA_CERT_PATH' in process.env);
     }

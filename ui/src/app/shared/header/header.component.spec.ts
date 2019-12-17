@@ -6,7 +6,7 @@ import { HeaderComponent } from './header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 
-describe('HeaderComponent', () => {
+fdescribe('HeaderComponent', () => {
   let location: Location;
   let router: Router;
   let component: HeaderComponent;
@@ -48,6 +48,7 @@ describe('HeaderComponent', () => {
   // if the component navigates with the right address under the given conditions.
 /*
   excluding this test for now
+
   xit('should go to home url when clicking on home link', () => {
     const link = fixture.debugElement.query(By.css('#home'));
     //link.click();
