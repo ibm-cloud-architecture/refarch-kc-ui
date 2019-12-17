@@ -20,8 +20,12 @@ jobs:
           FIELD=$1
           VALUE=$2
 
-          [ -z "${VALUE}" ] && { echo "The secret ${FIELD} needs to be set on this repository."; ((INVALID++)); }
-          echo "The secret ${FIELD} is set on this repository."
+          if [ -z "${VALUE}" ]; then
+            echo "The secret ${FIELD} needs to be set on this repository."
+            ((INVALID++))
+          else
+            echo "The secret ${FIELD} is set on this repository."
+          fi
         }
 
         validate_secret DOCKER_USERNAME ${DOCKER_USERNAME}
