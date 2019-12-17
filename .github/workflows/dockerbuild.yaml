@@ -9,10 +9,17 @@ on:
 
 jobs:
   build-docker-image:
-    if: startsWith(github.repository, 'ibm-cloud-architecture/')
+    #if: startsWith(github.repository, 'ibm-cloud-architecture/')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - name: Validate DOCKER_USERNAME is defined
+      id: validate-docker-username
+      run: |
+        [ -z "${VALUE}" ] && echo "The secret ${FIELD} needs to be set on this repository." && exit 1;
+      env:
+        FIELD: DOCKER_USERNAME
+        VALUE: ${{ secrets.DOCKER_USERNAME }}
     - name: Bump version and push tag
       id: bump-version-action
       uses: anothrNick/github-tag-action@master
@@ -22,6 +29,7 @@ jobs:
     - name: Build the ui docker image
       id: build-ui-image
       run: |
+        IMAGE_NAME="${DOCKER_R}/${DOCKER_I}"
         docker login -u ${DOCKER_U} -p ${DOCKER_P}
         cd ${WORKDIR}
         docker build . --file ${DOCKERFILE} --tag ${IMAGE_NAME}:${IMAGE_TAG}
@@ -30,9 +38,11 @@ jobs:
       env:
         DOCKER_U: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_P: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_R: ${{ secrets.DOCKER_REPOSITORY }}
+        DOCKER_I: ${{ secrets.DOCKER_IMAGE }}
         WORKDIR: .
         DOCKERFILE: Dockerfile
-        IMAGE_NAME: ibmcase/kcontainer-ui
+        #IMAGE_NAME: ibmcase/kcontainer-ui
         IMAGE_TAG: ${{ steps.bump-version-action.outputs.new_tag }}
     - name: Webhook to GitOps repo
       id: gitops-repo-webhook
