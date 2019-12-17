@@ -14,6 +14,8 @@ jobs:
     - name: Validate docker registry secrets are defined
       id: validate-docker-secrets
       run: |
+        echo "Validating docker registry secrets are defined on the repository"
+
         FAIL=false
 
         validate_secret(){
@@ -56,6 +58,7 @@ jobs:
     - name: Build the ui docker image
       id: build-ui-image
       run: |
+        echo "Build and push the docker image"
         IMAGE_NAME="${DOCKER_R}/${DOCKER_I}"
         docker login -u ${DOCKER_U} -p ${DOCKER_P}
         cd ${WORKDIR}
