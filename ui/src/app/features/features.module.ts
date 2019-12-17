@@ -22,6 +22,9 @@ import { SimulcontrolComponent } from './simulcontrol/simulcontrol.component';
 import { OrdersModule } from './orders/orders.module';
 import { ShipmentsModule } from './shipments/shipments.module';
 import { LoginModule } from './login/login.module';
+//import { ContainersComponent } from './containers/containers.component';
+//import { ContainerComponent } from './containers/container/container.component';
+import { ContainersModule } from './containers/containers.module';
 
 @NgModule({
   imports: [
@@ -42,7 +45,8 @@ import { LoginModule } from './login/login.module';
       }),
     OrdersModule,
     LoginModule,
-    ShipmentsModule
+    ShipmentsModule,
+    ContainersModule
   ],
   declarations: [HomeComponent, FleetComponent, ShipsComponent, ShipComponent, SimulcontrolComponent, LeafletMapComponent],
   exports: [ RouterModule ]

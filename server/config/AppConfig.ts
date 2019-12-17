@@ -5,6 +5,7 @@
 const config = require('./config.json');
 
 export default class AppConfig {
+  
     constructor() {}
 
     public getKafkaBrokers(): string {
@@ -47,6 +48,15 @@ export default class AppConfig {
         if(process.env.VOYAGESMS_SERVICE_HOST && process.env.VOYAGESMS_SERVICE_PORT){
           url = "http://" + process.env.VOYAGESMS_SERVICE_HOST
               + ":" + process.env.VOYAGESMS_SERVICE_PORT;
+        }
+        return url;
+    }
+
+    public getContainerMSURL(): string {
+        var url = config.containerMSURL;
+        if(process.env.CONTAINERMS_SERVICE_HOST && process.env.CONTAINERMS_SERVICE_PORT){
+          url = "http://" + process.env.CONTAINERMS_SERVICE_HOST
+              + ":" + process.env.CONTAINERMS_SERVICE_PORT + "/containers";
         }
         return url;
     }
