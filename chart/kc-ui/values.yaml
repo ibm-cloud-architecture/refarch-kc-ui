@@ -61,3 +61,5 @@ application:
   orderQueryServicePort: 9080
   voyageServiceHost: voyagesms-service
   voyageServicePort: 3000
+  containerServiceHost: springcontainerms-service
+  containerServicePort: 8080

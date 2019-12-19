@@ -12,5 +12,4 @@ spec:
     port: {{ .Values.service.servicePort }}
     nodePort: {{ .Values.service.nodePort }}
   selector:
-    app: {{ template "kc-ui.name" . }}
-    release: {{ .Release.Name }}
+    app: "{{  .Chart.Name }}-selector"
