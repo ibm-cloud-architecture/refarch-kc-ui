@@ -10,7 +10,7 @@ export default class ContainerClient {
     }
 
     public getContainers(): Promise<domain.Container[]>{
-        return request.get(this.config.getContainerMSURL() + '/containers/',
+        return request.get(this.config.getContainerMSURL(),
         {json: true})
         .then( (body) => {
             return <domain.Container[]>body;
