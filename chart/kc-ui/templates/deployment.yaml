@@ -1,24 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "kc-ui.fullname" . }}
+  name: "{{  .Chart.Name }}-deployment"
   labels:
-    app: {{ template "kc-ui.name" . }}
-    chart: {{ template "kc-ui.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
-  selector:
-    matchLabels:
-      app: {{ template "kc-ui.name" . }}
-      release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "kc-ui.name" . }}
-        release: {{ .Release.Name }}
+        app: "{{  .Chart.Name }}-selector"
+        version: "current"
     spec:
       serviceAccountName: {{ .Values.serviceAccountName }}
       {{- if .Values.image.pullSecret }}
@@ -62,6 +55,10 @@ spec:
             value: "{{ .Values.application.voyageServiceHost }}"
           - name: VOYAGESMS_SERVICE_PORT
             value: "{{ .Values.application.voyageServicePort }}"
+          - name: CONTAINERMS_SERVICE_HOST
+            value: "{{ .Values.application.containerServiceHost }}"
+          - name: CONTAINERMS_SERVICE_PORT
+            value: "{{ .Values.application.containerServicePort }}"
           - name: KAFKA_BROKERS
             valueFrom:
               configMapKeyRef:
