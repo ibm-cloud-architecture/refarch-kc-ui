@@ -9,4 +9,6 @@ export interface Container {
     row: number;
     column: number;
     shipId: string;
+    latitude: number;
+    longitude: number;
 }
