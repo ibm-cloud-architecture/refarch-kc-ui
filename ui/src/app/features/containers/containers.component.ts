@@ -21,7 +21,7 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
 })
 export class ContainersComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'type' , 'status'];
+  displayedColumns: string[] = ['id', 'type' , 'status', 'longitude', 'latitude'];
   dataSource = new MatTableDataSource<Container>();
   expandedElement: Container[] | null;
 
@@ -41,8 +41,8 @@ export class ContainersComponent implements OnInit {
   } 
 
 //this function test the UI with fake data
-
-  /*getContainersTest(): void {
+/*
+  getContainersTest(): void {
     this.containerService.getContainersTest().subscribe
     (containers => this.containers = containers);
   } */
