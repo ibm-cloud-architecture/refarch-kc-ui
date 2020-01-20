@@ -7,6 +7,7 @@
   "orderMSURL" : "http://ordercmd:9080/orders",
   "orderQueryMSURL" : "http://orderquery:9080/orders",
   "voyagesMSURL": "http://voyages:3000",
+  "containerMSURL": "http://kcontainer-spring-container-eda-integration.gse-eda-demos-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud",
   "problemTopicName" : "bluewaterProblem",
   "shipTopicName" : "bluewaterShip",
   "version": "0.0.7",

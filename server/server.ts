@@ -62,5 +62,6 @@ server.listen(config.getPort(), () => {
     console.log('Order MS Command ' +  config.getOrderMSURL());
     console.log('Order MS Query ' +  config.getOrderQueryMSURL());
     console.log('Voyage MS ' +  config.getVoyageMSURL());
+    console.log('Container MS ' + config.getContainerMSURL());
 
 });
