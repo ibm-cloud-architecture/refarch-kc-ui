@@ -57,7 +57,7 @@ export default class AppConfig {
         if(process.env.CONTAINERMS_SERVICE_HOST && process.env.CONTAINERMS_SERVICE_PORT){
           url = "http://" + process.env.CONTAINERMS_SERVICE_HOST
               + ":" + process.env.CONTAINERMS_SERVICE_PORT + "/containers";
-        }
+        } console.log(url);
         return url;
     }
 

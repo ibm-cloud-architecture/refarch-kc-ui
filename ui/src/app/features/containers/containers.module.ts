@@ -13,7 +13,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
 import { MatDialogModule } from '@angular/material';
-//import { BrowserAnimationsModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [ContainersComponent, ContainerComponent],
@@ -32,7 +31,6 @@ import { MatDialogModule } from '@angular/material';
     CommonModule,
     ToastrModule,
     MatDialogModule,
-    //BrowserAnimationsModule,
   ]
 })
 export class ContainersModule { }

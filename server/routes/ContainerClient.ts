@@ -10,14 +10,17 @@ export default class ContainerClient {
     }
 
     public getContainers(): Promise<domain.Container[]>{
-        return request.get(this.config.getContainerMSURL(),
+        return request.get(this.config.getContainerMSURL() + '/containers',
         {json: true})
         .then( (body) => {
             return <domain.Container[]>body;
         })
         .catch( (err) => {
             console.log(err);
-            return[];
+            return new Promise((resolve, _) => {
+                // resolve empty on error
+                resolve([]);
+            });
         });
 
     }
