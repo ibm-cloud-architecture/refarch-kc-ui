@@ -8,5 +8,5 @@ export interface Container {
     currentCity: string;
     capacity: number;
     createdAt: string;
-    updateAt: string;
+    updatedAt: string;
 }
