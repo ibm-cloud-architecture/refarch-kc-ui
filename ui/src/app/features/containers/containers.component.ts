@@ -36,9 +36,12 @@ export class ContainersComponent implements OnInit {
 
   showContainers() {
      this.containerService.getContainersList().subscribe(
-      data => {this.containers = data}
+      data => {
+        //this.containers = data;
+        this.dataSource.data = data;
+        }
       );
-  } 
+  }
 
 //this function test the UI with fake data
 /*

@@ -10,10 +10,12 @@ export default class ContainerClient {
     }
 
     public getContainers(): Promise<domain.Container[]>{
-        return request.get(this.config.getContainerMSURL() + '/containers',
+        return request.get(this.config.getContainerMSURL(),
         {json: true})
         .then( (body) => {
-            return <domain.Container[]>body;
+            //We need to cast & return `body.content` and not just `body`,
+            // as it is a paginated response
+            return <domain.Container[]> (body.content);
         })
         .catch( (err) => {
             console.log(err);
