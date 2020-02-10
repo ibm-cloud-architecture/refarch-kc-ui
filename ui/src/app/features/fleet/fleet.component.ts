@@ -30,7 +30,6 @@ export class FleetComponent implements OnInit {
 
   loadFleet(fleet) {
     console.log(fleet);
-    //this.service.getShipsForFleet(fleet).subscribe()
   }
 
   startFleet() {
