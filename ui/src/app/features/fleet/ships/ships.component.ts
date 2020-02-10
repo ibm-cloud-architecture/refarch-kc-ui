@@ -55,6 +55,5 @@ export class ShipsComponent implements OnInit {
     console.log("simulate " + JSON.stringify(ship));
     this.selectedship = ship;
   }
-
-
+  
 }

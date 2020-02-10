@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { OrdersService } from './orders.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -19,9 +19,8 @@ beforeEach(async(() => {
     imports: [ HttpClientTestingModule,
      ]
   }));
-let httpTestingController : HttpTestingController;
 
-//httpTestingController = TestBed.get(httpTestingController);
+httpTestingController = TestBed.get(httpTestingController);
   
   it('should be created', () => {
     const service: OrdersService = TestBed.get(OrdersService);

@@ -6,7 +6,7 @@
 <div class="row">
     <mat-form-field>
         <label class="wrapper" for="selectedCommand">Select a simulation</label>
-        <mat-select  [(value)]="selectedCommand" mame="selectedCommand" style="width=200px;">
+        <mat-select  [(value)]="selectedCommand" mame="selectedCommand" style="width:200px">
           <mat-option *ngFor="let command of commands" [value]="command.value">
             {{command.name}}
           </mat-option>

@@ -37,7 +37,6 @@ describe('TileComponent', () => {
   }));
 
   beforeEach(() => {
-    // mockRouter = {navigate: jasmine.createSpy('navigate')};
     fixture = TestBed.createComponent(HostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
