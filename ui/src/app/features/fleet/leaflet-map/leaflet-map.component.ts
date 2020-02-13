@@ -24,7 +24,6 @@ export class LeafletMapComponent implements OnInit, OnChanges {
   @Input()
   set ships(ships: Ship[]) {
     this._ships = ships;
-    //this.ngOnInit();
     this.placeMarkers();
   }
 
@@ -33,8 +32,10 @@ export class LeafletMapComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-     // Render Map centered on California, with a zoom high enough to fit the usa map
-    // all mouse and touch interactions on the map are enabled, and it has zoom and attribution controls.
+    
+    /* Render Map centered on California, with a zoom high enough to fit the usa map
+    all mouse and touch interactions on the map are enabled, and it has zoom and attribution controls. */
+
     this.seaMap = L.map('mapid').setView([37.8044, -122.2711], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {  
        attribution: 'OpenStreet map &copy;'

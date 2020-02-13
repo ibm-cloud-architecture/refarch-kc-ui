@@ -29,7 +29,6 @@ fdescribe('HeaderComponent', () => {
 
   beforeEach(() => {
     router = TestBed.get(Router); 
-    //location = TestBed.get(Location);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -42,20 +41,4 @@ fdescribe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // The HTML as a routerlink to home
-  // As a rule you test the component, not the router, and care only 
-  // if the component navigates with the right address under the given conditions.
-/*
-  excluding this test for now
-
-  xit('should go to home url when clicking on home link', () => {
-    const link = fixture.debugElement.query(By.css('#home'));
-    //link.click();
-    fixture.whenStable().then(() => {
-      const routerService = TestBed.get(Router);
-      //expect(routerService.navigate.calls.any()).toBe(true, 'navigate called');
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
-    })
-  }); */
 });

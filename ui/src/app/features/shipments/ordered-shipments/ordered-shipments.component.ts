@@ -33,7 +33,7 @@ export class OrderedShipmentsComponent implements OnInit {
     console.log(voyage);
     this.selectedOrder.voyageID=voyage;
     this.shipmentService.saveOrderShipment(this.selectedOrder);
-    // call save voaygage
+    // call save voyage
     this.selectedOrder = null;
   }
 }

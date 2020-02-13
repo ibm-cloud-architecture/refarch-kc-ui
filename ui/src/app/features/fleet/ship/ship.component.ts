@@ -114,8 +114,9 @@ export class ShipComponent implements OnInit {
  simulationStarted(){
     this.ship = this.service.getSelectedShip();
 
-    // create a subscription on ship position. wait 1 s and then every 30s, then poll the ship position and once getting results
-    // move the boat
+    /*create a subscription on ship position. wait 1 s and then every 30s, then poll the ship position and once getting results
+    move the boat */
+
     this.shipPositionSubscription = timer(1000, 30000).pipe(
       switchMap(() => this.pollShipPositionEvent())
     ).subscribe(data => this.processShipPosition(data));
@@ -258,7 +259,5 @@ export class ShipComponent implements OnInit {
     this.context.fillStyle='#000';
     this.context.fillRect(cellWt - (thick), cellHt - (thick), cellwidth + (thick * 2), cellheight + (thick * 2));
   }
-
-
 
 }
