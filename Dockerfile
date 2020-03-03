@@ -1,12 +1,14 @@
 FROM node:12
 MAINTAINER https://github.com/ibm-cloud-architecture - IBM - Jerome Boyer
 
+RUN apt-get update
+
 WORKDIR /app
 COPY . /app
 
-RUN apt-get update && cd ui \
+RUN cd ui \
    && npm install \
-   && npm install -g  @angular/cli \
+   && npm install -g  @angular/cli@^8.0.3 \
    && ng build \
    && cd ../server \
    && npm install && npm run build
