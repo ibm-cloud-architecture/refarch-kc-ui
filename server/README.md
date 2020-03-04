@@ -24,7 +24,7 @@ The other api definition to support the Angular app are in the `route/api.ts` co
 
 ### A TDD for ship event consumer
 
-We want to have the user interface polling every x seconds the state of ship so it can update the ship map. There are multiple ways to implement this. The angular component can call a BFF end point every x seconds using the RxJS Observable interface, then the BFF can call the Ship microservice. But as we are using event sourcing, we have the state of the ship as ShipEvent on the `bluewaterShip` kafka topic, therefore the BFF is also a kafka consumer and will populate a list of the last n events read from the topic. When Angular call the new BFF api `getShipPosition(shipId)` then the last event is sent back.
+We want to have the user interface polling every x seconds the state of ship so it can update the ship map. There are multiple ways to implement this. The angular component can call a BFF end point every x seconds using the RxJS Observable interface, then the BFF can call the Ship microservice. But as we are using event sourcing, we have the state of the ship as ShipEvent on the `bluewater-ship` kafka topic, therefore the BFF is also a kafka consumer and will populate a list of the last n events read from the topic. When Angular call the new BFF api `getShipPosition(shipId)` then the last event is sent back.
 
 To illustrate a TDD approach on consuming ship event in the BFF we define a new test case: `test/GetShipEvent.spec.ts`.
 
