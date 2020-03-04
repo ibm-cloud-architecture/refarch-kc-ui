@@ -13,12 +13,12 @@ describe('Config', () => {
 
     it('should have a problem topic name', () => {
         let appCfg = new AppConfig();
-        expect(appCfg.getProblemTopicName()).to.be.equal("bluewaterProblem");
+        expect(appCfg.getProblemTopicName()).to.be.equal("bluewater-problem");
     });
 
     it('should have a ship topic name', () => {
         let appCfg = new AppConfig();
-        expect(appCfg.getShipTopicName()).to.be.equal("bluewaterShip");
+        expect(appCfg.getShipTopicName()).to.be.equal("bluewater-ship");
     });
 
 })

@@ -8,8 +8,8 @@
   "orderQueryMSURL" : "http://orderquery:9080/orders",
   "voyagesMSURL": "http://voyages:3000",
   "containerMSURL": "http://springcontainerms:8080/containers",
-  "problemTopicName" : "bluewaterProblem",
-  "shipTopicName" : "bluewaterShip",
+  "problemTopicName" : "bluewater-problem",
+  "shipTopicName" : "bluewater-ship",
   "version": "0.0.7",
   "certsPath": "/etc/ssl/certs"
  }
