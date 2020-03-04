@@ -68,12 +68,12 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: "{{ .Values.kafka.topicsConfigMap }}"
-                key: bluewaterProblemTopic
+                key: bluewater-problem-topic
           - name: SHIP_TOPIC
             valueFrom:
               configMapKeyRef:
                 name: "{{ .Values.kafka.topicsConfigMap }}"
-                key: bluewaterShipTopic
+                key: bluewater-ship-topic
           {{- if .Values.eventstreams.enabled }}
           - name: KAFKA_APIKEY
             valueFrom:
