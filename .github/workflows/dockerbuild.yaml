@@ -6,6 +6,8 @@ on:
     paths-ignore:
       - 'chart/**'
       - 'docs/**'
+      - 'docs-gatsby/**'
+      - '.github/workflows/build-and-push-gatsby.yaml'
 
 jobs:
   validate-docker-secrets:
