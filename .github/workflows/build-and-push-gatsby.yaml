@@ -2,8 +2,10 @@ name: Build & push Gatsby docs
 
 on:
   push:
-    branches:
-      - master
+    #branches:
+    #  - master
+    branches-ignore:
+      - '**'
     paths:
       - 'docs/**'
       - 'docs-gatsby/**'
