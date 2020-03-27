@@ -1,8 +1,8 @@
 - title: KContainer UI
   pages:
     - title: Overview
-      path: ./
+      path: /refarch-kc-ui/
     - title: Build and run
-      path: ./build-run
+      path: /refarch-kc-ui/build-run
     - title: Contributing
-      path: ./contributing
+      path: /refarch-kc-ui/contributing
