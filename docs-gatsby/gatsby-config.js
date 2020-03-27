@@ -1,8 +1,13 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Theme Carbon',
-    description: 'A Gatsby theme for the carbon design system',
+    title: 'User Interface for the K-Container shipment solution',
+    description: 'User Interface for the K-Container shipment solution',
     keywords: 'gatsby,theme,carbon',
+    repository: {
+      baseUrl: 'https://github.com/ibm-cloud-architecture/refarch-kc-ui',
+      subDirectory: '/docs-gatsby',
+      branch: 'master'
+    }
   },
   pathPrefix: `/gtc`,
   plugins: [
@@ -21,11 +26,7 @@ module.exports = {
       resolve: 'gatsby-theme-carbon',
       options: {
         isSearchEnabled: true,
-        repository: {
-          baseUrl:
-            'https://github.com/carbon-design-system/gatsby-theme-carbon',
-          subDirectory: '/packages/example',
-        },
+        titleType: 'append'
       },
     },
   ],
