@@ -2,10 +2,10 @@ name: Build & push Gatsby docs
 
 on:
   push:
-    #branches:
-    #  - master
-    branches-ignore:
-      - '**'
+    branches:
+      - master
+    #branches-ignore:
+    #  - '**'
     paths:
       - 'docs/**'
       - 'docs-gatsby/**'
@@ -31,7 +31,7 @@ jobs:
       run: npm install
     - name: Build Gatbsy docs via npm
       working-directory: ${{ env.WORKDIR }}
-      run: npm run build --if-present
+      run: npm run build:prefix --if-present
     - name: Deploy Gatsby docs to gh-pages branch
       uses: osowski/github-pages-deploy-action@releases/v3
       with:

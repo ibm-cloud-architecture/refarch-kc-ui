@@ -9,7 +9,7 @@ module.exports = {
       branch: 'master'
     }
   },
-  pathPrefix: `/gtc`,
+  pathPrefix: "/refarch-kc-ui",
   plugins: [
     {
       resolve: 'gatsby-plugin-manifest',
