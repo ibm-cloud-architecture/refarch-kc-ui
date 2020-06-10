@@ -54,7 +54,7 @@ serviceAccountName: default
 application:
   fleetServiceHost: fleetms-service
   fleetServicePort: 9080
-  orderCommandServiceHost: ordercommandms-service
+  orderCommandServiceHost: order-command-ms
   orderCommandServicePort: 9080
   orderQueryServiceHost: orderqueryms-service
   orderQueryServicePort: 9080
