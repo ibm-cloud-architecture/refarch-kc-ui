@@ -56,7 +56,7 @@ application:
   fleetServicePort: 9080
   orderCommandServiceHost: order-command-ms
   orderCommandServicePort: 9080
-  orderQueryServiceHost: orderqueryms-service
+  orderQueryServiceHost: order-query-ms
   orderQueryServicePort: 9080
   voyageServiceHost: voyagesms-service
   voyageServicePort: 3000
