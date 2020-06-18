@@ -58,7 +58,7 @@ application:
   orderCommandServicePort: 9080
   orderQueryServiceHost: order-query-ms
   orderQueryServicePort: 9080
-  voyageServiceHost: voyagesms-service
+  voyageServiceHost: voyages-ms
   voyageServicePort: 3000
-  containerServiceHost: springcontainerms-service
+  containerServiceHost: spring-container-ms
   containerServicePort: 8080
