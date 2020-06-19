@@ -52,7 +52,7 @@ eventstreams:
   caPemSecretName: es-ca-pemfile
 serviceAccountName: default
 application:
-  fleetServiceHost: fleetms-service
+  fleetServiceHost: fleet-ms
   fleetServicePort: 9080
   orderCommandServiceHost: order-command-ms
   orderCommandServicePort: 9080
