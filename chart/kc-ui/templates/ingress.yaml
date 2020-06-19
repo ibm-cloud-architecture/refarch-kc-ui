@@ -33,7 +33,7 @@ spec:
         paths:
           - path: {{ $ingressPath }}
             backend:
-              serviceName: "{{ $chartName }}-service"
+              serviceName: "kc-ui"
               servicePort: http
   {{- end }}
 {{- end }}
