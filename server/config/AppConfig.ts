@@ -90,8 +90,7 @@ export default class AppConfig {
     }
 
     public isEventStreams(): boolean {
-        var kafka_api_key = process.env.KAFKA_APIKEY.trim();
-        return ('KAFKA_APIKEY' in process.env && kafka_api_key !=="");
+        return ('KAFKA_APIKEY' in process.env && process.env.KAFKA_APIKEY.trim() !=="");
     }
 
     public eventStreamsSecurityEnabled(): boolean {
