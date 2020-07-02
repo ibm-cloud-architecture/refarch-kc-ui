@@ -1,0 +1,18 @@
+{
+  "name": "nodejs-simple",
+  "version": "0.1.0",
+  "description": "Simple Node.js application",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "cd server && node dist/server/server.js",
+    "debug": "cd server && node --inspect dist/server/server.js",
+    "build-ui": "cd ui && npm install && npm run build",
+    "build-server": "cd server && npm install && npm run build",
+    "preinstall": "npm run build-ui && npm run build-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appsody/stacks.git",
+    "directory": "incubator/nodejs/templates/simple"
+  }
+}
