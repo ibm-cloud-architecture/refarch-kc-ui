@@ -6,8 +6,8 @@
   "scripts": {
     "start": "cd server && node dist/server/server.js",
     "debug": "cd server && node --inspect dist/server/server.js",
-    "build-ui": "cd ui && npm install && npm run build",
-    "build-server": "cd server && npm install && npm run build",
+    "build-ui": "cd ui && unset NODE_ENV && unset npm_config_production && npm install && npm run build",
+    "build-server": "cd server && unset NODE_ENV && unset npm_config_production && npm install && npm run build",
     "preinstall": "npm run build-ui && npm run build-server"
   },
   "repository": {
