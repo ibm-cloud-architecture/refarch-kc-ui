@@ -1,3 +1,3 @@
 id: "20200618171619.12001550"
 project-name: kc-ui
-stack: docker.io/appsody/nodejs:0.3
+stack: dev.local/appsody/nodejs:0.4
