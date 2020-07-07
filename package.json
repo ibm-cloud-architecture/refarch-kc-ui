@@ -8,7 +8,7 @@
     "debug": "cd server && node --inspect dist/server/server.js",
     "build-ui": "cd ui && npm run build",
     "build-server": "cd server && npm run build",
-    "build": "npm run build-ui && npm run build-server",
+    "build": "npm install && npm run build-ui && npm run build-server",
     "install-ui": "cd ui && npm install",
     "install-server": "cd server && npm install",
     "preinstall": "npm run install-ui && npm run install-server",
