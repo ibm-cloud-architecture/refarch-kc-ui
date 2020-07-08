@@ -1,0 +1,87 @@
+apiVersion: appsody.dev/v1beta1
+kind: AppsodyApplication
+metadata:
+  annotations:
+    commit.image.appsody.dev/contextDir: C:\dev\refarch\appsody-kc-ui
+    commit.image.appsody.dev/date: Wed Jul 8 16:40:18 2020 +0100
+    commit.image.appsody.dev/message: Correct more typos
+    commit.stack.appsody.dev/contextDir: C:\dev\appsody\stacks\incubator\nodejs
+    commit.stack.appsody.dev/date: Tue Jul 7 17:52:38 2020 +0100
+    commit.stack.appsody.dev/message: 'nodejs: Add ''build'' and ''prune'' lifecycle
+      events'
+    image.opencontainers.org/created: "2020-07-08T16:40:43+01:00"
+    image.opencontainers.org/documentation: https://github.com/djones6/refarch-kc-ui
+    image.opencontainers.org/revision: 32db4084d17c07598349cee2e065baa87353210a
+    image.opencontainers.org/source: |-
+      https://github.com/djones6/refarch-kc-ui/tree/appsodyify
+      AM
+    image.opencontainers.org/url: https://github.com/djones6/refarch-kc-ui
+    stack.appsody.dev/authors: Gireesh Punathil <gireeshpunathil>
+    stack.appsody.dev/configured: dev.local/appsody/nodejs:0.4
+    stack.appsody.dev/created: "2020-07-08T16:13:34+01:00"
+    stack.appsody.dev/description: Runtime for Node.js applications
+    stack.appsody.dev/digest: sha256:0cefdc635e3ebc5375c8dbcb8d4c9aa628a3e35e3bf140876b4eabf48f238107
+    stack.appsody.dev/documentation: |-
+      https://github.com/djones6/stacks/tree/node-build-phase
+      C:\dev\appsody\stacks\incubator\nodejs/README.md
+    stack.appsody.dev/licenses: Apache-2.0
+    stack.appsody.dev/revision: d6ba0ce2100fe094228f587480bc1373f75e05c6
+    stack.appsody.dev/source: |-
+      https://github.com/djones6/stacks/tree/node-build-phase
+      C:\dev\appsody\stacks\incubator\nodejs/image
+    stack.appsody.dev/tag: dev.local/appsody/nodejs:0.4.0
+    stack.appsody.dev/title: Node.js
+    stack.appsody.dev/url: |-
+      https://github.com/djones6/stacks/tree/node-build-phase
+      C:\dev\appsody\stacks\incubator\nodejs
+  creationTimestamp: null
+  labels:
+    image.opencontainers.org/title: kc-ui
+    stack.appsody.dev/id: nodejs
+    stack.appsody.dev/version: 0.4.0
+  name: kc-ui
+spec:
+  applicationImage: djones6/kcontainer-kc-ui:0.0.4
+  createKnativeService: false
+  env:
+  - name: FLEETMS_SERVICE_HOST
+    value: fleet-ms
+  - name: FLEETMS_SERVICE_PORT
+    value: "9080"
+  - name: ORDERCOMMANDMS_SERVICE_HOST
+    value: order-command-ms
+  - name: ORDERCOMMANDMS_SERVICE_PORT
+    value: "9080"
+  - name: ORDERQUERYMS_SERVICE_HOST
+    value: order-query-ms
+  - name: ORDERQUERYMS_SERVICE_PORT
+    value: "9080"
+  - name: VOYAGESMS_SERVICE_HOST
+    value: voyages-ms
+  - name: VOYAGESMS_SERVICE_PORT
+    value: "3000"
+  - name: CONTAINERMS_SERVICE_HOST
+    value: spring-container-ms
+  - name: CONTAINERMS_SERVICE_PORT
+    value: "8080"
+  - name: KAFKA_BROKERS
+    valueFrom:
+      configMapKeyRef:
+        key: brokers
+        name: kafka-brokers
+  - name: PROBLEM_TOPIC
+    valueFrom:
+      configMapKeyRef:
+        key: bluewaterProblemTopic
+        name: kafka-topics
+  - name: SHIP_TOPIC
+    valueFrom:
+      configMapKeyRef:
+        key: bluewaterShipTopic
+        name: kafka-topics
+  expose: true
+  service:
+    port: 3000
+    type: NodePort
+  stack: nodejs
+  version: 1.0.0
