@@ -37,7 +37,7 @@ const getConsumerConfig = (gid) => {
   };
 
   if (config.isEventStreams()){
-    eventStreamsConfig = getCloudConfig();
+    var eventStreamsConfig = getCloudConfig();
     for (var key in eventStreamsConfig) {
         consumerConfig[key] = eventStreamsConfig[key];
     }
