@@ -3,110 +3,93 @@
 Kafka consumer for two different topics
 */
 import AppConfig from   '../config/AppConfig';
-var kafka = require('kafka-node');
+var kafka = require('node-rdkafka');
 var config = new AppConfig();
 var fs = require('fs');
+
+const getCloudConfig = () => {
+  var _config = {
+      'security.protocol': 'sasl_ssl',
+      'sasl.mechanisms': 'PLAIN',
+      'sasl.username': 'token',
+      'sasl.password': config.getKafkaApiKey()
+  };
+  if(config.eventStreamsSecurityEnabled()){
+    _config['ssl.ca.location'] = config.getCertsPath();
+  }
+  return _config;
+}
+
+const getConsumerTopicConfig = () => {
+  return {'auto.offset.reset':'latest'};
+}
+
+const getConsumerConfig = (gid) => {
+  var consumerConfig = {
+    'debug': 'security,broker',
+    'metadata.broker.list': config.getKafkaBrokers(),
+    'broker.version.fallback': '0.10.2.1',
+    'log.connection.close' : false,
+    'client.id': 'kc-ui-consumer',
+    'group.id': gid,
+    'enable.auto.commit' : true,
+    'socket.keepalive.enable': true
+  };
+
+  if (config.isEventStreams()){
+    eventStreamsConfig = getCloudConfig();
+    for (var key in eventStreamsConfig) {
+        consumerConfig[key] = eventStreamsConfig[key];
+    }
+  }
+  return consumerConfig;
+}
 
 class KafkaConsumer {
 
   problemsConsumer() {
     var problems = new Array;
 
-    var kafkaClientConfig = {
-      kafkaHost: config.getKafkaBrokers()
-    };
+    var kafkaClientConfig = getConsumerConfig('kc-ui-problems-consumer-group');
+    console.log('Problem consumer config: ' + JSON.stringify(kafkaClientConfig));
 
-    if (config.isEventStreams()){
-      kafkaClientConfig.sasl = {
-        mechanism: 'PLAIN',
-        username: 'token',
-        password: config.getKafkaApiKey()
-      }
-    }
+    var stream = kafka.KafkaConsumer.createReadStream(kafkaClientConfig, getConsumerTopicConfig(), {
+      topics: [config.getProblemTopicName()]
+    });
 
-    if (config.eventStreamsSecurityEnabled()){
-      kafkaClientConfig.ssl = true;
-      kafkaClientConfig.sslOptions = {
-        ca: [ fs.readFileSync(config.getCertsPath()) ]
-      }
-    }
-
-    var Consumer = kafka.Consumer,
-        client = new kafka.KafkaClient(kafkaClientConfig),
-        consumer = new Consumer(
-           client,
-           [{ topic: config.getProblemTopicName(), partition: 0 }
-           ],
-           {autoCommit: true,
-            fromOffset: 'latest'
-           }
-         );
-
-    consumer.on('message', function (message) {
-      // console.log("In problem consumer:" + message.value);
+    stream.on('data', function (message) {
+      console.log("Problem consumer:" + message.value);
       problems.push(message.value);
     });
 
-    consumer.on('error', function (err) {
-       console.error("In problem consumer the err "+err);
+    stream.on('event.error', function (err) {
+       console.error("Problem consumer error: "+err);
        return err;
     });
     return problems;
    }
 
    kafkaShipPosition() {
-
     var shipPositionList = new Array;
 
-    var kafkaClientConfig = {
-      kafkaHost: config.getKafkaBrokers()
-    };
+    var kafkaClientConfig = getConsumerConfig('kc-ui-ship-consumer-group');
+    console.log('Ship position consumer config: ' + JSON.stringify(kafkaClientConfig));
 
-    if (config.isEventStreams()){
-      kafkaClientConfig.sasl = {
-        mechanism: 'PLAIN',
-        username: 'token',
-        password: config.getKafkaApiKey()
-      }
-    }
+    var stream = kafka.KafkaConsumer.createReadStream(kafkaClientConfig, getConsumerTopicConfig(), {
+      topics: [config.getShipTopicName()]
+    });
 
-    if (config.eventStreamsSecurityEnabled()){
-      kafkaClientConfig.ssl = true;
-      kafkaClientConfig.sslOptions = {
-        ca: [ fs.readFileSync(config.getCertsPath()) ]
-      }
-    }
+    stream.on('data', function (message) {
+      console.log("Ship position consumer: " + message.value);
+      shipPositionList.push(message.value);
+    });
 
-    var Consumer = kafka.Consumer,
-        client = new kafka.KafkaClient(kafkaClientConfig),
-        consumer = new Consumer(
-            client,
-            [
-                { topic: config.getShipTopicName(), partition: 0 }
-            ],
-            [
-              {
-                autoCommit: true
-              },
-              {
-                fromOffset: 'latest'
-              }
-            ]
-          );
+    stream.on('event.error', function (err) {
+      console.log("Ship position consumer error: "+err);
+      return err;
+    });
 
-      consumer.on('message', function (message) {
-          console.log("In ship position js consumer file");
-          console.log(message.value);
-          shipPositionList.push(message.value);
-        });
-
-      consumer.on('error', function (err) {
-        console.log("This is the err "+err);
-        return err;
-      });
-
-      return shipPositionList;
-
-    }
+    return shipPositionList;
+  }
 }
 export default KafkaConsumer;

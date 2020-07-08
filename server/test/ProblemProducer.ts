@@ -2,18 +2,16 @@
 
 import * as domain from '../routes/fleetDomain';
 import AppConfig  from '../config/AppConfig';
-const kafka = require('kafka-node');
-var Producer = kafka.Producer;
+import * as kafka from 'node-rdkafka';
 declare const Buffer;
 
 export default class ProblemProducer {
-    config:AppConfig;
-    producer: any;
+    config: AppConfig;
+    producer: kafka.Producer;
     producerReady: boolean = false;
 
-
     constructor() {
-        this.config =  new AppConfig();
+        this.config = new AppConfig();
     }
 
     public ProblemTopicProducer(p:domain.ProblemReport){
@@ -21,29 +19,29 @@ export default class ProblemProducer {
       let positionvarAsString = JSON.stringify(p);
       const buffer = new Buffer.from(positionvarAsString);
 
-      var kafka = require('kafka-node'),
-          Producer = kafka.Producer,
-          KeyedMessage = kafka.KeyedMessage,
-          client = new kafka.KafkaClient(),
-          producer = new Producer(client),
-          km = new KeyedMessage('key', 'message'),
-          payloads = [
-              { topic: 'blueProblem', messages: buffer, partition: 0 }
-          ];
+      let producerConfig = {
+        'metadata.broker.list': this.config.getKafkaBrokers()
+      };
 
-          producer.on('ready', function () {
-            producer.send(payloads, function (err, data) {
-              console.log("Prodcuer sending the messages");
-              console.log(data);
-            });
-          });
+      this.producer = new kafka.Producer(producerConfig);
 
-          producer.on('error', function (err) {});
-
+      this.producer.on('ready', () => {
+        try {
+          this.producer.produce(this.config.getProblemTopicName(), null, buffer);
+        } catch (err) {
+          console.error('Problem producer error');
+          console.error(err);
         }
+      });
+
+      this.producer.on('event.error', (err) => {
+        console.error('Problem producer error');
+        console.error(err);
+      });
+    }
 
     public stopProducer(){
-        this.producer.close(true, () => {
+        this.producer.disconnect(() => {
             console.log("Stop problem producer");
         })
     }
