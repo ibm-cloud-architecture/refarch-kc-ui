@@ -1,0 +1,80 @@
+apiVersion: appsody.dev/v1beta1
+kind: AppsodyApplication
+metadata:
+  annotations:
+    commit.image.appsody.dev/contextDir: C:\dev\refarch\appsody-kc-ui
+    commit.image.appsody.dev/date: Thu Jul 30 11:38:05 2020 +0100
+    commit.image.appsody.dev/message: Use published nodejs 0.4 stack
+    commit.stack.appsody.dev/contextDir: /incubator/nodejs
+    commit.stack.appsody.dev/date: Thu Jul 30 11:03:34 2020 +0100
+    commit.stack.appsody.dev/message: 'nodejs: Add ''build'' and ''prune'' lifecycle
+      events (#841)'
+    image.opencontainers.org/created: "2020-07-30T15:29:13+01:00"
+    image.opencontainers.org/documentation: https://github.com/djones6/refarch-kc-ui
+    image.opencontainers.org/revision: a47e2e8fb329c820b68dba0ebe9feb9e241db281
+    image.opencontainers.org/source: |
+      https://github.com/djones6/refarch-kc-ui/tree/appsodyify
+    image.opencontainers.org/url: https://github.com/djones6/refarch-kc-ui
+    stack.appsody.dev/authors: Gireesh Punathil <gireeshpunathil>
+    stack.appsody.dev/configured: docker.io/appsody/nodejs:0.4
+    stack.appsody.dev/created: "2020-07-30T10:06:45Z"
+    stack.appsody.dev/description: Runtime for Node.js applications
+    stack.appsody.dev/digest: sha256:615ccc0c6d5c78ddc1c80252ace50e225e5d569e5f212404588b40c47a1ac9f0
+    stack.appsody.dev/documentation: https://github.com/appsody/stacks/tree/master/incubator/nodejs/README.md
+    stack.appsody.dev/licenses: Apache-2.0
+    stack.appsody.dev/revision: 02c41f9b025cac08843d3d703b47bb97216db43f
+    stack.appsody.dev/source: https://github.com/appsody/stacks/tree/master/incubator/nodejs/image
+    stack.appsody.dev/tag: docker.io/appsody/nodejs:0.4.0
+    stack.appsody.dev/title: Node.js
+    stack.appsody.dev/url: https://github.com/appsody/stacks/tree/master/incubator/nodejs
+  creationTimestamp: null
+  labels:
+    image.opencontainers.org/title: kc-ui
+    stack.appsody.dev/id: nodejs
+    stack.appsody.dev/version: 0.4.0
+  name: kc-ui
+spec:
+  applicationImage: ibmcase/kcontainer-ui:latest
+  createKnativeService: false
+  env:
+  - name: FLEETMS_SERVICE_HOST
+    value: fleet-ms
+  - name: FLEETMS_SERVICE_PORT
+    value: "9080"
+  - name: ORDERCOMMANDMS_SERVICE_HOST
+    value: order-command-ms
+  - name: ORDERCOMMANDMS_SERVICE_PORT
+    value: "9080"
+  - name: ORDERQUERYMS_SERVICE_HOST
+    value: order-query-ms
+  - name: ORDERQUERYMS_SERVICE_PORT
+    value: "9080"
+  - name: VOYAGESMS_SERVICE_HOST
+    value: voyages-ms
+  - name: VOYAGESMS_SERVICE_PORT
+    value: "3000"
+  - name: CONTAINERMS_SERVICE_HOST
+    value: spring-container-ms
+  - name: CONTAINERMS_SERVICE_PORT
+    value: "8080"
+  - name: KAFKA_BROKERS
+    valueFrom:
+      configMapKeyRef:
+        key: brokers
+        name: kafka-brokers
+  - name: PROBLEM_TOPIC
+    valueFrom:
+      configMapKeyRef:
+        key: bluewaterProblemTopic
+        name: kafka-topics
+  - name: SHIP_TOPIC
+    valueFrom:
+      configMapKeyRef:
+        key: bluewaterShipTopic
+        name: kafka-topics
+  expose: true
+  service:
+    port: 3000
+    type: NodePort
+  stack: nodejs
+  version: 1.0.0
