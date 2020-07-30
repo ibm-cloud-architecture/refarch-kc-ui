@@ -78,7 +78,7 @@ export default class AppConfig {
     }
 
     public getPort(): number {
-        return process.env.port || config.port;
+        return process.env.PORT || config.port;
     }
 
     public getVersion() : string {
