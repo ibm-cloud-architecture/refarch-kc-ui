@@ -45,11 +45,11 @@ kafka:
   topicsConfigMap: kafka-topics
 eventstreams:
   enabled: true
-  apikeyConfigMap: eventstreams-apikey
+  esCredSecret: eventstreams-cred
   caPemFileRequired: false
   caPemFilePath: "/etc/ssl/certs/kcontainer"
   caPemFileName: "es-cert.pem"
-  caPemSecretName: es-ca-pemfile
+  caPemSecretName: eventstreams-cert-pem
 serviceAccountName: default
 application:
   fleetServiceHost: fleet-ms

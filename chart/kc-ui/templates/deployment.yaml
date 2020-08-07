@@ -79,11 +79,16 @@ spec:
                 name: "{{ .Values.kafka.topicsConfigMap }}"
                 key: bluewaterShipTopic
           {{- if .Values.eventstreams.enabled }}
-          - name: KAFKA_APIKEY
+          - name: KAFKA_USER
             valueFrom:
               secretKeyRef:
-                name: "{{ .Values.eventstreams.apikeyConfigMap }}"
-                key: binding
+                name: "{{ .Values.eventstreams.esCredSecret }}"
+                key: username
+          - name: KAFKA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Values.eventstreams.esCredSecret }}"
+                key: password
           {{- if .Values.eventstreams.caPemFileRequired }}
           - name: CERTS_ENABLED
             value : "true"
