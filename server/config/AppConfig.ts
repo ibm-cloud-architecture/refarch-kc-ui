@@ -12,8 +12,12 @@ export default class AppConfig {
         return process.env.KAFKA_BROKERS || config.kafkaBrokers;
     }
 
-    public getKafkaApiKey(): string {
-        return process.env.KAFKA_APIKEY ||  config.kafkaApiKey;
+    public getKafkaPassword(): string {
+        return process.env.KAFKA_PASSWORD ||  config.kafkaPassword;
+    }
+
+    public getKafkaUser(): string {
+        return process.env.KAFKA_USER ||  config.kafkaUser;
     }
 
     public getFleetMSURL(): string {
@@ -90,7 +94,7 @@ export default class AppConfig {
     }
 
     public isEventStreams(): boolean {
-        return ('KAFKA_APIKEY' in process.env && process.env.KAFKA_APIKEY.trim() !=="");
+        return ('KAFKA_PASSWORD' in process.env && process.env.KAFKA_PASSWORD.trim() !=="");
     }
 
     public eventStreamsSecurityEnabled(): boolean {
