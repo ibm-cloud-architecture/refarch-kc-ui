@@ -16,9 +16,9 @@ export class OrderComponent implements OnInit {
 
   @Output()
   done = new EventEmitter<Order>();
-  
-  products: string[] = ["Fresh product 1", "Medical vaccin", "Carrot", "Fresh product 2"];
-  
+
+  products: string[] = ["Fresh product 1", "Medical vaccine", "Carrot", "Fresh product 2"];
+
   constructor(private orderService: OrdersService) { }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class OrderComponent implements OnInit {
 
     // if there is no orderID we are creating a new order
     if(this.order.orderID == null) {
-      this.orderService.saveOrder(this.order).subscribe(callback ); 
+      this.orderService.saveOrder(this.order).subscribe(callback );
     } else {
       this.orderService.updateOrder(this.order).subscribe(callback);
     }
