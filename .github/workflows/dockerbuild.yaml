@@ -5,8 +5,6 @@ on:
       - master
     paths-ignore:
       - 'chart/**'
-      - 'docs/**'
-      - 'docs-gatsby/**'
       - '.github/workflows/build-and-push-gatsby.yaml'
 
 jobs:
@@ -35,6 +33,7 @@ jobs:
         validate_secret DOCKER_USERNAME ${DOCKER_USERNAME}
         validate_secret DOCKER_PASSWORD ${DOCKER_PASSWORD}
         validate_secret DOCKER_REPOSITORY ${DOCKER_REPOSITORY}
+        validate_secret DOCKER_REGISTRY ${DOCKER_REGISTRY}
         validate_secret DOCKER_IMAGE ${DOCKER_IMAGE}
         validate_secret GITOPS_EMAIL ${GITOPS_EMAIL}
         validate_secret GITOPS_TOKEN ${GITOPS_TOKEN}
@@ -47,6 +46,7 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
+        DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
         DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
         GITOPS_EMAIL: ${{ secrets.GITOPS_EMAIL }}
         GITOPS_TOKEN: ${{ secrets.GITOPS_TOKEN }}
@@ -60,7 +60,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Bump version and push tag
       id: bump-version-action
-      uses: osowski/github-tag-action@master
+      uses: ibm-cloud-architecture/github-tag-action@master
       env:
         DEFAULT_BUMP: patch
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -70,8 +70,8 @@ jobs:
     - name: Build the ui docker image
       id: build-ui-image
       run: |
-        IMAGE_NAME="${DOCKER_R}/${DOCKER_I}"
-        docker login -u ${DOCKER_U} -p ${DOCKER_P}
+        IMAGE_NAME="${DOCKER_REG}/${DOCKER_R}/${DOCKER_I}"
+        docker login -u ${DOCKER_U} -p ${DOCKER_P} ${DOCKER_REG}
 
         echo "Build and push the docker image"
         cd ${WORKDIR}
@@ -83,8 +83,8 @@ jobs:
         DOCKER_P: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_R: ${{ secrets.DOCKER_REPOSITORY }}
         DOCKER_I: ${{ secrets.DOCKER_IMAGE }}
+        DOCKER_REG: ${{ secrets.DOCKER_REGISTRY }}
         WORKDIR: .
-        DOCKERFILE: Dockerfile
         IMAGE_TAG: ${{ steps.bump-version-action.outputs.new_tag }}
     - name: Save app-deploy.yaml
       uses: actions/upload-artifact@v2

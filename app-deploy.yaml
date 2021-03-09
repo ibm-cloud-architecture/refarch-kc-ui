@@ -34,7 +34,7 @@ metadata:
     stack.appsody.dev/version: 0.4.0
   name: kc-ui
 spec:
-  applicationImage: ibmcase/kcontainer-ui:latest
+  applicationImage: quay.io/ibmcase/kcontainer-ui:latest
   createKnativeService: false
   env:
   - name: PORT
